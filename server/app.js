@@ -4,7 +4,7 @@ var os = require('os')
 var webpack = require('webpack')
 var WebpackDevServer = require('webpack-dev-server')
 
-var config = require('../webpack.config')
+var config = require('../webpack-dev.config')
 
 var port = 3000
 

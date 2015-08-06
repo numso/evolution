@@ -24,14 +24,12 @@
     "eslint": "0.24.1",
     "eslint-plugin-react": "2.7.0",
     "flow-bin": "0.13.1",
+    "json-loader": "0.5.2",
     "lodash": "3.10.0",
     "moment": "2.10.3",
     "pixi.js": "3.0.7",
-    "react": "0.13.3",
-    "react-hot-loader": "1.2.8",
-    "react-pixi": "0.6.1",
     "shortid": "2.2.2",
-    "webpack": "1.10.1",
+    "webpack": "1.10.5",
     "webpack-dev-server": "1.10.1"
   }
 }

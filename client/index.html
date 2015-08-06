@@ -5,9 +5,40 @@
     <title>Evolution</title>
     <meta name="description" content="Evolution">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+      }
+      html {
+        height: 100%;
+      }
+      body {
+        background-color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+      canvas {
+        /*min-width: 100%;*/
+      }
+      .instructions {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 20px;
+        color: white;
+      }
+    </style>
   </head>
   <body>
-    <div id="game"></div>
+    <div class="instructions">
+      <div>Left / Right Arrow to move</div>
+      <div>Up Arrow to Jump</div>
+    </div>
     <script src="build/bundle.js"></script>
   </body>
 </html>
