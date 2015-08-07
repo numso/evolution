@@ -46,13 +46,29 @@
 
 	'use strict';
 
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var _pixiJs = __webpack_require__(1);
 
 	var _pixiJs2 = _interopRequireDefault(_pixiJs);
 
-	var _lodash = __webpack_require__(133);
+	var _background = __webpack_require__(133);
+
+	var bg = _interopRequireWildcard(_background);
+
+	var _foreground = __webpack_require__(135);
+
+	var fg = _interopRequireWildcard(_foreground);
+
+	var _character = __webpack_require__(136);
+
+	var char = _interopRequireWildcard(_character);
+
+	var _obstacles = __webpack_require__(139);
+
+	var obstacles = _interopRequireWildcard(_obstacles);
 
 	var renderer = _pixiJs2['default'].autoDetectRenderer();
 	// renderer.view.style.width = window.innerWidth + 'px'
@@ -60,155 +76,26 @@
 	renderer.view.style.display = 'block';
 	document.body.appendChild(renderer.view);
 
-	// create background
-	var bg = new _pixiJs2['default'].Graphics();
-	bg.beginFill(0xBAFFD9);
-	bg.drawRect(0, 0, 800, 600);
-	bg.endFill();
-
-	// create obstacle
-	var obs1 = new _pixiJs2['default'].Graphics();
-	obs1.beginFill(0x774320);
-	obs1.drawRect(0, 0, 300, 20);
-	obs1.endFill();
-	obs1.position.x = 300;
-	obs1.position.y = 280;
-
-	// create obstacle
-	var obs2 = new _pixiJs2['default'].Graphics();
-	obs2.beginFill(0x774320);
-	obs2.drawRect(0, 0, 300, 20);
-	obs2.endFill();
-	obs2.position.x = 100;
-	obs2.position.y = 450;
-
-	// create obstacle
-	var obs3 = new _pixiJs2['default'].Graphics();
-	obs3.beginFill(0x774320);
-	obs3.drawRect(0, 0, 150, 150);
-	obs3.endFill();
-	obs3.position.x = 800 - 150;
-	obs3.position.y = 600 - 150;
-
-	// create character
-	var char = new _pixiJs2['default'].Graphics();
-	char.lineStyle(5, 0x4731FF, 1);
-	char.beginFill(null, 0);
-	char.moveTo(0, 125);
-	char.lineTo(25, 75);
-	char.moveTo(50, 125);
-	char.lineTo(25, 75);
-	char.moveTo(25, 75);
-	char.lineTo(25, 25);
-	char.moveTo(0, 50);
-	char.lineTo(50, 50);
-	char.endFill();
-	char.beginFill(0x4731FF);
-	char.drawRect(10, 5, 30, 30);
-	char.endFill();
-
-	char.position.x = 800 - 50 - 200;
-	char.position.y = 600 - 125;
-
-	// create stage
 	var stage = new _pixiJs2['default'].Container();
-	stage.addChild(bg);
-	stage.addChild(char);
-	stage.addChild(obs1);
-	stage.addChild(obs2);
-	stage.addChild(obs3);
-
-	var obstacles = [obs1, obs2, obs3];
+	stage.addChild(bg.container);
+	stage.addChild(char.container);
+	stage.addChild(obstacles.container);
+	stage.addChild(fg.container);
 
 	function gameLoop() {
-	  requestAnimationFrame(gameLoop);
+	  window.requestAnimationFrame(gameLoop);
 	  update();
 	  renderer.render(stage);
 	}
 
-	var dy = 0;
-	var dx = 0;
-	var SPRING = -25;
-	var GRAVITY = 1.5;
-	var ACCEL = 1;
-	var MAX_SPEED = 8;
-	var onGround = true;
 	function update() {
-	  // UPDATE X
-	  var oldX = char.position.x;
-	  if (keyMap[37]) {
-	    dx -= ACCEL;
-	    dx = Math.max(dx, -MAX_SPEED);
-	  } else if (keyMap[39]) {
-	    dx += ACCEL;
-	    dx = Math.min(dx, MAX_SPEED);
-	  } else {
-	    if (dx > 0) {
-	      dx -= ACCEL;
-	      dx = Math.max(0, dx);
-	    } else if (dx < 0) {
-	      dx += ACCEL;
-	      dx = Math.min(0, dx);
-	    }
-	  }
-	  char.position.x += dx;
-	  if (char.position.x < 0) {
-	    char.position.x = 0;
-	  }
-	  if (char.position.x > 800 - 50) {
-	    char.position.x = 800 - 50;
-	  }
-	  // if character collides, x wise, go back to old x
-	  var collidesX = (0, _lodash.any)(obstacles, function (obs) {
-	    return doesCollide(char, obs);
-	  });
-	  if (collidesX) {
-	    char.position.x = oldX;
-	  }
-	  // UPDATE Y
-	  var oldY = char.position.y;
-	  if (keyMap[38]) {
-	    if (onGround) {
-	      dy = SPRING;
-	    }
-	  }
-	  onGround = false;
-	  dy += GRAVITY;
-	  char.position.y += dy;
-	  if (char.position.y > 600 - 125) {
-	    char.position.y = 600 - 125;
-	    dy = 0;
-	    onGround = true;
-	  }
-	  // if character collides, y wise, go back to old y
-	  var collidesY = (0, _lodash.any)(obstacles, function (obs) {
-	    return doesCollide(char, obs);
-	  });
-	  if (collidesY) {
-	    char.position.y = oldY;
-	    if (dy > 0) {
-	      onGround = true;
-	    }
-	    dy = 0;
-	  }
+	  bg.update();
+	  char.update(obstacles.obstacles);
+	  obstacles.update();
+	  fg.update();
 	}
 
-	requestAnimationFrame(gameLoop);
-
-	var keyMap = [];
-	document.addEventListener('keydown', function (e) {
-	  keyMap[e.keyCode] = true;
-	});
-	document.addEventListener('keyup', function (e) {
-	  keyMap[e.keyCode] = false;
-	});
-
-	function doesCollide(obj1, obj2) {
-	  return obj1.x + obj1.width > obj2.x && obj1.x < obj2.x + obj2.width && (obj1.y + obj1.height > obj2.y && obj1.y < obj2.y + obj2.height);
-	}
-
-	// This is very much hacky. Just trying to throw something together in the smallest amount of time.
-	// It will get better. I promise
+	window.requestAnimationFrame(gameLoop);
 
 /***/ },
 /* 1 */
@@ -1418,7 +1305,7 @@
 		"gitHead": "34cd01eb0f204848972de325b1b85c0b6f7b8c8e",
 		"_id": "pixi.js@3.0.7",
 		"_shasum": "8908990cd86c6bd1d04ca8708757857c69282751",
-		"_from": "pixi.js@*",
+		"_from": "pixi.js@3.0.7",
 		"_npmVersion": "2.7.1",
 		"_nodeVersion": "0.12.4",
 		"_npmUser": {
@@ -27269,6 +27156,236 @@
 /* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.update = update;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _pixiJs = __webpack_require__(1);
+
+	var _pixiJs2 = _interopRequireDefault(_pixiJs);
+
+	var _constants = __webpack_require__(134);
+
+	var sky = new _pixiJs2['default'].Graphics();
+	sky.beginFill(0x98c2ea);
+	sky.drawRect(0, 0, _constants.WIDTH, _constants.HEIGHT);
+	sky.endFill();
+
+	var cloud = new _pixiJs2['default'].Sprite.fromImage('img/cloud01.svg');
+	cloud.position.x = 10;
+	cloud.position.y = 10;
+
+	var cloud2 = new _pixiJs2['default'].Sprite.fromImage('img/cloud02.svg');
+	cloud2.position.x = 400;
+	cloud2.position.y = 120;
+
+	var tree = new _pixiJs2['default'].Sprite.fromImage('img/tree01.svg');
+	tree.position.x = 50;
+
+	var container = new _pixiJs2['default'].Container();
+	exports.container = container;
+	container.addChild(sky);
+	container.addChild(cloud);
+	container.addChild(cloud2);
+	container.addChild(tree);
+
+	function update() {
+	  tree.position.y = _constants.HEIGHT - tree.height;
+
+	  cloud.position.x -= 0.2;
+	  if (cloud.position.x + cloud.width < 0) {
+	    cloud.position.x = _constants.WIDTH;
+	  }
+
+	  cloud2.position.x -= 0.1;
+	  if (cloud2.position.x + cloud2.width < 0) {
+	    cloud2.position.x = _constants.WIDTH;
+	  }
+	}
+
+/***/ },
+/* 134 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var WIDTH = 800;
+	exports.WIDTH = WIDTH;
+	var HEIGHT = 600;
+
+	exports.HEIGHT = HEIGHT;
+	var CHAR_COLOR = 0x4731FF;
+	exports.CHAR_COLOR = CHAR_COLOR;
+	var SPRING = -25;
+	exports.SPRING = SPRING;
+	var GRAVITY = 1.5;
+	exports.GRAVITY = GRAVITY;
+	var ACCEL = 1;
+	exports.ACCEL = ACCEL;
+	var MAX_SPEED = 8;
+
+	exports.MAX_SPEED = MAX_SPEED;
+	var OBS_COLOR = 0x774320;
+	exports.OBS_COLOR = OBS_COLOR;
+
+/***/ },
+/* 135 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.update = update;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _pixiJs = __webpack_require__(1);
+
+	var _pixiJs2 = _interopRequireDefault(_pixiJs);
+
+	var _constants = __webpack_require__(134);
+
+	var tree = new _pixiJs2['default'].Sprite.fromImage('img/tree02.svg');
+	tree.position.x = 350;
+
+	var container = new _pixiJs2['default'].Container();
+	exports.container = container;
+	container.addChild(tree);
+
+	function update() {
+	  tree.position.y = _constants.HEIGHT - tree.height;
+	}
+
+/***/ },
+/* 136 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.update = update;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _pixiJs = __webpack_require__(1);
+
+	var _pixiJs2 = _interopRequireDefault(_pixiJs);
+
+	var _lodash = __webpack_require__(137);
+
+	var _input = __webpack_require__(138);
+
+	var _constants = __webpack_require__(134);
+
+	function createCharacter() {
+	  var char = new _pixiJs2['default'].Graphics();
+	  char.lineStyle(5, _constants.CHAR_COLOR, 1);
+	  char.beginFill(null, 0);
+	  char.moveTo(0, 125);
+	  char.lineTo(25, 75);
+	  char.moveTo(50, 125);
+	  char.lineTo(25, 75);
+	  char.moveTo(25, 75);
+	  char.lineTo(25, 25);
+	  char.moveTo(0, 50);
+	  char.lineTo(50, 50);
+	  char.endFill();
+	  char.beginFill(_constants.CHAR_COLOR);
+	  char.drawRect(10, 5, 30, 30);
+	  char.endFill();
+	  return char;
+	}
+
+	var char = createCharacter();
+	char.position.x = _constants.WIDTH - 50 - 200;
+	char.position.y = _constants.HEIGHT - 125;
+	var container = char;
+
+	exports.container = container;
+	var dy = 0;
+	var dx = 0;
+	var onGround = true;
+
+	function update(obstacles) {
+	  // UPDATE X
+	  var oldX = char.position.x;
+	  if (_input.keyMap[_input.LEFT]) {
+	    dx -= _constants.ACCEL;
+	    dx = Math.max(dx, -_constants.MAX_SPEED);
+	  } else if (_input.keyMap[_input.RIGHT]) {
+	    dx += _constants.ACCEL;
+	    dx = Math.min(dx, _constants.MAX_SPEED);
+	  } else {
+	    if (dx > 0) {
+	      dx -= _constants.ACCEL;
+	      dx = Math.max(0, dx);
+	    } else if (dx < 0) {
+	      dx += _constants.ACCEL;
+	      dx = Math.min(0, dx);
+	    }
+	  }
+	  char.position.x += dx;
+	  if (char.position.x < 0) {
+	    char.position.x = 0;
+	  }
+	  if (char.position.x > _constants.WIDTH - 50) {
+	    char.position.x = _constants.WIDTH - 50;
+	  }
+	  // if character collides, x wise, go back to old x
+	  var collidesX = (0, _lodash.any)(obstacles, function (obs) {
+	    return doesCollide(char, obs);
+	  });
+	  if (collidesX) {
+	    char.position.x = oldX;
+	  }
+	  // UPDATE Y
+	  var oldY = char.position.y;
+	  if (_input.keyMap[_input.UP]) {
+	    if (onGround) {
+	      dy = _constants.SPRING;
+	    }
+	  }
+	  onGround = false;
+	  dy += _constants.GRAVITY;
+	  char.position.y += dy;
+	  if (char.position.y > _constants.HEIGHT - 125) {
+	    char.position.y = _constants.HEIGHT - 125;
+	    dy = 0;
+	    onGround = true;
+	  }
+	  // if character collides, y wise, go back to old y
+	  var collidesY = (0, _lodash.any)(obstacles, function (obs) {
+	    return doesCollide(char, obs);
+	  });
+	  if (collidesY) {
+	    char.position.y = oldY;
+	    if (dy > 0) {
+	      onGround = true;
+	    }
+	    dy = 0;
+	  }
+	}
+
+	function doesCollide(obj1, obj2) {
+	  return obj1.x + obj1.width > obj2.x && obj1.x < obj2.x + obj2.width && (obj1.y + obj1.height > obj2.y && obj1.y < obj2.y + obj2.height);
+	}
+
+/***/ },
+/* 137 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
 	 * @license
 	 * lodash 3.10.0 (Custom Build) <https://lodash.com/>
@@ -39622,6 +39739,81 @@
 	}.call(this));
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(115)(module), (function() { return this; }())))
+
+/***/ },
+/* 138 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	var LEFT = 37;
+	exports.LEFT = LEFT;
+	var UP = 38;
+	exports.UP = UP;
+	var RIGHT = 39;
+	exports.RIGHT = RIGHT;
+	var DOWN = 40;
+	exports.DOWN = DOWN;
+	var SPACE = 32;exports.SPACE = SPACE;
+	// I think?
+
+	var keyMap = [];
+
+	exports.keyMap = keyMap;
+	document.addEventListener('keydown', function (e) {
+	  keyMap[e.keyCode] = true;
+	});
+
+	document.addEventListener('keyup', function (e) {
+	  keyMap[e.keyCode] = false;
+	});
+
+/***/ },
+/* 139 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.update = update;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _pixiJs = __webpack_require__(1);
+
+	var _pixiJs2 = _interopRequireDefault(_pixiJs);
+
+	var _constants = __webpack_require__(134);
+
+	function createObstacle(w, h, x, y) {
+	  var obs = new _pixiJs2['default'].Graphics();
+	  obs.beginFill(_constants.OBS_COLOR);
+	  obs.drawRect(0, 0, w, h);
+	  obs.endFill();
+	  obs.position.x = x;
+	  obs.position.y = y;
+	  return obs;
+	}
+
+	var obs1 = createObstacle(300, 20, 300, 280);
+	var obs2 = createObstacle(300, 20, 100, 450);
+	var obs3 = createObstacle(150, 150, _constants.WIDTH - 150, _constants.HEIGHT - 150);
+
+	var container = new _pixiJs2['default'].Container();
+	exports.container = container;
+	container.addChild(obs1);
+	container.addChild(obs2);
+	container.addChild(obs3);
+
+	function update() {}
+
+	var obstacles = [obs1, obs2, obs3];
+	exports.obstacles = obstacles;
 
 /***/ }
 /******/ ]);
