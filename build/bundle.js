@@ -54,11 +54,11 @@
 
 	var _pixiJs2 = _interopRequireDefault(_pixiJs);
 
-	var _music = __webpack_require__(135);
+	var _music = __webpack_require__(134);
 
 	var music = _interopRequireWildcard(_music);
 
-	var _background = __webpack_require__(137);
+	var _background = __webpack_require__(136);
 
 	var bg = _interopRequireWildcard(_background);
 
@@ -66,11 +66,11 @@
 
 	var fg = _interopRequireWildcard(_foreground);
 
-	var _character = __webpack_require__(138);
+	var _character = __webpack_require__(137);
 
 	var char = _interopRequireWildcard(_character);
 
-	var _obstacles = __webpack_require__(141);
+	var _obstacles = __webpack_require__(140);
 
 	var obstacles = _interopRequireWildcard(_obstacles);
 
@@ -122,7 +122,7 @@
 
 	var _pixiJs2 = _interopRequireDefault(_pixiJs);
 
-	var _constants = __webpack_require__(134);
+	var _constants = __webpack_require__(133);
 
 	var tree = new _pixiJs2['default'].Sprite.fromImage('img/tree02.svg');
 	tree.position.x = 350;
@@ -140,16 +140,16 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// run the polyfills
-	__webpack_require__(70);
+	__webpack_require__(69);
 
 	var core = module.exports = __webpack_require__(5);
 
 	// add core plugins.
-	core.extras         = __webpack_require__(74);
-	core.filters        = __webpack_require__(81);
+	core.extras         = __webpack_require__(73);
+	core.filters        = __webpack_require__(80);
 	core.interaction    = __webpack_require__(3);
-	core.loaders        = __webpack_require__(110);
-	core.mesh           = __webpack_require__(128);
+	core.loaders        = __webpack_require__(109);
+	core.mesh           = __webpack_require__(127);
 
 	// export a premade loader instance
 	/**
@@ -162,7 +162,7 @@
 	core.loader = new core.loaders.Loader();
 
 	// mixin the deprecation features.
-	Object.assign(core, __webpack_require__(133));
+	Object.assign(core, __webpack_require__(132));
 
 	// Always export pixi globally.
 	global.PIXI = core;
@@ -185,8 +185,8 @@
 	 */
 	module.exports = {
 	    InteractionData:    __webpack_require__(4),
-	    InteractionManager: __webpack_require__(68),
-	    interactiveTarget:  __webpack_require__(69)
+	    InteractionManager: __webpack_require__(67),
+	    interactiveTarget:  __webpack_require__(68)
 	};
 
 
@@ -285,15 +285,15 @@
 	    Sprite:                 __webpack_require__(37),
 	    ParticleContainer:      __webpack_require__(39),
 	    SpriteRenderer:         __webpack_require__(40),
-	    ParticleRenderer:       __webpack_require__(56),
+	    ParticleRenderer:       __webpack_require__(55),
 
 	    // text
-	    Text:                   __webpack_require__(59),
+	    Text:                   __webpack_require__(58),
 
 	    // primitives
-	    Graphics:               __webpack_require__(60),
-	    GraphicsData:           __webpack_require__(62),
-	    GraphicsRenderer:       __webpack_require__(63),
+	    Graphics:               __webpack_require__(59),
+	    GraphicsData:           __webpack_require__(61),
+	    GraphicsRenderer:       __webpack_require__(62),
 
 	    // textures
 	    Texture:                __webpack_require__(27),
@@ -303,8 +303,8 @@
 	    TextureUvs:             __webpack_require__(29),
 
 	    // renderers - canvas
-	    CanvasRenderer:         __webpack_require__(66),
-	    CanvasGraphics:         __webpack_require__(61),
+	    CanvasRenderer:         __webpack_require__(65),
+	    CanvasGraphics:         __webpack_require__(60),
 	    CanvasBuffer:           __webpack_require__(35),
 
 	    // renderers - webgl
@@ -316,7 +316,7 @@
 
 	    // filters - webgl
 	    AbstractFilter:         __webpack_require__(51),
-	    FXAAFilter:             __webpack_require__(55),
+	    FXAAFilter:             __webpack_require__(54),
 	    SpriteMaskFilter:       __webpack_require__(50),
 
 	    /**
@@ -9424,12 +9424,12 @@
 	var SystemRenderer = __webpack_require__(43),
 	    ShaderManager = __webpack_require__(44),
 	    MaskManager = __webpack_require__(49),
-	    StencilManager = __webpack_require__(53),
+	    StencilManager = __webpack_require__(52),
 	    FilterManager = __webpack_require__(32),
-	    BlendModeManager = __webpack_require__(54),
+	    BlendModeManager = __webpack_require__(53),
 	    RenderTarget = __webpack_require__(30),
 	    ObjectRenderer = __webpack_require__(41),
-	    FXAAFilter = __webpack_require__(55),
+	    FXAAFilter = __webpack_require__(54),
 	    utils = __webpack_require__(7),
 	    CONST = __webpack_require__(8);
 
@@ -11297,11 +11297,11 @@
 /* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var AbstractFilter = __webpack_require__(51),
+	var AbstractFilter = __webpack_require__(51),
 	    math =  __webpack_require__(15);
 
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * The SpriteMaskFilter class
@@ -11316,8 +11316,8 @@
 	    var maskMatrix = new math.Matrix();
 
 	    AbstractFilter.call(this,
-	        fs.readFileSync(__dirname + '/spriteMaskFilter.vert', 'utf8'),
-	        fs.readFileSync(__dirname + '/spriteMaskFilter.frag', 'utf8'),
+	        "attribute vec2 aVertexPosition;\nattribute vec2 aTextureCoord;\nattribute vec4 aColor;\n\nuniform mat3 projectionMatrix;\nuniform mat3 otherMatrix;\n\nvarying vec2 vMaskCoord;\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\n\nvoid main(void)\n{\n    gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);\n    vTextureCoord = aTextureCoord;\n    vMaskCoord = ( otherMatrix * vec3( aTextureCoord, 1.0)  ).xy;\n    vColor = vec4(aColor.rgb * aColor.a, aColor.a);\n}\n",
+	        "precision lowp float;\n\nvarying vec2 vMaskCoord;\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\n\nuniform sampler2D uSampler;\nuniform float alpha;\nuniform sampler2D mask;\n\nvoid main(void)\n{\n    // check clip! this will stop the mask bleeding out from the edges\n    vec2 text = abs( vMaskCoord - 0.5 );\n    text = step(0.5, text);\n    float clip = 1.0 - max(text.y, text.x);\n    vec4 original = texture2D(uSampler, vTextureCoord);\n    vec4 masky = texture2D(mask, vMaskCoord);\n    original *= (masky.r * masky.a * alpha * clip);\n    gl_FragColor = original;\n}\n",
 	        {
 	            mask:           { type: 'sampler2D', value: sprite._texture },
 	            alpha:          { type: 'f', value: 1},
@@ -11393,7 +11393,6 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
 /* 51 */
@@ -11519,12 +11518,6 @@
 
 /***/ },
 /* 52 */
-/***/ function(module, exports) {
-
-	
-
-/***/ },
-/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var WebGLManager = __webpack_require__(33),
@@ -11872,7 +11865,7 @@
 
 
 /***/ },
-/* 54 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var WebGLManager = __webpack_require__(33);
@@ -11919,12 +11912,12 @@
 
 
 /***/ },
-/* 55 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var AbstractFilter = __webpack_require__(51);
+	var AbstractFilter = __webpack_require__(51);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 *
@@ -11945,9 +11938,9 @@
 	{
 	    AbstractFilter.call(this,
 	        // vertex shader
-	        fs.readFileSync(__dirname + '/FXAA.vert', 'utf8'),
+	        "\nprecision mediump float;\n\nattribute vec2 aVertexPosition;\nattribute vec2 aTextureCoord;\nattribute vec4 aColor;\n\nuniform mat3 projectionMatrix;\nuniform vec2 resolution;\n\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\n\nvarying vec2 vResolution;\n\n//texcoords computed in vertex step\n//to avoid dependent texture reads\nvarying vec2 v_rgbNW;\nvarying vec2 v_rgbNE;\nvarying vec2 v_rgbSW;\nvarying vec2 v_rgbSE;\nvarying vec2 v_rgbM;\n\n\nvoid texcoords(vec2 fragCoord, vec2 resolution,\n            out vec2 v_rgbNW, out vec2 v_rgbNE,\n            out vec2 v_rgbSW, out vec2 v_rgbSE,\n            out vec2 v_rgbM) {\n    vec2 inverseVP = 1.0 / resolution.xy;\n    v_rgbNW = (fragCoord + vec2(-1.0, -1.0)) * inverseVP;\n    v_rgbNE = (fragCoord + vec2(1.0, -1.0)) * inverseVP;\n    v_rgbSW = (fragCoord + vec2(-1.0, 1.0)) * inverseVP;\n    v_rgbSE = (fragCoord + vec2(1.0, 1.0)) * inverseVP;\n    v_rgbM = vec2(fragCoord * inverseVP);\n}\n\nvoid main(void){\n   gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);\n   vTextureCoord = aTextureCoord;\n   vColor = vec4(aColor.rgb * aColor.a, aColor.a);\n   vResolution = resolution;\n\n   //compute the texture coords and send them to varyings\n   texcoords(aTextureCoord * resolution, resolution, v_rgbNW, v_rgbNE, v_rgbSW, v_rgbSE, v_rgbM);\n}\n",
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/FXAA.frag', 'utf8'),
+	        "precision lowp float;\n\n\n/**\nBasic FXAA implementation based on the code on geeks3d.com with the\nmodification that the texture2DLod stuff was removed since it's\nunsupported by WebGL.\n\n--\n\nFrom:\nhttps://github.com/mitsuhiko/webgl-meincraft\n\nCopyright (c) 2011 by Armin Ronacher.\n\nSome rights reserved.\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions are\nmet:\n\n    * Redistributions of source code must retain the above copyright\n      notice, this list of conditions and the following disclaimer.\n\n    * Redistributions in binary form must reproduce the above\n      copyright notice, this list of conditions and the following\n      disclaimer in the documentation and/or other materials provided\n      with the distribution.\n\n    * The names of the contributors may not be used to endorse or\n      promote products derived from this software without specific\n      prior written permission.\n\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\n\"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\nLIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR\nA PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT\nOWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,\nSPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT\nLIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,\nDATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY\nTHEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\nOF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n*/\n\n#ifndef FXAA_REDUCE_MIN\n    #define FXAA_REDUCE_MIN   (1.0/ 128.0)\n#endif\n#ifndef FXAA_REDUCE_MUL\n    #define FXAA_REDUCE_MUL   (1.0 / 8.0)\n#endif\n#ifndef FXAA_SPAN_MAX\n    #define FXAA_SPAN_MAX     8.0\n#endif\n\n//optimized version for mobile, where dependent\n//texture reads can be a bottleneck\nvec4 fxaa(sampler2D tex, vec2 fragCoord, vec2 resolution,\n            vec2 v_rgbNW, vec2 v_rgbNE,\n            vec2 v_rgbSW, vec2 v_rgbSE,\n            vec2 v_rgbM) {\n    vec4 color;\n    mediump vec2 inverseVP = vec2(1.0 / resolution.x, 1.0 / resolution.y);\n    vec3 rgbNW = texture2D(tex, v_rgbNW).xyz;\n    vec3 rgbNE = texture2D(tex, v_rgbNE).xyz;\n    vec3 rgbSW = texture2D(tex, v_rgbSW).xyz;\n    vec3 rgbSE = texture2D(tex, v_rgbSE).xyz;\n    vec4 texColor = texture2D(tex, v_rgbM);\n    vec3 rgbM  = texColor.xyz;\n    vec3 luma = vec3(0.299, 0.587, 0.114);\n    float lumaNW = dot(rgbNW, luma);\n    float lumaNE = dot(rgbNE, luma);\n    float lumaSW = dot(rgbSW, luma);\n    float lumaSE = dot(rgbSE, luma);\n    float lumaM  = dot(rgbM,  luma);\n    float lumaMin = min(lumaM, min(min(lumaNW, lumaNE), min(lumaSW, lumaSE)));\n    float lumaMax = max(lumaM, max(max(lumaNW, lumaNE), max(lumaSW, lumaSE)));\n\n    mediump vec2 dir;\n    dir.x = -((lumaNW + lumaNE) - (lumaSW + lumaSE));\n    dir.y =  ((lumaNW + lumaSW) - (lumaNE + lumaSE));\n\n    float dirReduce = max((lumaNW + lumaNE + lumaSW + lumaSE) *\n                          (0.25 * FXAA_REDUCE_MUL), FXAA_REDUCE_MIN);\n\n    float rcpDirMin = 1.0 / (min(abs(dir.x), abs(dir.y)) + dirReduce);\n    dir = min(vec2(FXAA_SPAN_MAX, FXAA_SPAN_MAX),\n              max(vec2(-FXAA_SPAN_MAX, -FXAA_SPAN_MAX),\n              dir * rcpDirMin)) * inverseVP;\n\n    vec3 rgbA = 0.5 * (\n        texture2D(tex, fragCoord * inverseVP + dir * (1.0 / 3.0 - 0.5)).xyz +\n        texture2D(tex, fragCoord * inverseVP + dir * (2.0 / 3.0 - 0.5)).xyz);\n    vec3 rgbB = rgbA * 0.5 + 0.25 * (\n        texture2D(tex, fragCoord * inverseVP + dir * -0.5).xyz +\n        texture2D(tex, fragCoord * inverseVP + dir * 0.5).xyz);\n\n    float lumaB = dot(rgbB, luma);\n    if ((lumaB < lumaMin) || (lumaB > lumaMax))\n        color = vec4(rgbA, texColor.a);\n    else\n        color = vec4(rgbB, texColor.a);\n    return color;\n}\n\n\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\nvarying vec2 vResolution;\n\n//texcoords computed in vertex step\n//to avoid dependent texture reads\nvarying vec2 v_rgbNW;\nvarying vec2 v_rgbNE;\nvarying vec2 v_rgbSW;\nvarying vec2 v_rgbSE;\nvarying vec2 v_rgbM;\n\nuniform sampler2D uSampler;\n\n\nvoid main(void){\n\n    gl_FragColor = fxaa(uSampler, vTextureCoord * vResolution, vResolution, v_rgbNW, v_rgbNE, v_rgbSW, v_rgbSE, v_rgbM);\n\n}\n",
 	        // uniforms
 	        {
 	            resolution: { type: 'v2', value: { x: 1, y: 1 } }
@@ -11969,16 +11962,15 @@
 	    filterManager.applyFilter(shader, input, output);
 	};
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 56 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ObjectRenderer = __webpack_require__(41),
 	    WebGLRenderer = __webpack_require__(42),
-	    ParticleShader = __webpack_require__(57),
-	    ParticleBuffer = __webpack_require__(58),
+	    ParticleShader = __webpack_require__(56),
+	    ParticleBuffer = __webpack_require__(57),
 	    math            = __webpack_require__(15);
 
 	/**
@@ -12471,7 +12463,7 @@
 
 
 /***/ },
-/* 57 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var TextureShader = __webpack_require__(45);
@@ -12553,7 +12545,7 @@
 
 
 /***/ },
-/* 58 */
+/* 57 */
 /***/ function(module, exports) {
 
 	
@@ -12770,7 +12762,7 @@
 
 
 /***/ },
-/* 59 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Sprite = __webpack_require__(37),
@@ -13387,14 +13379,14 @@
 
 
 /***/ },
-/* 60 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Container = __webpack_require__(36),
 	    Texture = __webpack_require__(27),
 	    CanvasBuffer = __webpack_require__(35),
-	    CanvasGraphics = __webpack_require__(61),
-	    GraphicsData = __webpack_require__(62),
+	    CanvasGraphics = __webpack_require__(60),
+	    GraphicsData = __webpack_require__(61),
 	    math = __webpack_require__(15),
 	    CONST = __webpack_require__(8),
 	    tempPoint = new math.Point();
@@ -14573,7 +14565,7 @@
 
 
 /***/ },
-/* 61 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var CONST = __webpack_require__(8);
@@ -14930,7 +14922,7 @@
 
 
 /***/ },
-/* 62 */
+/* 61 */
 /***/ function(module, exports) {
 
 	/**
@@ -15024,7 +15016,7 @@
 
 
 /***/ },
-/* 63 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var utils = __webpack_require__(7),
@@ -15032,8 +15024,8 @@
 	    CONST = __webpack_require__(8),
 	    ObjectRenderer = __webpack_require__(41),
 	    WebGLRenderer = __webpack_require__(42),
-	    WebGLGraphicsData = __webpack_require__(64),
-	    earcut = __webpack_require__(65);
+	    WebGLGraphicsData = __webpack_require__(63),
+	    earcut = __webpack_require__(64);
 
 	/**
 	 * Renders the graphics object.
@@ -15932,7 +15924,7 @@
 
 
 /***/ },
-/* 64 */
+/* 63 */
 /***/ function(module, exports) {
 
 	/**
@@ -16054,7 +16046,7 @@
 
 
 /***/ },
-/* 65 */
+/* 64 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -16723,11 +16715,11 @@
 
 
 /***/ },
-/* 66 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var SystemRenderer = __webpack_require__(43),
-	    CanvasMaskManager = __webpack_require__(67),
+	    CanvasMaskManager = __webpack_require__(66),
 	    utils = __webpack_require__(7),
 	    math = __webpack_require__(15),
 	    CONST = __webpack_require__(8);
@@ -17012,10 +17004,10 @@
 
 
 /***/ },
-/* 67 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var CanvasGraphics = __webpack_require__(61);
+	var CanvasGraphics = __webpack_require__(60);
 
 	/**
 	 * A set of functions used to handle masking.
@@ -17078,7 +17070,7 @@
 
 
 /***/ },
-/* 68 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(5),
@@ -17087,7 +17079,7 @@
 	// Mix interactiveTarget into core.DisplayObject.prototype
 	Object.assign(
 	    core.DisplayObject.prototype,
-	    __webpack_require__(69)
+	    __webpack_require__(68)
 	);
 
 	/**
@@ -17933,7 +17925,7 @@
 
 
 /***/ },
-/* 69 */
+/* 68 */
 /***/ function(module, exports) {
 
 	/**
@@ -17986,15 +17978,15 @@
 
 
 /***/ },
-/* 70 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(71);
-	__webpack_require__(73);
+	__webpack_require__(70);
+	__webpack_require__(72);
 
 
 /***/ },
-/* 71 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// References:
@@ -18003,12 +17995,12 @@
 
 	if (!Object.assign)
 	{
-	    Object.assign = __webpack_require__(72);
+	    Object.assign = __webpack_require__(71);
 	}
 
 
 /***/ },
-/* 72 */
+/* 71 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -18040,7 +18032,7 @@
 
 
 /***/ },
-/* 73 */
+/* 72 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// References:
@@ -18113,7 +18105,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 74 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -18123,22 +18115,22 @@
 	 * @license     {@link https://github.com/GoodBoyDigital/pixi.js/blob/master/LICENSE|MIT License}
 	 */
 
+	__webpack_require__(75);
 	__webpack_require__(76);
 	__webpack_require__(77);
-	__webpack_require__(78);
 
 	/**
 	 * @namespace PIXI.extras
 	 */
 	module.exports = {
-	    MovieClip:      __webpack_require__(75),
-	    TilingSprite:   __webpack_require__(79),
-	    BitmapText:     __webpack_require__(80)
+	    MovieClip:      __webpack_require__(74),
+	    TilingSprite:   __webpack_require__(78),
+	    BitmapText:     __webpack_require__(79)
 	};
 
 
 /***/ },
-/* 75 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(5);
@@ -18418,7 +18410,7 @@
 
 
 /***/ },
-/* 76 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(5),
@@ -18694,7 +18686,7 @@
 
 
 /***/ },
-/* 77 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(5);
@@ -18726,7 +18718,7 @@
 
 
 /***/ },
-/* 78 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(5);
@@ -18759,7 +18751,7 @@
 
 
 /***/ },
-/* 79 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(5),
@@ -19200,7 +19192,7 @@
 
 
 /***/ },
-/* 80 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(5);
@@ -19583,7 +19575,7 @@
 
 
 /***/ },
-/* 81 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19597,42 +19589,42 @@
 	 * @namespace PIXI.filters
 	 */
 	module.exports = {
-	    AsciiFilter:        __webpack_require__(85),
-	    BloomFilter:        __webpack_require__(86),
-	    BlurFilter:         __webpack_require__(88),
-	    BlurXFilter:        __webpack_require__(83),
-	    BlurYFilter:        __webpack_require__(87),
-	    BlurDirFilter:      __webpack_require__(89),
-	    ColorMatrixFilter:  __webpack_require__(90),
-	    ColorStepFilter:    __webpack_require__(91),
-	    ConvolutionFilter:  __webpack_require__(92),
-	    CrossHatchFilter:   __webpack_require__(93),
-	    DisplacementFilter: __webpack_require__(94),
-	    DotScreenFilter:    __webpack_require__(95),
-	    GrayFilter:         __webpack_require__(96),
-	    DropShadowFilter:   __webpack_require__(82),
-	    InvertFilter:       __webpack_require__(97),
-	    NoiseFilter:        __webpack_require__(98),
-	    NormalMapFilter:    __webpack_require__(99),
-	    PixelateFilter:     __webpack_require__(100),
-	    RGBSplitFilter:     __webpack_require__(101),
-	    ShockwaveFilter:    __webpack_require__(102),
-	    SepiaFilter:        __webpack_require__(103),
-	    SmartBlurFilter:    __webpack_require__(104),
-	    TiltShiftFilter:    __webpack_require__(105),
-	    TiltShiftXFilter:   __webpack_require__(106),
-	    TiltShiftYFilter:   __webpack_require__(108),
-	    TwistFilter:        __webpack_require__(109)
+	    AsciiFilter:        __webpack_require__(84),
+	    BloomFilter:        __webpack_require__(85),
+	    BlurFilter:         __webpack_require__(87),
+	    BlurXFilter:        __webpack_require__(82),
+	    BlurYFilter:        __webpack_require__(86),
+	    BlurDirFilter:      __webpack_require__(88),
+	    ColorMatrixFilter:  __webpack_require__(89),
+	    ColorStepFilter:    __webpack_require__(90),
+	    ConvolutionFilter:  __webpack_require__(91),
+	    CrossHatchFilter:   __webpack_require__(92),
+	    DisplacementFilter: __webpack_require__(93),
+	    DotScreenFilter:    __webpack_require__(94),
+	    GrayFilter:         __webpack_require__(95),
+	    DropShadowFilter:   __webpack_require__(81),
+	    InvertFilter:       __webpack_require__(96),
+	    NoiseFilter:        __webpack_require__(97),
+	    NormalMapFilter:    __webpack_require__(98),
+	    PixelateFilter:     __webpack_require__(99),
+	    RGBSplitFilter:     __webpack_require__(100),
+	    ShockwaveFilter:    __webpack_require__(101),
+	    SepiaFilter:        __webpack_require__(102),
+	    SmartBlurFilter:    __webpack_require__(103),
+	    TiltShiftFilter:    __webpack_require__(104),
+	    TiltShiftXFilter:   __webpack_require__(105),
+	    TiltShiftYFilter:   __webpack_require__(107),
+	    TwistFilter:        __webpack_require__(108)
 	};
 
 
 /***/ },
-/* 82 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(5),
-	    BlurXFilter = __webpack_require__(83),
-	    BlurYTintFilter = __webpack_require__(84);
+	    BlurXFilter = __webpack_require__(82),
+	    BlurYTintFilter = __webpack_require__(83);
 
 	/**
 	 * The DropShadowFilter applies a Gaussian blur to an object.
@@ -19800,12 +19792,12 @@
 
 
 /***/ },
-/* 83 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * The BlurXFilter applies a horizontal Gaussian blur to an object.
@@ -19818,9 +19810,9 @@
 	{
 	    core.AbstractFilter.call(this,
 	        // vertex shader
-	        fs.readFileSync(__dirname + '/blurX.vert', 'utf8'),
+	        "attribute vec2 aVertexPosition;\nattribute vec2 aTextureCoord;\nattribute vec4 aColor;\n\nuniform float strength;\nuniform mat3 projectionMatrix;\n\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\nvarying vec2 vBlurTexCoords[6];\n\nvoid main(void)\n{\n    gl_Position = vec4((projectionMatrix * vec3((aVertexPosition), 1.0)).xy, 0.0, 1.0);\n    vTextureCoord = aTextureCoord;\n\n    vBlurTexCoords[ 0] = aTextureCoord + vec2(-0.012 * strength, 0.0);\n    vBlurTexCoords[ 1] = aTextureCoord + vec2(-0.008 * strength, 0.0);\n    vBlurTexCoords[ 2] = aTextureCoord + vec2(-0.004 * strength, 0.0);\n    vBlurTexCoords[ 3] = aTextureCoord + vec2( 0.004 * strength, 0.0);\n    vBlurTexCoords[ 4] = aTextureCoord + vec2( 0.008 * strength, 0.0);\n    vBlurTexCoords[ 5] = aTextureCoord + vec2( 0.012 * strength, 0.0);\n\n    vColor = vec4(aColor.rgb * aColor.a, aColor.a);\n}\n",
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/blur.frag', 'utf8'),
+	        "precision lowp float;\n\nvarying vec2 vTextureCoord;\nvarying vec2 vBlurTexCoords[6];\nvarying vec4 vColor;\n\nuniform sampler2D uSampler;\n\nvoid main(void)\n{\n    gl_FragColor = vec4(0.0);\n\n    gl_FragColor += texture2D(uSampler, vBlurTexCoords[ 0])*0.004431848411938341;\n    gl_FragColor += texture2D(uSampler, vBlurTexCoords[ 1])*0.05399096651318985;\n    gl_FragColor += texture2D(uSampler, vBlurTexCoords[ 2])*0.2419707245191454;\n    gl_FragColor += texture2D(uSampler, vTextureCoord     )*0.3989422804014327;\n    gl_FragColor += texture2D(uSampler, vBlurTexCoords[ 3])*0.2419707245191454;\n    gl_FragColor += texture2D(uSampler, vBlurTexCoords[ 4])*0.05399096651318985;\n    gl_FragColor += texture2D(uSampler, vBlurTexCoords[ 5])*0.004431848411938341;\n}\n",
 	        // set the uniforms
 	        {
 	            strength: { type: '1f', value: 1 }
@@ -19896,16 +19888,15 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 84 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * The BlurYTintFilter applies a vertical Gaussian blur to an object.
@@ -19918,9 +19909,9 @@
 	{
 	    core.AbstractFilter.call(this,
 	        // vertex shader
-	        fs.readFileSync(__dirname + '/blurYTint.vert', 'utf8'),
+	        "attribute vec2 aVertexPosition;\nattribute vec2 aTextureCoord;\nattribute vec4 aColor;\n\nuniform float strength;\nuniform vec2 offset;\n\nuniform mat3 projectionMatrix;\n\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\nvarying vec2 vBlurTexCoords[6];\n\nvoid main(void)\n{\n    gl_Position = vec4((projectionMatrix * vec3((aVertexPosition+offset), 1.0)).xy, 0.0, 1.0);\n    vTextureCoord = aTextureCoord;\n\n    vBlurTexCoords[ 0] = aTextureCoord + vec2(0.0, -0.012 * strength);\n    vBlurTexCoords[ 1] = aTextureCoord + vec2(0.0, -0.008 * strength);\n    vBlurTexCoords[ 2] = aTextureCoord + vec2(0.0, -0.004 * strength);\n    vBlurTexCoords[ 3] = aTextureCoord + vec2(0.0,  0.004 * strength);\n    vBlurTexCoords[ 4] = aTextureCoord + vec2(0.0,  0.008 * strength);\n    vBlurTexCoords[ 5] = aTextureCoord + vec2(0.0,  0.012 * strength);\n\n   vColor = vec4(aColor.rgb * aColor.a, aColor.a);\n}\n",
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/blurYTint.frag', 'utf8'),
+	        "precision lowp float;\n\nvarying vec2 vTextureCoord;\nvarying vec2 vBlurTexCoords[6];\nvarying vec4 vColor;\n\nuniform vec3 color;\nuniform float alpha;\n\nuniform sampler2D uSampler;\n\nvoid main(void)\n{\n    vec4 sum = vec4(0.0);\n\n    sum += texture2D(uSampler, vBlurTexCoords[ 0])*0.004431848411938341;\n    sum += texture2D(uSampler, vBlurTexCoords[ 1])*0.05399096651318985;\n    sum += texture2D(uSampler, vBlurTexCoords[ 2])*0.2419707245191454;\n    sum += texture2D(uSampler, vTextureCoord     )*0.3989422804014327;\n    sum += texture2D(uSampler, vBlurTexCoords[ 3])*0.2419707245191454;\n    sum += texture2D(uSampler, vBlurTexCoords[ 4])*0.05399096651318985;\n    sum += texture2D(uSampler, vBlurTexCoords[ 5])*0.004431848411938341;\n\n    gl_FragColor = vec4( color.rgb * sum.a * alpha, sum.a * alpha );\n}\n",
 	        // set the uniforms
 	        {
 	            blur: { type: '1f', value: 1 / 512 },
@@ -19992,15 +19983,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 85 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	// TODO (cengler) - The Y is flipped in this shader for some reason.
 
@@ -20022,7 +20012,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/ascii.frag', 'utf8'),
+	        "precision mediump float;\n\nuniform vec4 dimensions;\nuniform float pixelSize;\nuniform sampler2D uSampler;\n\nfloat character(float n, vec2 p)\n{\n    p = floor(p*vec2(4.0, -4.0) + 2.5);\n    if (clamp(p.x, 0.0, 4.0) == p.x && clamp(p.y, 0.0, 4.0) == p.y)\n    {\n        if (int(mod(n/exp2(p.x + 5.0*p.y), 2.0)) == 1) return 1.0;\n    }\n    return 0.0;\n}\n\nvoid main()\n{\n    vec2 uv = gl_FragCoord.xy;\n\n    vec3 col = texture2D(uSampler, floor( uv / pixelSize ) * pixelSize / dimensions.xy).rgb;\n\n    float gray = (col.r + col.g + col.b) / 3.0;\n\n    float n =  65536.0;             // .\n    if (gray > 0.2) n = 65600.0;    // :\n    if (gray > 0.3) n = 332772.0;   // *\n    if (gray > 0.4) n = 15255086.0; // o\n    if (gray > 0.5) n = 23385164.0; // &\n    if (gray > 0.6) n = 15252014.0; // 8\n    if (gray > 0.7) n = 13199452.0; // @\n    if (gray > 0.8) n = 11512810.0; // #\n\n    vec2 p = mod( uv / ( pixelSize * 0.5 ), 2.0) - vec2(1.0);\n    col = col * character(n, p);\n\n    gl_FragColor = vec4(col, 1.0);\n}\n",
 	        // custom uniforms
 	        {
 	            dimensions: { type: '4fv', value: new Float32Array([0, 0, 0, 0]) },
@@ -20054,15 +20044,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 86 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(5),
-	    BlurXFilter = __webpack_require__(83),
-	    BlurYFilter = __webpack_require__(87);
+	    BlurXFilter = __webpack_require__(82),
+	    BlurYFilter = __webpack_require__(86);
 
 	/**
 	 * The BloomFilter applies a Gaussian blur to an object.
@@ -20162,12 +20151,12 @@
 
 
 /***/ },
-/* 87 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * The BlurYFilter applies a horizontal Gaussian blur to an object.
@@ -20180,9 +20169,9 @@
 	{
 	    core.AbstractFilter.call(this,
 	        // vertex shader
-	        fs.readFileSync(__dirname + '/blurY.vert', 'utf8'),
+	        "attribute vec2 aVertexPosition;\nattribute vec2 aTextureCoord;\nattribute vec4 aColor;\n\nuniform float strength;\nuniform mat3 projectionMatrix;\n\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\nvarying vec2 vBlurTexCoords[6];\n\nvoid main(void)\n{\n    gl_Position = vec4((projectionMatrix * vec3((aVertexPosition), 1.0)).xy, 0.0, 1.0);\n    vTextureCoord = aTextureCoord;\n\n    vBlurTexCoords[ 0] = aTextureCoord + vec2(0.0, -0.012 * strength);\n    vBlurTexCoords[ 1] = aTextureCoord + vec2(0.0, -0.008 * strength);\n    vBlurTexCoords[ 2] = aTextureCoord + vec2(0.0, -0.004 * strength);\n    vBlurTexCoords[ 3] = aTextureCoord + vec2(0.0,  0.004 * strength);\n    vBlurTexCoords[ 4] = aTextureCoord + vec2(0.0,  0.008 * strength);\n    vBlurTexCoords[ 5] = aTextureCoord + vec2(0.0,  0.012 * strength);\n\n   vColor = vec4(aColor.rgb * aColor.a, aColor.a);\n}\n",
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/blur.frag', 'utf8'),
+	        "precision lowp float;\n\nvarying vec2 vTextureCoord;\nvarying vec2 vBlurTexCoords[6];\nvarying vec4 vColor;\n\nuniform sampler2D uSampler;\n\nvoid main(void)\n{\n    gl_FragColor = vec4(0.0);\n\n    gl_FragColor += texture2D(uSampler, vBlurTexCoords[ 0])*0.004431848411938341;\n    gl_FragColor += texture2D(uSampler, vBlurTexCoords[ 1])*0.05399096651318985;\n    gl_FragColor += texture2D(uSampler, vBlurTexCoords[ 2])*0.2419707245191454;\n    gl_FragColor += texture2D(uSampler, vTextureCoord     )*0.3989422804014327;\n    gl_FragColor += texture2D(uSampler, vBlurTexCoords[ 3])*0.2419707245191454;\n    gl_FragColor += texture2D(uSampler, vBlurTexCoords[ 4])*0.05399096651318985;\n    gl_FragColor += texture2D(uSampler, vBlurTexCoords[ 5])*0.004431848411938341;\n}\n",
 	        // set the uniforms
 	        {
 	            strength: { type: '1f', value: 1 }
@@ -20250,15 +20239,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 88 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(5),
-	    BlurXFilter = __webpack_require__(83),
-	    BlurYFilter = __webpack_require__(87);
+	    BlurXFilter = __webpack_require__(82),
+	    BlurYFilter = __webpack_require__(86);
 
 	/**
 	 * The BlurFilter applies a Gaussian blur to an object.
@@ -20367,11 +20355,11 @@
 
 
 /***/ },
-/* 89 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
-	var fs = __webpack_require__(52);
+	var core = __webpack_require__(5);
+
 
 	/**
 	 * The BlurDirFilter applies a Gaussian blur toward a direction to an object.
@@ -20386,9 +20374,9 @@
 	{
 	    core.AbstractFilter.call(this,
 	        // vertex shader
-	        fs.readFileSync(__dirname + '/blurDir.vert', 'utf8'),
+	        "attribute vec2 aVertexPosition;\nattribute vec2 aTextureCoord;\nattribute vec4 aColor;\n\nuniform float strength;\nuniform float dirX;\nuniform float dirY;\nuniform mat3 projectionMatrix;\n\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\nvarying vec2 vBlurTexCoords[3];\n\nvoid main(void)\n{\n    gl_Position = vec4((projectionMatrix * vec3((aVertexPosition), 1.0)).xy, 0.0, 1.0);\n    vTextureCoord = aTextureCoord;\n\n    vBlurTexCoords[0] = aTextureCoord + vec2( (0.004 * strength) * dirX, (0.004 * strength) * dirY );\n    vBlurTexCoords[1] = aTextureCoord + vec2( (0.008 * strength) * dirX, (0.008 * strength) * dirY );\n    vBlurTexCoords[2] = aTextureCoord + vec2( (0.012 * strength) * dirX, (0.012 * strength) * dirY );\n\n    vColor = vec4(aColor.rgb * aColor.a, aColor.a);\n}\n",
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/blurDir.frag', 'utf8'),
+	        "precision lowp float;\n\nvarying vec2 vTextureCoord;\nvarying vec2 vBlurTexCoords[3];\nvarying vec4 vColor;\n\nuniform sampler2D uSampler;\n\nvoid main(void)\n{\n    gl_FragColor = vec4(0.0);\n\n    gl_FragColor += texture2D(uSampler, vTextureCoord     ) * 0.3989422804014327;\n    gl_FragColor += texture2D(uSampler, vBlurTexCoords[ 0]) * 0.2419707245191454;\n    gl_FragColor += texture2D(uSampler, vBlurTexCoords[ 1]) * 0.05399096651318985;\n    gl_FragColor += texture2D(uSampler, vBlurTexCoords[ 2]) * 0.004431848411938341;\n}\n",
 	        // set the uniforms
 	        {
 	            strength: { type: '1f', value: 1 },
@@ -20514,15 +20502,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 90 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * The ColorMatrixFilter class lets you apply a 5x4 matrix transformation on the RGBA
@@ -20545,7 +20532,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/colorMatrix.frag', 'utf8'),
+	        "precision mediump float;\n\nvarying vec2 vTextureCoord;\nuniform sampler2D uSampler;\nuniform float m[25];\n\nvoid main(void)\n{\n\n    vec4 c = texture2D(uSampler, vTextureCoord);\n\n    gl_FragColor.r = (m[0] * c.r);\n        gl_FragColor.r += (m[1] * c.g);\n        gl_FragColor.r += (m[2] * c.b);\n        gl_FragColor.r += (m[3] * c.a);\n        gl_FragColor.r += m[4];\n\n    gl_FragColor.g = (m[5] * c.r);\n        gl_FragColor.g += (m[6] * c.g);\n        gl_FragColor.g += (m[7] * c.b);\n        gl_FragColor.g += (m[8] * c.a);\n        gl_FragColor.g += m[9];\n\n     gl_FragColor.b = (m[10] * c.r);\n        gl_FragColor.b += (m[11] * c.g);\n        gl_FragColor.b += (m[12] * c.b);\n        gl_FragColor.b += (m[13] * c.a);\n        gl_FragColor.b += m[14];\n\n     gl_FragColor.a = (m[15] * c.r);\n        gl_FragColor.a += (m[16] * c.g);\n        gl_FragColor.a += (m[17] * c.b);\n        gl_FragColor.a += (m[18] * c.a);\n        gl_FragColor.a += m[19];\n\n}\n",
 	        // custom uniforms
 	        {
 	            m: {
@@ -21059,15 +21046,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 91 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * This lowers the color depth of your image by the given amount, producing an image with a smaller palette.
@@ -21082,7 +21068,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/colorStep.frag', 'utf8'),
+	        "precision mediump float;\n\nvarying vec2 vTextureCoord;\n\nuniform sampler2D uSampler;\nuniform float step;\n\nvoid main(void)\n{\n    vec4 color = texture2D(uSampler, vTextureCoord);\n\n    color = floor(color * step) / step;\n\n    gl_FragColor = color;\n}\n",
 	        // custom uniforms
 	        {
 	            step: { type: '1f', value: 5 }
@@ -21113,15 +21099,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 92 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * The ConvolutionFilter class applies a matrix convolution filter effect.
@@ -21143,7 +21128,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/convolution.frag', 'utf8'),
+	        "precision mediump float;\n\nvarying mediump vec2 vTextureCoord;\n\nuniform sampler2D uSampler;\nuniform vec2 texelSize;\nuniform float matrix[9];\n\nvoid main(void)\n{\n   vec4 c11 = texture2D(uSampler, vTextureCoord - texelSize); // top left\n   vec4 c12 = texture2D(uSampler, vec2(vTextureCoord.x, vTextureCoord.y - texelSize.y)); // top center\n   vec4 c13 = texture2D(uSampler, vec2(vTextureCoord.x + texelSize.x, vTextureCoord.y - texelSize.y)); // top right\n\n   vec4 c21 = texture2D(uSampler, vec2(vTextureCoord.x - texelSize.x, vTextureCoord.y)); // mid left\n   vec4 c22 = texture2D(uSampler, vTextureCoord); // mid center\n   vec4 c23 = texture2D(uSampler, vec2(vTextureCoord.x + texelSize.x, vTextureCoord.y)); // mid right\n\n   vec4 c31 = texture2D(uSampler, vec2(vTextureCoord.x - texelSize.x, vTextureCoord.y + texelSize.y)); // bottom left\n   vec4 c32 = texture2D(uSampler, vec2(vTextureCoord.x, vTextureCoord.y + texelSize.y)); // bottom center\n   vec4 c33 = texture2D(uSampler, vTextureCoord + texelSize); // bottom right\n\n   gl_FragColor =\n       c11 * matrix[0] + c12 * matrix[1] + c13 * matrix[2] +\n       c21 * matrix[3] + c22 * matrix[4] + c23 * matrix[5] +\n       c31 * matrix[6] + c32 * matrix[7] + c33 * matrix[8];\n\n   gl_FragColor.a = c22.a;\n}\n",
 	        // custom uniforms
 	        {
 	            matrix:     { type: '1fv', value: new Float32Array(matrix) },
@@ -21209,15 +21194,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 93 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * A Cross Hatch effect filter.
@@ -21232,7 +21216,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/crosshatch.frag', 'utf8')
+	        "precision mediump float;\n\nvarying vec2 vTextureCoord;\n\nuniform sampler2D uSampler;\n\nvoid main(void)\n{\n    float lum = length(texture2D(uSampler, vTextureCoord.xy).rgb);\n\n    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);\n\n    if (lum < 1.00)\n    {\n        if (mod(gl_FragCoord.x + gl_FragCoord.y, 10.0) == 0.0)\n        {\n            gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);\n        }\n    }\n\n    if (lum < 0.75)\n    {\n        if (mod(gl_FragCoord.x - gl_FragCoord.y, 10.0) == 0.0)\n        {\n            gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);\n        }\n    }\n\n    if (lum < 0.50)\n    {\n        if (mod(gl_FragCoord.x + gl_FragCoord.y - 5.0, 10.0) == 0.0)\n        {\n            gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);\n        }\n    }\n\n    if (lum < 0.3)\n    {\n        if (mod(gl_FragCoord.x - gl_FragCoord.y - 5.0, 10.0) == 0.0)\n        {\n            gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);\n        }\n    }\n}\n"
 	    );
 	}
 
@@ -21240,15 +21224,14 @@
 	CrossHatchFilter.prototype.constructor = CrossHatchFilter;
 	module.exports = CrossHatchFilter;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 94 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * The DisplacementFilter class uses the pixel values from the specified texture (called the displacement map) to perform a displacement of an object.
@@ -21267,9 +21250,9 @@
 
 	    core.AbstractFilter.call(this,
 	        // vertex shader
-	        fs.readFileSync(__dirname + '/displacement.vert', 'utf8'),
+	        "attribute vec2 aVertexPosition;\nattribute vec2 aTextureCoord;\nattribute vec4 aColor;\n\nuniform mat3 projectionMatrix;\nuniform mat3 otherMatrix;\n\nvarying vec2 vMapCoord;\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\n\nvoid main(void)\n{\n   gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);\n   vTextureCoord = aTextureCoord;\n   vMapCoord = ( otherMatrix * vec3( aTextureCoord, 1.0)  ).xy;\n   vColor = vec4(aColor.rgb * aColor.a, aColor.a);\n}\n",
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/displacement.frag', 'utf8'),
+	        "precision lowp float;\n\nvarying vec2 vMapCoord;\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\n\nuniform vec2 scale;\n\nuniform sampler2D uSampler;\nuniform sampler2D mapSampler;\n\nvoid main(void)\n{\n   vec4 original =  texture2D(uSampler, vTextureCoord);\n   vec4 map =  texture2D(mapSampler, vMapCoord);\n\n   map -= 0.5;\n   map.xy *= scale;\n\n   gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.x + map.x, vTextureCoord.y + map.y));\n}\n",
 	        // uniforms
 	        {
 	            mapSampler:     { type: 'sampler2D', value: sprite.texture },
@@ -21326,15 +21309,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 95 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * @author Mat Groves http://matgroves.com/ @Doormat23
@@ -21355,7 +21337,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/dotScreen.frag', 'utf8'),
+	        "precision mediump float;\n\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\n\nuniform vec4 dimensions;\nuniform sampler2D uSampler;\n\nuniform float angle;\nuniform float scale;\n\nfloat pattern()\n{\n   float s = sin(angle), c = cos(angle);\n   vec2 tex = vTextureCoord * dimensions.xy;\n   vec2 point = vec2(\n       c * tex.x - s * tex.y,\n       s * tex.x + c * tex.y\n   ) * scale;\n   return (sin(point.x) * sin(point.y)) * 4.0;\n}\n\nvoid main()\n{\n   vec4 color = texture2D(uSampler, vTextureCoord);\n   float average = (color.r + color.g + color.b) / 3.0;\n   gl_FragColor = vec4(vec3(average * 10.0 - 5.0 + pattern()), color.a);\n}\n",
 	        // custom uniforms
 	        {
 	            scale:      { type: '1f', value: 1 },
@@ -21403,15 +21385,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 96 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * This greyscales the palette of your Display Objects.
@@ -21426,7 +21407,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/gray.frag', 'utf8'),
+	        "precision mediump float;\n\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\n\nuniform sampler2D uSampler;\nuniform float gray;\n\nvoid main(void)\n{\n   gl_FragColor = texture2D(uSampler, vTextureCoord);\n   gl_FragColor.rgb = mix(gl_FragColor.rgb, vec3(0.2126*gl_FragColor.r + 0.7152*gl_FragColor.g + 0.0722*gl_FragColor.b), gray);\n}\n",
 	        // set the uniforms
 	        {
 	            gray: { type: '1f', value: 1 }
@@ -21457,15 +21438,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 97 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * This inverts your Display Objects colors.
@@ -21480,7 +21460,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/invert.frag', 'utf8'),
+	        "precision mediump float;\n\nvarying vec2 vTextureCoord;\n\nuniform float invert;\nuniform sampler2D uSampler;\n\nvoid main(void)\n{\n    gl_FragColor = texture2D(uSampler, vTextureCoord);\n\n    gl_FragColor.rgb = mix( (vec3(1)-gl_FragColor.rgb) * gl_FragColor.a, gl_FragColor.rgb, 1.0 - invert);\n}\n",
 	        // custom uniforms
 	        {
 	            invert: { type: '1f', value: 1 }
@@ -21512,15 +21492,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 98 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * @author Vico @vicocotea
@@ -21540,7 +21519,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/noise.frag', 'utf8'),
+	        "precision mediump float;\n\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\n\nuniform float noise;\nuniform sampler2D uSampler;\n\nfloat rand(vec2 co)\n{\n    return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);\n}\n\nvoid main()\n{\n    vec4 color = texture2D(uSampler, vTextureCoord);\n\n    float diff = (rand(vTextureCoord) - 0.5) * noise;\n\n    color.r += diff;\n    color.g += diff;\n    color.b += diff;\n\n    gl_FragColor = color;\n}\n",
 	        // custom uniforms
 	        {
 	            noise: { type: '1f', value: 0.5 }
@@ -21572,15 +21551,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 99 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * The NormalMapFilter class uses the pixel values from the specified texture (called the normal map)
@@ -21597,7 +21575,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/normalMap.frag', 'utf8'),
+	        "precision mediump float;\n\nvarying vec2 vTextureCoord;\nvarying vec4 vColor;\n\nuniform sampler2D displacementMap;\nuniform sampler2D uSampler;\n\nuniform vec4 dimensions;\n\nconst vec2 Resolution = vec2(1.0,1.0);      //resolution of screen\nuniform vec3 LightPos;    //light position, normalized\nconst vec4 LightColor = vec4(1.0, 1.0, 1.0, 1.0);      //light RGBA -- alpha is intensity\nconst vec4 AmbientColor = vec4(1.0, 1.0, 1.0, 0.5);    //ambient RGBA -- alpha is intensity\nconst vec3 Falloff = vec3(0.0, 1.0, 0.2);         //attenuation coefficients\n\nuniform vec3 LightDir; // = vec3(1.0, 0.0, 1.0);\n\nuniform vec2 mapDimensions; // = vec2(256.0, 256.0);\n\n\nvoid main(void)\n{\n    vec2 mapCords = vTextureCoord.xy;\n\n    vec4 color = texture2D(uSampler, vTextureCoord.st);\n    vec3 nColor = texture2D(displacementMap, vTextureCoord.st).rgb;\n\n\n    mapCords *= vec2(dimensions.x/512.0, dimensions.y/512.0);\n\n    mapCords.y *= -1.0;\n    mapCords.y += 1.0;\n\n    // RGBA of our diffuse color\n    vec4 DiffuseColor = texture2D(uSampler, vTextureCoord);\n\n    // RGB of our normal map\n    vec3 NormalMap = texture2D(displacementMap, mapCords).rgb;\n\n    // The delta position of light\n    // vec3 LightDir = vec3(LightPos.xy - (gl_FragCoord.xy / Resolution.xy), LightPos.z);\n    vec3 LightDir = vec3(LightPos.xy - (mapCords.xy), LightPos.z);\n\n    // Correct for aspect ratio\n    // LightDir.x *= Resolution.x / Resolution.y;\n\n    // Determine distance (used for attenuation) BEFORE we normalize our LightDir\n    float D = length(LightDir);\n\n    // normalize our vectors\n    vec3 N = normalize(NormalMap * 2.0 - 1.0);\n    vec3 L = normalize(LightDir);\n\n    // Pre-multiply light color with intensity\n    // Then perform 'N dot L' to determine our diffuse term\n    vec3 Diffuse = (LightColor.rgb * LightColor.a) * max(dot(N, L), 0.0);\n\n    // pre-multiply ambient color with intensity\n    vec3 Ambient = AmbientColor.rgb * AmbientColor.a;\n\n    // calculate attenuation\n    float Attenuation = 1.0 / ( Falloff.x + (Falloff.y*D) + (Falloff.z*D*D) );\n\n    // the calculation which brings it all together\n    vec3 Intensity = Ambient + Diffuse * Attenuation;\n    vec3 FinalColor = DiffuseColor.rgb * Intensity;\n    gl_FragColor = vColor * vec4(FinalColor, DiffuseColor.a);\n\n    // gl_FragColor = vec4(1.0, 0.0, 0.0, Attenuation); // vColor * vec4(FinalColor, DiffuseColor.a);\n\n/*\n    // normalise color\n    vec3 normal = normalize(nColor * 2.0 - 1.0);\n\n    vec3 deltaPos = vec3( (light.xy - gl_FragCoord.xy) / resolution.xy, light.z );\n\n    float lambert = clamp(dot(normal, lightDir), 0.0, 1.0);\n\n    float d = sqrt(dot(deltaPos, deltaPos));\n    float att = 1.0 / ( attenuation.x + (attenuation.y*d) + (attenuation.z*d*d) );\n\n    vec3 result = (ambientColor * ambientIntensity) + (lightColor.rgb * lambert) * att;\n    result *= color.rgb;\n\n    gl_FragColor = vec4(result, 1.0);\n*/\n}\n",
 	        // custom uniforms
 	        {
 	            displacementMap:  { type: 'sampler2D', value: texture },
@@ -21690,15 +21668,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 100 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * This filter applies a pixelate effect making display objects appear 'blocky'.
@@ -21713,7 +21690,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/pixelate.frag', 'utf8'),
+	        "precision mediump float;\n\nvarying vec2 vTextureCoord;\n\nuniform vec4 dimensions;\nuniform vec2 pixelSize;\nuniform sampler2D uSampler;\n\nvoid main(void)\n{\n    vec2 coord = vTextureCoord;\n\n    vec2 size = dimensions.xy / pixelSize;\n\n    vec2 color = floor( ( vTextureCoord * size ) ) / size + pixelSize/dimensions.xy * 0.5;\n\n    gl_FragColor = texture2D(uSampler, color);\n}\n",
 	        // custom uniforms
 	        {
 	            dimensions: { type: '4fv',  value: new Float32Array([0, 0, 0, 0]) },
@@ -21746,15 +21723,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 101 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * An RGB Split Filter.
@@ -21769,7 +21745,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/rgbSplit.frag', 'utf8'),
+	        "precision mediump float;\n\nvarying vec2 vTextureCoord;\n\nuniform sampler2D uSampler;\nuniform vec4 dimensions;\nuniform vec2 red;\nuniform vec2 green;\nuniform vec2 blue;\n\nvoid main(void)\n{\n   gl_FragColor.r = texture2D(uSampler, vTextureCoord + red/dimensions.xy).r;\n   gl_FragColor.g = texture2D(uSampler, vTextureCoord + green/dimensions.xy).g;\n   gl_FragColor.b = texture2D(uSampler, vTextureCoord + blue/dimensions.xy).b;\n   gl_FragColor.a = texture2D(uSampler, vTextureCoord).a;\n}\n",
 	        // custom uniforms
 	        {
 	            red:        { type: 'v2', value: { x: 20, y: 20 } },
@@ -21837,15 +21813,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 102 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * The ColorMatrixFilter class lets you apply a 4x4 matrix transformation on the RGBA
@@ -21862,7 +21837,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/shockwave.frag', 'utf8'),
+	        "precision lowp float;\n\nvarying vec2 vTextureCoord;\n\nuniform sampler2D uSampler;\n\nuniform vec2 center;\nuniform vec3 params; // 10.0, 0.8, 0.1\nuniform float time;\n\nvoid main()\n{\n    vec2 uv = vTextureCoord;\n    vec2 texCoord = uv;\n\n    float dist = distance(uv, center);\n\n    if ( (dist <= (time + params.z)) && (dist >= (time - params.z)) )\n    {\n        float diff = (dist - time);\n        float powDiff = 1.0 - pow(abs(diff*params.x), params.y);\n\n        float diffTime = diff  * powDiff;\n        vec2 diffUV = normalize(uv - center);\n        texCoord = uv + (diffUV * diffTime);\n    }\n\n    gl_FragColor = texture2D(uSampler, texCoord);\n}\n",
 	        // custom uniforms
 	        {
 	            center: { type: 'v2', value: { x: 0.5, y: 0.5 } },
@@ -21930,15 +21905,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 103 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * This applies a sepia effect to your Display Objects.
@@ -21953,7 +21927,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/sepia.frag', 'utf8'),
+	        "precision mediump float;\n\nvarying vec2 vTextureCoord;\n\nuniform sampler2D uSampler;\nuniform float sepia;\n\nconst mat3 sepiaMatrix = mat3(0.3588, 0.7044, 0.1368, 0.2990, 0.5870, 0.1140, 0.2392, 0.4696, 0.0912);\n\nvoid main(void)\n{\n   gl_FragColor = texture2D(uSampler, vTextureCoord);\n   gl_FragColor.rgb = mix( gl_FragColor.rgb, gl_FragColor.rgb * sepiaMatrix, sepia);\n}\n",
 	        // custom uniforms
 	        {
 	            sepia: { type: '1f', value: 1 }
@@ -21985,15 +21959,14 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 104 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * A Smart Blur Filter.
@@ -22008,7 +21981,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/smartBlur.frag', 'utf8'),
+	        "precision mediump float;\n\nvarying vec2 vTextureCoord;\n\nuniform sampler2D uSampler;\nuniform vec2 delta;\n\nfloat random(vec3 scale, float seed)\n{\n    return fract(sin(dot(gl_FragCoord.xyz + seed, scale)) * 43758.5453 + seed);\n}\n\nvoid main(void)\n{\n    vec4 color = vec4(0.0);\n    float total = 0.0;\n\n    float offset = random(vec3(12.9898, 78.233, 151.7182), 0.0);\n\n    for (float t = -30.0; t <= 30.0; t++)\n    {\n        float percent = (t + offset - 0.5) / 30.0;\n        float weight = 1.0 - abs(percent);\n        vec4 sample = texture2D(uSampler, vTextureCoord + delta * percent);\n        sample.rgb *= sample.a;\n        color += sample * weight;\n        total += weight;\n    }\n\n    gl_FragColor = color / total;\n    gl_FragColor.rgb /= gl_FragColor.a + 0.00001;\n}\n",
 	        // uniforms
 	        {
 	          delta: { type: 'v2', value: { x: 0.1, y: 0.0 } }
@@ -22020,15 +21993,14 @@
 	SmartBlurFilter.prototype.constructor = SmartBlurFilter;
 	module.exports = SmartBlurFilter;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 105 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(5),
-	    TiltShiftXFilter = __webpack_require__(106),
-	    TiltShiftYFilter = __webpack_require__(108);
+	    TiltShiftXFilter = __webpack_require__(105),
+	    TiltShiftYFilter = __webpack_require__(107);
 
 	/**
 	 * @author Vico @vicocotea
@@ -22137,10 +22109,10 @@
 
 
 /***/ },
-/* 106 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var TiltShiftAxisFilter = __webpack_require__(107);
+	var TiltShiftAxisFilter = __webpack_require__(106);
 
 	/**
 	 * @author Vico @vicocotea
@@ -22179,12 +22151,12 @@
 
 
 /***/ },
-/* 107 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * @author Vico @vicocotea
@@ -22204,7 +22176,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/tiltShift.frag', 'utf8'),
+	        "precision mediump float;\n\nvarying vec2 vTextureCoord;\n\nuniform sampler2D uSampler;\nuniform float blur;\nuniform float gradientBlur;\nuniform vec2 start;\nuniform vec2 end;\nuniform vec2 delta;\nuniform vec2 texSize;\n\nfloat random(vec3 scale, float seed)\n{\n    return fract(sin(dot(gl_FragCoord.xyz + seed, scale)) * 43758.5453 + seed);\n}\n\nvoid main(void)\n{\n    vec4 color = vec4(0.0);\n    float total = 0.0;\n\n    float offset = random(vec3(12.9898, 78.233, 151.7182), 0.0);\n    vec2 normal = normalize(vec2(start.y - end.y, end.x - start.x));\n    float radius = smoothstep(0.0, 1.0, abs(dot(vTextureCoord * texSize - start, normal)) / gradientBlur) * blur;\n\n    for (float t = -30.0; t <= 30.0; t++)\n    {\n        float percent = (t + offset - 0.5) / 30.0;\n        float weight = 1.0 - abs(percent);\n        vec4 sample = texture2D(uSampler, vTextureCoord + delta / texSize * percent * radius);\n        sample.rgb *= sample.a;\n        color += sample * weight;\n        total += weight;\n    }\n\n    gl_FragColor = color / total;\n    gl_FragColor.rgb /= gl_FragColor.a + 0.00001;\n}\n",
 	        // custom uniforms
 	        {
 	            blur:           { type: '1f', value: 100 },
@@ -22306,13 +22278,12 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 108 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var TiltShiftAxisFilter = __webpack_require__(107);
+	var TiltShiftAxisFilter = __webpack_require__(106);
 
 	/**
 	 * @author Vico @vicocotea
@@ -22351,12 +22322,12 @@
 
 
 /***/ },
-/* 109 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(52);
+
 
 	/**
 	 * This filter applies a twist effect making display objects appear twisted in the given direction.
@@ -22371,7 +22342,7 @@
 	        // vertex shader
 	        null,
 	        // fragment shader
-	        fs.readFileSync(__dirname + '/twist.frag', 'utf8'),
+	        "precision mediump float;\n\nvarying vec2 vTextureCoord;\n\nuniform sampler2D uSampler;\nuniform float radius;\nuniform float angle;\nuniform vec2 offset;\n\nvoid main(void)\n{\n   vec2 coord = vTextureCoord - offset;\n   float dist = length(coord);\n\n   if (dist < radius)\n   {\n       float ratio = (radius - dist) / radius;\n       float angleMod = ratio * ratio * angle;\n       float s = sin(angleMod);\n       float c = cos(angleMod);\n       coord = vec2(coord.x * c - coord.y * s, coord.x * s + coord.y * c);\n   }\n\n   gl_FragColor = texture2D(uSampler, coord+offset);\n}\n",
 	        // custom uniforms
 	        {
 	            radius:     { type: '1f', value: 0.5 },
@@ -22438,10 +22409,9 @@
 	    }
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 110 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -22455,24 +22425,24 @@
 	 * @namespace PIXI.loaders
 	 */
 	module.exports = {
-	    Loader:             __webpack_require__(111),
+	    Loader:             __webpack_require__(110),
 
 	    // parsers
-	    bitmapFontParser:   __webpack_require__(127),
-	    spritesheetParser:  __webpack_require__(125),
-	    textureParser:      __webpack_require__(124),
-	    Resource:           __webpack_require__(112).Resource
+	    bitmapFontParser:   __webpack_require__(126),
+	    spritesheetParser:  __webpack_require__(124),
+	    textureParser:      __webpack_require__(123),
+	    Resource:           __webpack_require__(111).Resource
 	};
 
 
 /***/ },
-/* 111 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ResourceLoader = __webpack_require__(112),
-	    textureParser = __webpack_require__(124),
-	    spritesheetParser = __webpack_require__(125),
-	    bitmapFontParser = __webpack_require__(127);
+	var ResourceLoader = __webpack_require__(111),
+	    textureParser = __webpack_require__(123),
+	    spritesheetParser = __webpack_require__(124),
+	    bitmapFontParser = __webpack_require__(126);
 
 	/**
 	 *
@@ -22532,30 +22502,30 @@
 
 
 /***/ },
-/* 112 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(113);
+	module.exports = __webpack_require__(112);
 
-	module.exports.Resource = __webpack_require__(120);
+	module.exports.Resource = __webpack_require__(119);
 
 	module.exports.middleware = {
 	    caching: {
-	        memory: __webpack_require__(121)
+	        memory: __webpack_require__(120)
 	    },
 	    parsing: {
-	        blob: __webpack_require__(122)
+	        blob: __webpack_require__(121)
 	    }
 	};
 
 
 /***/ },
-/* 113 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var async       = __webpack_require__(11),
-	    urlParser   = __webpack_require__(114),
-	    Resource    = __webpack_require__(120),
+	    urlParser   = __webpack_require__(113),
+	    Resource    = __webpack_require__(119),
 	    EventEmitter = __webpack_require__(14);
 
 	/**
@@ -23009,7 +22979,7 @@
 
 
 /***/ },
-/* 114 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -23033,7 +23003,7 @@
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(115);
+	var punycode = __webpack_require__(114);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -23105,7 +23075,7 @@
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(117);
+	    querystring = __webpack_require__(116);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -23722,7 +23692,7 @@
 
 
 /***/ },
-/* 115 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -24254,10 +24224,10 @@
 
 	}(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(116)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(115)(module), (function() { return this; }())))
 
 /***/ },
-/* 116 */
+/* 115 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -24273,17 +24243,17 @@
 
 
 /***/ },
-/* 117 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(118);
-	exports.encode = exports.stringify = __webpack_require__(119);
+	exports.decode = exports.parse = __webpack_require__(117);
+	exports.encode = exports.stringify = __webpack_require__(118);
 
 
 /***/ },
-/* 118 */
+/* 117 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -24369,7 +24339,7 @@
 
 
 /***/ },
-/* 119 */
+/* 118 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -24439,11 +24409,11 @@
 
 
 /***/ },
-/* 120 */
+/* 119 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var EventEmitter = __webpack_require__(14),
-	    _url = __webpack_require__(114),
+	    _url = __webpack_require__(113),
 	    // tests is CORS is supported in XHR, if not we need to use XDR
 	    useXdr = !!(window.XDomainRequest && !('withCredentials' in (new XMLHttpRequest()))),
 	    tempAnchor = null;
@@ -25220,7 +25190,7 @@
 
 
 /***/ },
-/* 121 */
+/* 120 */
 /***/ function(module, exports) {
 
 	// a simple in-memory cache for resources
@@ -25246,11 +25216,11 @@
 
 
 /***/ },
-/* 122 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Resource = __webpack_require__(120),
-	    b64 = __webpack_require__(123);
+	var Resource = __webpack_require__(119),
+	    b64 = __webpack_require__(122);
 
 	window.URL = window.URL || window.webkitURL;
 
@@ -25310,7 +25280,7 @@
 
 
 /***/ },
-/* 123 */
+/* 122 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -25380,7 +25350,7 @@
 
 
 /***/ },
-/* 124 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(5);
@@ -25403,11 +25373,11 @@
 
 
 /***/ },
-/* 125 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Resource = __webpack_require__(112).Resource,
-	    path = __webpack_require__(126),
+	var Resource = __webpack_require__(111).Resource,
+	    path = __webpack_require__(125),
 	    core = __webpack_require__(5);
 
 	module.exports = function ()
@@ -25490,7 +25460,7 @@
 
 
 /***/ },
-/* 126 */
+/* 125 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -25721,13 +25691,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ },
-/* 127 */
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Resource = __webpack_require__(112).Resource,
+	var Resource = __webpack_require__(111).Resource,
 	    core = __webpack_require__(5),
-	    extras = __webpack_require__(74),
-	    path = __webpack_require__(126);
+	    extras = __webpack_require__(73),
+	    path = __webpack_require__(125);
 
 
 	function parse(resource, texture) {
@@ -25845,7 +25815,7 @@
 
 
 /***/ },
-/* 128 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25859,15 +25829,15 @@
 	 * @namespace PIXI.mesh
 	 */
 	module.exports = {
-	    Mesh:           __webpack_require__(129),
-	    Rope:           __webpack_require__(130),
-	    MeshRenderer:   __webpack_require__(131),
-	    MeshShader:     __webpack_require__(132)
+	    Mesh:           __webpack_require__(128),
+	    Rope:           __webpack_require__(129),
+	    MeshRenderer:   __webpack_require__(130),
+	    MeshShader:     __webpack_require__(131)
 	};
 
 
 /***/ },
-/* 129 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(5),
@@ -26352,10 +26322,10 @@
 
 
 /***/ },
-/* 130 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Mesh = __webpack_require__(129);
+	var Mesh = __webpack_require__(128);
 	var core = __webpack_require__(5);
 
 	/**
@@ -26569,11 +26539,11 @@
 
 
 /***/ },
-/* 131 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(5),
-	    Mesh = __webpack_require__(129);
+	    Mesh = __webpack_require__(128);
 
 	/**
 	 * @author Mat Groves
@@ -26787,7 +26757,7 @@
 
 
 /***/ },
-/* 132 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(5);
@@ -26852,14 +26822,14 @@
 
 
 /***/ },
-/* 133 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*global console */
 	var core = __webpack_require__(5),
-	    mesh = __webpack_require__(128),
-	    extras = __webpack_require__(74),
-	    filters = __webpack_require__(81);
+	    mesh = __webpack_require__(127),
+	    extras = __webpack_require__(73),
+	    filters = __webpack_require__(80);
 
 	/**
 	 * @class
@@ -27191,7 +27161,7 @@
 
 
 /***/ },
-/* 134 */
+/* 133 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -27217,7 +27187,7 @@
 	exports.OBS_COLOR = OBS_COLOR;
 
 /***/ },
-/* 135 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27226,7 +27196,7 @@
 	  value: true
 	});
 
-	var _howler = __webpack_require__(136);
+	var _howler = __webpack_require__(135);
 
 	var bg = new _howler.Howl({
 	  urls: ['snd/ossuary-5-rest.mp3'],
@@ -27246,7 +27216,7 @@
 	exports.land = land;
 
 /***/ },
-/* 136 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -28605,7 +28575,7 @@
 
 
 /***/ },
-/* 137 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28621,7 +28591,7 @@
 
 	var _pixiJs2 = _interopRequireDefault(_pixiJs);
 
-	var _constants = __webpack_require__(134);
+	var _constants = __webpack_require__(133);
 
 	var sky = new _pixiJs2['default'].Graphics();
 	sky.beginFill(0x98c2ea);
@@ -28661,7 +28631,7 @@
 	}
 
 /***/ },
-/* 138 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28677,13 +28647,13 @@
 
 	var _pixiJs2 = _interopRequireDefault(_pixiJs);
 
-	var _lodash = __webpack_require__(139);
+	var _lodash = __webpack_require__(138);
 
-	var _input = __webpack_require__(140);
+	var _input = __webpack_require__(139);
 
-	var _music = __webpack_require__(135);
+	var _music = __webpack_require__(134);
 
-	var _constants = __webpack_require__(134);
+	var _constants = __webpack_require__(133);
 
 	var lightMask = new _pixiJs2['default'].Sprite.fromImage('img/alpha-mask.png');
 	exports.lightMask = lightMask;
@@ -28788,7 +28758,7 @@
 	}
 
 /***/ },
-/* 139 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -41143,10 +41113,10 @@
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(116)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(115)(module), (function() { return this; }())))
 
 /***/ },
-/* 140 */
+/* 139 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -41177,7 +41147,7 @@
 	});
 
 /***/ },
-/* 141 */
+/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41193,7 +41163,7 @@
 
 	var _pixiJs2 = _interopRequireDefault(_pixiJs);
 
-	var _constants = __webpack_require__(134);
+	var _constants = __webpack_require__(133);
 
 	function createObstacle(w, h, x, y) {
 	  var obs = new _pixiJs2['default'].Graphics();
