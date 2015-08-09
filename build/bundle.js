@@ -86,6 +86,9 @@
 	stage.addChild(obstacles.container);
 	stage.addChild(fg.container);
 
+	stage.addChild(char.lightMask);
+	stage.mask = char.lightMask;
+
 	function gameLoop() {
 	  window.requestAnimationFrame(gameLoop);
 	  update();
@@ -28682,10 +28685,15 @@
 
 	var _constants = __webpack_require__(134);
 
+	var lightMask = new _pixiJs2['default'].Sprite.fromImage('img/alpha-mask.png');
+	exports.lightMask = lightMask;
+	function rescaleLight(num) {
+	  lightMask.scale.x = lightMask.scale.y = num;
+	}
+
 	function createCharacter() {
 	  var char = new _pixiJs2['default'].Sprite.fromImage('img/beardy.png');
-	  char.width = 1010 / 16;
-	  char.height = 1549 / 16;
+	  char.scale.x = char.scale.y = 0.0625;
 	  char.position.x = 230;
 	  char.position.y = _constants.HEIGHT - char.height;
 	  return char;
@@ -28765,6 +28773,14 @@
 	    }
 	    dy = 0;
 	  }
+
+	  // lightMask logic
+	  var speed = Math.abs(dx);
+	  var mod = (8 - speed) / 8;
+	  mod = mod * 0.6 + 0.4;
+	  rescaleLight(mod);
+	  lightMask.position.x = char.position.x + char.width / 2 - lightMask.width / 2 + 25;
+	  lightMask.position.y = char.position.y + char.height / 2 - lightMask.height / 2 - 8;
 	}
 
 	function doesCollide(obj1, obj2) {
