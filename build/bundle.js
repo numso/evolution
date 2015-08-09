@@ -50,23 +50,27 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _pixiJs = __webpack_require__(1);
+	var _pixiJs = __webpack_require__(2);
 
 	var _pixiJs2 = _interopRequireDefault(_pixiJs);
 
-	var _background = __webpack_require__(133);
+	var _music = __webpack_require__(135);
+
+	var music = _interopRequireWildcard(_music);
+
+	var _background = __webpack_require__(137);
 
 	var bg = _interopRequireWildcard(_background);
 
-	var _foreground = __webpack_require__(135);
+	var _foreground = __webpack_require__(1);
 
 	var fg = _interopRequireWildcard(_foreground);
 
-	var _character = __webpack_require__(136);
+	var _character = __webpack_require__(138);
 
 	var char = _interopRequireWildcard(_character);
 
-	var _obstacles = __webpack_require__(139);
+	var _obstacles = __webpack_require__(141);
 
 	var obstacles = _interopRequireWildcard(_obstacles);
 
@@ -95,23 +99,54 @@
 	  fg.update();
 	}
 
+	music.bg.play();
 	window.requestAnimationFrame(gameLoop);
 
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {// run the polyfills
-	__webpack_require__(69);
+	'use strict';
 
-	var core = module.exports = __webpack_require__(4);
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.update = update;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _pixiJs = __webpack_require__(2);
+
+	var _pixiJs2 = _interopRequireDefault(_pixiJs);
+
+	var _constants = __webpack_require__(134);
+
+	var tree = new _pixiJs2['default'].Sprite.fromImage('img/tree02.svg');
+	tree.position.x = 350;
+
+	var container = new _pixiJs2['default'].Container();
+	exports.container = container;
+	container.addChild(tree);
+
+	function update() {
+	  tree.position.y = _constants.HEIGHT - tree.height;
+	}
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {// run the polyfills
+	__webpack_require__(70);
+
+	var core = module.exports = __webpack_require__(5);
 
 	// add core plugins.
-	core.extras         = __webpack_require__(73);
-	core.filters        = __webpack_require__(80);
-	core.interaction    = __webpack_require__(2);
-	core.loaders        = __webpack_require__(109);
-	core.mesh           = __webpack_require__(127);
+	core.extras         = __webpack_require__(74);
+	core.filters        = __webpack_require__(81);
+	core.interaction    = __webpack_require__(3);
+	core.loaders        = __webpack_require__(110);
+	core.mesh           = __webpack_require__(128);
 
 	// export a premade loader instance
 	/**
@@ -124,7 +159,7 @@
 	core.loader = new core.loaders.Loader();
 
 	// mixin the deprecation features.
-	Object.assign(core, __webpack_require__(132));
+	Object.assign(core, __webpack_require__(133));
 
 	// Always export pixi globally.
 	global.PIXI = core;
@@ -132,7 +167,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -146,17 +181,17 @@
 	 * @namespace PIXI.interaction
 	 */
 	module.exports = {
-	    InteractionData:    __webpack_require__(3),
-	    InteractionManager: __webpack_require__(67),
-	    interactiveTarget:  __webpack_require__(68)
+	    InteractionData:    __webpack_require__(4),
+	    InteractionManager: __webpack_require__(68),
+	    interactiveTarget:  __webpack_require__(69)
 	};
 
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4);
+	var core = __webpack_require__(5);
 
 	/**
 	 * Holds all information related to an Interaction event
@@ -220,7 +255,7 @@
 
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -234,52 +269,52 @@
 	 * @namespace PIXI
 	 */
 	// export core and const. We assign core to const so that the non-reference types in const remain in-tact
-	var core = module.exports = Object.assign(__webpack_require__(7), __webpack_require__(14), {
+	var core = module.exports = Object.assign(__webpack_require__(8), __webpack_require__(15), {
 	    // utils
-	    utils: __webpack_require__(6),
-	    ticker: __webpack_require__(22),
+	    utils: __webpack_require__(7),
+	    ticker: __webpack_require__(23),
 
 	    // display
-	    DisplayObject:          __webpack_require__(24),
-	    Container:              __webpack_require__(35),
+	    DisplayObject:          __webpack_require__(25),
+	    Container:              __webpack_require__(36),
 
 	    // sprites
-	    Sprite:                 __webpack_require__(36),
-	    ParticleContainer:      __webpack_require__(38),
-	    SpriteRenderer:         __webpack_require__(39),
-	    ParticleRenderer:       __webpack_require__(55),
+	    Sprite:                 __webpack_require__(37),
+	    ParticleContainer:      __webpack_require__(39),
+	    SpriteRenderer:         __webpack_require__(40),
+	    ParticleRenderer:       __webpack_require__(56),
 
 	    // text
-	    Text:                   __webpack_require__(58),
+	    Text:                   __webpack_require__(59),
 
 	    // primitives
-	    Graphics:               __webpack_require__(59),
-	    GraphicsData:           __webpack_require__(61),
-	    GraphicsRenderer:       __webpack_require__(62),
+	    Graphics:               __webpack_require__(60),
+	    GraphicsData:           __webpack_require__(62),
+	    GraphicsRenderer:       __webpack_require__(63),
 
 	    // textures
-	    Texture:                __webpack_require__(26),
-	    BaseTexture:            __webpack_require__(5),
-	    RenderTexture:          __webpack_require__(25),
-	    VideoBaseTexture:       __webpack_require__(27),
-	    TextureUvs:             __webpack_require__(28),
+	    Texture:                __webpack_require__(27),
+	    BaseTexture:            __webpack_require__(6),
+	    RenderTexture:          __webpack_require__(26),
+	    VideoBaseTexture:       __webpack_require__(28),
+	    TextureUvs:             __webpack_require__(29),
 
 	    // renderers - canvas
-	    CanvasRenderer:         __webpack_require__(65),
-	    CanvasGraphics:         __webpack_require__(60),
-	    CanvasBuffer:           __webpack_require__(34),
+	    CanvasRenderer:         __webpack_require__(66),
+	    CanvasGraphics:         __webpack_require__(61),
+	    CanvasBuffer:           __webpack_require__(35),
 
 	    // renderers - webgl
-	    WebGLRenderer:          __webpack_require__(41),
-	    ShaderManager:          __webpack_require__(43),
-	    Shader:                 __webpack_require__(45),
-	    ObjectRenderer:         __webpack_require__(40),
-	    RenderTarget:           __webpack_require__(29),
+	    WebGLRenderer:          __webpack_require__(42),
+	    ShaderManager:          __webpack_require__(44),
+	    Shader:                 __webpack_require__(46),
+	    ObjectRenderer:         __webpack_require__(41),
+	    RenderTarget:           __webpack_require__(30),
 
 	    // filters - webgl
-	    AbstractFilter:         __webpack_require__(50),
-	    FXAAFilter:             __webpack_require__(54),
-	    SpriteMaskFilter:       __webpack_require__(49),
+	    AbstractFilter:         __webpack_require__(51),
+	    FXAAFilter:             __webpack_require__(55),
+	    SpriteMaskFilter:       __webpack_require__(50),
 
 	    /**
 	     * This helper function will automatically detect which renderer you should be using.
@@ -316,12 +351,12 @@
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var utils = __webpack_require__(6),
-	    CONST = __webpack_require__(7),
-	    EventEmitter = __webpack_require__(13);
+	var utils = __webpack_require__(7),
+	    CONST = __webpack_require__(8),
+	    EventEmitter = __webpack_require__(14);
 
 	/**
 	 * A texture stores the information that represents an image. All textures have a base texture.
@@ -753,10 +788,10 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var CONST = __webpack_require__(7);
+	var CONST = __webpack_require__(8);
 
 	/**
 	 * @namespace PIXI.utils
@@ -765,8 +800,8 @@
 	    _uid: 0,
 	    _saidHello: false,
 
-	    pluginTarget:   __webpack_require__(9),
-	    async:          __webpack_require__(10),
+	    pluginTarget:   __webpack_require__(10),
+	    async:          __webpack_require__(11),
 
 	    /**
 	     * Gets the next unique identifier
@@ -996,7 +1031,7 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1012,7 +1047,7 @@
 	     * @constant
 	     * @property {string} VERSION
 	     */
-	    VERSION: __webpack_require__(8).version,
+	    VERSION: __webpack_require__(9).version,
 
 	    /**
 	     * @property {number} PI_2 - Two Pi
@@ -1222,7 +1257,7 @@
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -1328,7 +1363,7 @@
 	}
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	/**
@@ -1402,7 +1437,7 @@
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, setImmediate) {/*!
@@ -2529,10 +2564,10 @@
 
 	}());
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11), __webpack_require__(12).setImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12), __webpack_require__(13).setImmediate))
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -2628,10 +2663,10 @@
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(11).nextTick;
+	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(12).nextTick;
 	var apply = Function.prototype.apply;
 	var slice = Array.prototype.slice;
 	var immediateIds = {};
@@ -2707,10 +2742,10 @@
 	exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
 	  delete immediateIds[id];
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12).setImmediate, __webpack_require__(12).clearImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13).setImmediate, __webpack_require__(13).clearImmediate))
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2978,7 +3013,7 @@
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2992,19 +3027,19 @@
 	    // to avoid circular dependencies and cut down on
 	    // internal module requires.
 
-	    Point:      __webpack_require__(15),
-	    Matrix:     __webpack_require__(16),
+	    Point:      __webpack_require__(16),
+	    Matrix:     __webpack_require__(17),
 
-	    Circle:     __webpack_require__(17),
-	    Ellipse:    __webpack_require__(19),
-	    Polygon:    __webpack_require__(20),
-	    Rectangle:  __webpack_require__(18),
-	    RoundedRectangle: __webpack_require__(21)
+	    Circle:     __webpack_require__(18),
+	    Ellipse:    __webpack_require__(20),
+	    Polygon:    __webpack_require__(21),
+	    Rectangle:  __webpack_require__(19),
+	    RoundedRectangle: __webpack_require__(22)
 	};
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports) {
 
 	/**
@@ -3078,10 +3113,10 @@
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Point = __webpack_require__(15);
+	var Point = __webpack_require__(16);
 
 	/**
 	 * The pixi Matrix class as an object, which makes it a lot faster,
@@ -3442,11 +3477,11 @@
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Rectangle = __webpack_require__(18),
-	    CONST = __webpack_require__(7);
+	var Rectangle = __webpack_require__(19),
+	    CONST = __webpack_require__(8);
 
 	/**
 	 * The Circle object can be used to specify a hit area for displayObjects
@@ -3534,10 +3569,10 @@
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var CONST = __webpack_require__(7);
+	var CONST = __webpack_require__(8);
 
 	/**
 	 * the Rectangle object is an area defined by its position, as indicated by its top-left corner point (x, y) and by its width and its height.
@@ -3632,11 +3667,11 @@
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Rectangle = __webpack_require__(18),
-	    CONST = __webpack_require__(7);
+	var Rectangle = __webpack_require__(19),
+	    CONST = __webpack_require__(8);
 
 	/**
 	 * The Ellipse object can be used to specify a hit area for displayObjects
@@ -3731,11 +3766,11 @@
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Point = __webpack_require__(15),
-	    CONST = __webpack_require__(7);
+	var Point = __webpack_require__(16),
+	    CONST = __webpack_require__(8);
 
 	/**
 	 * @class
@@ -3838,10 +3873,10 @@
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var CONST = __webpack_require__(7);
+	var CONST = __webpack_require__(8);
 
 	/**
 	 * The Rounded Rectangle object is an area that has nice rounded corners, as indicated by its top-left corner point (x, y) and by its width and its height and its radius.
@@ -3934,7 +3969,7 @@
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3943,7 +3978,7 @@
 	 * @copyright   2013-2015 GoodBoyDigital
 	 * @license     {@link https://github.com/GoodBoyDigital/pixi.js/blob/master/LICENSE|MIT License}
 	 */
-	var Ticker = __webpack_require__(23);
+	var Ticker = __webpack_require__(24);
 
 	/**
 	 * The shared ticker instance used by {@link PIXI.extras.MovieClip}.
@@ -4000,11 +4035,11 @@
 
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var CONST = __webpack_require__(7),
-	    EventEmitter = __webpack_require__(13),
+	var CONST = __webpack_require__(8),
+	    EventEmitter = __webpack_require__(14),
 	    // Internal event used by composed emitter
 	    TICK = 'tick';
 
@@ -4355,13 +4390,13 @@
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var math = __webpack_require__(14),
-	    RenderTexture = __webpack_require__(25),
-	    EventEmitter = __webpack_require__(13),
-	    CONST = __webpack_require__(7),
+	var math = __webpack_require__(15),
+	    RenderTexture = __webpack_require__(26),
+	    EventEmitter = __webpack_require__(14),
+	    CONST = __webpack_require__(8),
 	    _tempMatrix = new math.Matrix();
 
 	/**
@@ -4825,16 +4860,16 @@
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var BaseTexture = __webpack_require__(5),
-	    Texture = __webpack_require__(26),
-	    RenderTarget = __webpack_require__(29),
-	    FilterManager = __webpack_require__(31),
-	    CanvasBuffer = __webpack_require__(34),
-	    math = __webpack_require__(14),
-	    CONST = __webpack_require__(7),
+	var BaseTexture = __webpack_require__(6),
+	    Texture = __webpack_require__(27),
+	    RenderTarget = __webpack_require__(30),
+	    FilterManager = __webpack_require__(32),
+	    CanvasBuffer = __webpack_require__(35),
+	    math = __webpack_require__(15),
+	    CONST = __webpack_require__(8),
 	    tempMatrix = new math.Matrix();
 
 	/**
@@ -5320,15 +5355,15 @@
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var BaseTexture = __webpack_require__(5),
-	    VideoBaseTexture = __webpack_require__(27),
-	    TextureUvs = __webpack_require__(28),
-	    EventEmitter = __webpack_require__(13),
-	    math = __webpack_require__(14),
-	    utils = __webpack_require__(6);
+	var BaseTexture = __webpack_require__(6),
+	    VideoBaseTexture = __webpack_require__(28),
+	    TextureUvs = __webpack_require__(29),
+	    EventEmitter = __webpack_require__(14),
+	    math = __webpack_require__(15),
+	    utils = __webpack_require__(7);
 
 	/**
 	 * A texture stores the information that represents an image or part of an image. It cannot be added
@@ -5730,11 +5765,11 @@
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var BaseTexture = __webpack_require__(5),
-	    utils = __webpack_require__(6);
+	var BaseTexture = __webpack_require__(6),
+	    utils = __webpack_require__(7);
 
 	/**
 	 * A texture of a [playing] Video.
@@ -5967,7 +6002,7 @@
 
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports) {
 
 	
@@ -6039,14 +6074,14 @@
 
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var math = __webpack_require__(14),
-	    utils = __webpack_require__(6),
-	    CONST = __webpack_require__(7),
+	var math = __webpack_require__(15),
+	    utils = __webpack_require__(7),
+	    CONST = __webpack_require__(8),
 	    //StencilManager = require('../managers/StencilManager'),
-	    StencilMaskStack = __webpack_require__(30);
+	    StencilMaskStack = __webpack_require__(31);
 
 	/**
 	 * @author Mat Groves http://matgroves.com/ @Doormat23
@@ -6349,7 +6384,7 @@
 
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports) {
 
 	/**
@@ -6387,14 +6422,14 @@
 
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var WebGLManager = __webpack_require__(32),
-	    RenderTarget = __webpack_require__(29),
-	    CONST = __webpack_require__(7),
-	    Quad = __webpack_require__(33),
-	    math =  __webpack_require__(14);
+	var WebGLManager = __webpack_require__(33),
+	    RenderTarget = __webpack_require__(30),
+	    CONST = __webpack_require__(8),
+	    Quad = __webpack_require__(34),
+	    math =  __webpack_require__(15);
 
 	/**
 	 * @class
@@ -6827,7 +6862,7 @@
 
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports) {
 
 	/**
@@ -6872,7 +6907,7 @@
 
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports) {
 
 	/**
@@ -7022,7 +7057,7 @@
 
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports) {
 
 	/**
@@ -7126,12 +7161,12 @@
 
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var math = __webpack_require__(14),
-	    DisplayObject = __webpack_require__(24),
-	    RenderTexture = __webpack_require__(25),
+	var math = __webpack_require__(15),
+	    DisplayObject = __webpack_require__(25),
+	    RenderTexture = __webpack_require__(26),
 	    _tempMatrix = new math.Matrix();
 
 	/**
@@ -7706,15 +7741,15 @@
 
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var math = __webpack_require__(14),
-	    Texture = __webpack_require__(26),
-	    Container = __webpack_require__(35),
-	    CanvasTinter = __webpack_require__(37),
-	    utils = __webpack_require__(6),
-	    CONST = __webpack_require__(7),
+	var math = __webpack_require__(15),
+	    Texture = __webpack_require__(27),
+	    Container = __webpack_require__(36),
+	    CanvasTinter = __webpack_require__(38),
+	    utils = __webpack_require__(7),
+	    CONST = __webpack_require__(8),
 	    tempPoint = new math.Point();
 
 	/**
@@ -8274,10 +8309,10 @@
 
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(7);
 
 	/**
 	 * Utility methods for Sprite/Texture tinting.
@@ -8512,11 +8547,11 @@
 
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Container = __webpack_require__(35),
-	    CONST = __webpack_require__(7);
+	var Container = __webpack_require__(36),
+	    CONST = __webpack_require__(8);
 
 	/**
 	 * The ParticleContainer class is a really fast version of the Container built solely for speed,
@@ -8847,12 +8882,12 @@
 
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ObjectRenderer = __webpack_require__(40),
-	    WebGLRenderer = __webpack_require__(41),
-	    CONST = __webpack_require__(7);
+	var ObjectRenderer = __webpack_require__(41),
+	    WebGLRenderer = __webpack_require__(42),
+	    CONST = __webpack_require__(8);
 
 	/**
 	 * @author Mat Groves
@@ -9319,10 +9354,10 @@
 
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var WebGLManager = __webpack_require__(32);
+	var WebGLManager = __webpack_require__(33);
 
 	/**
 	 * Base for a common object renderer that can be used as a system renderer plugin.
@@ -9380,20 +9415,20 @@
 
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var SystemRenderer = __webpack_require__(42),
-	    ShaderManager = __webpack_require__(43),
-	    MaskManager = __webpack_require__(48),
-	    StencilManager = __webpack_require__(52),
-	    FilterManager = __webpack_require__(31),
-	    BlendModeManager = __webpack_require__(53),
-	    RenderTarget = __webpack_require__(29),
-	    ObjectRenderer = __webpack_require__(40),
-	    FXAAFilter = __webpack_require__(54),
-	    utils = __webpack_require__(6),
-	    CONST = __webpack_require__(7);
+	var SystemRenderer = __webpack_require__(43),
+	    ShaderManager = __webpack_require__(44),
+	    MaskManager = __webpack_require__(49),
+	    StencilManager = __webpack_require__(53),
+	    FilterManager = __webpack_require__(32),
+	    BlendModeManager = __webpack_require__(54),
+	    RenderTarget = __webpack_require__(30),
+	    ObjectRenderer = __webpack_require__(41),
+	    FXAAFilter = __webpack_require__(55),
+	    utils = __webpack_require__(7),
+	    CONST = __webpack_require__(8);
 
 	/**
 	 * The WebGLRenderer draws the scene and all its content onto a webGL enabled canvas. This renderer
@@ -9929,13 +9964,13 @@
 
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var utils = __webpack_require__(6),
-	    math = __webpack_require__(14),
-	    CONST = __webpack_require__(7),
-	    EventEmitter = __webpack_require__(13);
+	var utils = __webpack_require__(7),
+	    math = __webpack_require__(15),
+	    CONST = __webpack_require__(8),
+	    EventEmitter = __webpack_require__(14);
 
 	/**
 	 * The CanvasRenderer draws the scene and all its content onto a 2d canvas. This renderer should be used for browsers that do not support webGL.
@@ -10175,14 +10210,14 @@
 
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var WebGLManager = __webpack_require__(32),
-	    TextureShader = __webpack_require__(44),
-	    ComplexPrimitiveShader = __webpack_require__(46),
-	    PrimitiveShader = __webpack_require__(47),
-	    utils = __webpack_require__(6);
+	var WebGLManager = __webpack_require__(33),
+	    TextureShader = __webpack_require__(45),
+	    ComplexPrimitiveShader = __webpack_require__(47),
+	    PrimitiveShader = __webpack_require__(48),
+	    utils = __webpack_require__(7);
 
 	/**
 	 * @class
@@ -10346,10 +10381,10 @@
 
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Shader = __webpack_require__(45);
+	var Shader = __webpack_require__(46);
 
 	/**
 	 * @class
@@ -10447,11 +10482,11 @@
 
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*global console */
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(7);
 
 	/**
 	 * @class
@@ -11009,10 +11044,10 @@
 
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Shader = __webpack_require__(45);
+	var Shader = __webpack_require__(46);
 
 	/**
 	 * @class
@@ -11073,10 +11108,10 @@
 
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Shader = __webpack_require__(45);
+	var Shader = __webpack_require__(46);
 
 	/**
 	 * @class
@@ -11138,11 +11173,11 @@
 
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var WebGLManager = __webpack_require__(32),
-	    AlphaMaskFilter = __webpack_require__(49);
+	var WebGLManager = __webpack_require__(33),
+	    AlphaMaskFilter = __webpack_require__(50);
 
 	/**
 	 * @class
@@ -11256,14 +11291,14 @@
 
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var AbstractFilter = __webpack_require__(50),
-	    math =  __webpack_require__(14);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var AbstractFilter = __webpack_require__(51),
+	    math =  __webpack_require__(15);
 
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * The SpriteMaskFilter class
@@ -11358,10 +11393,10 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var DefaultShader = __webpack_require__(44);
+	var DefaultShader = __webpack_require__(45);
 
 	/**
 	 * This is the base class for creating a PIXI filter. Currently only WebGL supports filters.
@@ -11480,17 +11515,17 @@
 
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports) {
 
 	
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var WebGLManager = __webpack_require__(32),
-	    utils = __webpack_require__(6);
+	var WebGLManager = __webpack_require__(33),
+	    utils = __webpack_require__(7);
 
 	/**
 	 * @class
@@ -11834,10 +11869,10 @@
 
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var WebGLManager = __webpack_require__(32);
+	var WebGLManager = __webpack_require__(33);
 
 	/**
 	 * @class
@@ -11881,12 +11916,12 @@
 
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var AbstractFilter = __webpack_require__(50);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var AbstractFilter = __webpack_require__(51);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 *
@@ -11934,14 +11969,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ObjectRenderer = __webpack_require__(40),
-	    WebGLRenderer = __webpack_require__(41),
-	    ParticleShader = __webpack_require__(56),
-	    ParticleBuffer = __webpack_require__(57),
-	    math            = __webpack_require__(14);
+	var ObjectRenderer = __webpack_require__(41),
+	    WebGLRenderer = __webpack_require__(42),
+	    ParticleShader = __webpack_require__(57),
+	    ParticleBuffer = __webpack_require__(58),
+	    math            = __webpack_require__(15);
 
 	/**
 	 * @author Mat Groves
@@ -12433,10 +12468,10 @@
 
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var TextureShader = __webpack_require__(44);
+	var TextureShader = __webpack_require__(45);
 
 	/**
 	 * @class
@@ -12515,7 +12550,7 @@
 
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports) {
 
 	
@@ -12732,14 +12767,14 @@
 
 
 /***/ },
-/* 58 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Sprite = __webpack_require__(36),
-	    Texture = __webpack_require__(26),
-	    math = __webpack_require__(14),
-	    utils = __webpack_require__(6),
-	    CONST = __webpack_require__(7);
+	var Sprite = __webpack_require__(37),
+	    Texture = __webpack_require__(27),
+	    math = __webpack_require__(15),
+	    utils = __webpack_require__(7),
+	    CONST = __webpack_require__(8);
 
 	/**
 	 * A Text Object will create a line or multiple lines of text. To split a line you can use '\n' in your text string,
@@ -13349,16 +13384,16 @@
 
 
 /***/ },
-/* 59 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Container = __webpack_require__(35),
-	    Texture = __webpack_require__(26),
-	    CanvasBuffer = __webpack_require__(34),
-	    CanvasGraphics = __webpack_require__(60),
-	    GraphicsData = __webpack_require__(61),
-	    math = __webpack_require__(14),
-	    CONST = __webpack_require__(7),
+	var Container = __webpack_require__(36),
+	    Texture = __webpack_require__(27),
+	    CanvasBuffer = __webpack_require__(35),
+	    CanvasGraphics = __webpack_require__(61),
+	    GraphicsData = __webpack_require__(62),
+	    math = __webpack_require__(15),
+	    CONST = __webpack_require__(8),
 	    tempPoint = new math.Point();
 
 	/**
@@ -14535,10 +14570,10 @@
 
 
 /***/ },
-/* 60 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var CONST = __webpack_require__(7);
+	var CONST = __webpack_require__(8);
 
 	/**
 	 * A set of functions used by the canvas renderer to draw the primitive graphics data.
@@ -14892,7 +14927,7 @@
 
 
 /***/ },
-/* 61 */
+/* 62 */
 /***/ function(module, exports) {
 
 	/**
@@ -14986,16 +15021,16 @@
 
 
 /***/ },
-/* 62 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var utils = __webpack_require__(6),
-	    math = __webpack_require__(14),
-	    CONST = __webpack_require__(7),
-	    ObjectRenderer = __webpack_require__(40),
-	    WebGLRenderer = __webpack_require__(41),
-	    WebGLGraphicsData = __webpack_require__(63),
-	    earcut = __webpack_require__(64);
+	var utils = __webpack_require__(7),
+	    math = __webpack_require__(15),
+	    CONST = __webpack_require__(8),
+	    ObjectRenderer = __webpack_require__(41),
+	    WebGLRenderer = __webpack_require__(42),
+	    WebGLGraphicsData = __webpack_require__(64),
+	    earcut = __webpack_require__(65);
 
 	/**
 	 * Renders the graphics object.
@@ -15894,7 +15929,7 @@
 
 
 /***/ },
-/* 63 */
+/* 64 */
 /***/ function(module, exports) {
 
 	/**
@@ -16016,7 +16051,7 @@
 
 
 /***/ },
-/* 64 */
+/* 65 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -16685,14 +16720,14 @@
 
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var SystemRenderer = __webpack_require__(42),
-	    CanvasMaskManager = __webpack_require__(66),
-	    utils = __webpack_require__(6),
-	    math = __webpack_require__(14),
-	    CONST = __webpack_require__(7);
+	var SystemRenderer = __webpack_require__(43),
+	    CanvasMaskManager = __webpack_require__(67),
+	    utils = __webpack_require__(7),
+	    math = __webpack_require__(15),
+	    CONST = __webpack_require__(8);
 
 	/**
 	 * The CanvasRenderer draws the scene and all its content onto a 2d canvas. This renderer should be used for browsers that do not support webGL.
@@ -16974,10 +17009,10 @@
 
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var CanvasGraphics = __webpack_require__(60);
+	var CanvasGraphics = __webpack_require__(61);
 
 	/**
 	 * A set of functions used to handle masking.
@@ -17040,16 +17075,16 @@
 
 
 /***/ },
-/* 67 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4),
-	    InteractionData = __webpack_require__(3);
+	var core = __webpack_require__(5),
+	    InteractionData = __webpack_require__(4);
 
 	// Mix interactiveTarget into core.DisplayObject.prototype
 	Object.assign(
 	    core.DisplayObject.prototype,
-	    __webpack_require__(68)
+	    __webpack_require__(69)
 	);
 
 	/**
@@ -17895,7 +17930,7 @@
 
 
 /***/ },
-/* 68 */
+/* 69 */
 /***/ function(module, exports) {
 
 	/**
@@ -17948,15 +17983,15 @@
 
 
 /***/ },
-/* 69 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(70);
-	__webpack_require__(72);
+	__webpack_require__(71);
+	__webpack_require__(73);
 
 
 /***/ },
-/* 70 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// References:
@@ -17965,12 +18000,12 @@
 
 	if (!Object.assign)
 	{
-	    Object.assign = __webpack_require__(71);
+	    Object.assign = __webpack_require__(72);
 	}
 
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -18002,7 +18037,7 @@
 
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// References:
@@ -18075,7 +18110,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -18085,25 +18120,25 @@
 	 * @license     {@link https://github.com/GoodBoyDigital/pixi.js/blob/master/LICENSE|MIT License}
 	 */
 
-	__webpack_require__(75);
 	__webpack_require__(76);
 	__webpack_require__(77);
+	__webpack_require__(78);
 
 	/**
 	 * @namespace PIXI.extras
 	 */
 	module.exports = {
-	    MovieClip:      __webpack_require__(74),
-	    TilingSprite:   __webpack_require__(78),
-	    BitmapText:     __webpack_require__(79)
+	    MovieClip:      __webpack_require__(75),
+	    TilingSprite:   __webpack_require__(79),
+	    BitmapText:     __webpack_require__(80)
 	};
 
 
 /***/ },
-/* 74 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4);
+	var core = __webpack_require__(5);
 
 	/**
 	 * A MovieClip is a simple way to display an animation depicted by a list of textures.
@@ -18380,10 +18415,10 @@
 
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4),
+	var core = __webpack_require__(5),
 	    DisplayObject = core.DisplayObject,
 	    _tempMatrix = new core.Matrix();
 
@@ -18656,10 +18691,10 @@
 
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4);
+	var core = __webpack_require__(5);
 
 	/**
 	 * The instance name of the object.
@@ -18688,10 +18723,10 @@
 
 
 /***/ },
-/* 77 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4);
+	var core = __webpack_require__(5);
 
 	/**
 	* Returns the global position of the displayObject
@@ -18721,10 +18756,10 @@
 
 
 /***/ },
-/* 78 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4),
+	var core = __webpack_require__(5),
 	    // a sprite use dfor rendering textures..
 	    tempPoint = new core.Point();
 
@@ -19162,10 +19197,10 @@
 
 
 /***/ },
-/* 79 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4);
+	var core = __webpack_require__(5);
 
 	/**
 	 * A BitmapText object will create a line or multiple lines of text using bitmap font. To
@@ -19545,7 +19580,7 @@
 
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19559,42 +19594,42 @@
 	 * @namespace PIXI.filters
 	 */
 	module.exports = {
-	    AsciiFilter:        __webpack_require__(84),
-	    BloomFilter:        __webpack_require__(85),
-	    BlurFilter:         __webpack_require__(87),
-	    BlurXFilter:        __webpack_require__(82),
-	    BlurYFilter:        __webpack_require__(86),
-	    BlurDirFilter:      __webpack_require__(88),
-	    ColorMatrixFilter:  __webpack_require__(89),
-	    ColorStepFilter:    __webpack_require__(90),
-	    ConvolutionFilter:  __webpack_require__(91),
-	    CrossHatchFilter:   __webpack_require__(92),
-	    DisplacementFilter: __webpack_require__(93),
-	    DotScreenFilter:    __webpack_require__(94),
-	    GrayFilter:         __webpack_require__(95),
-	    DropShadowFilter:   __webpack_require__(81),
-	    InvertFilter:       __webpack_require__(96),
-	    NoiseFilter:        __webpack_require__(97),
-	    NormalMapFilter:    __webpack_require__(98),
-	    PixelateFilter:     __webpack_require__(99),
-	    RGBSplitFilter:     __webpack_require__(100),
-	    ShockwaveFilter:    __webpack_require__(101),
-	    SepiaFilter:        __webpack_require__(102),
-	    SmartBlurFilter:    __webpack_require__(103),
-	    TiltShiftFilter:    __webpack_require__(104),
-	    TiltShiftXFilter:   __webpack_require__(105),
-	    TiltShiftYFilter:   __webpack_require__(107),
-	    TwistFilter:        __webpack_require__(108)
+	    AsciiFilter:        __webpack_require__(85),
+	    BloomFilter:        __webpack_require__(86),
+	    BlurFilter:         __webpack_require__(88),
+	    BlurXFilter:        __webpack_require__(83),
+	    BlurYFilter:        __webpack_require__(87),
+	    BlurDirFilter:      __webpack_require__(89),
+	    ColorMatrixFilter:  __webpack_require__(90),
+	    ColorStepFilter:    __webpack_require__(91),
+	    ConvolutionFilter:  __webpack_require__(92),
+	    CrossHatchFilter:   __webpack_require__(93),
+	    DisplacementFilter: __webpack_require__(94),
+	    DotScreenFilter:    __webpack_require__(95),
+	    GrayFilter:         __webpack_require__(96),
+	    DropShadowFilter:   __webpack_require__(82),
+	    InvertFilter:       __webpack_require__(97),
+	    NoiseFilter:        __webpack_require__(98),
+	    NormalMapFilter:    __webpack_require__(99),
+	    PixelateFilter:     __webpack_require__(100),
+	    RGBSplitFilter:     __webpack_require__(101),
+	    ShockwaveFilter:    __webpack_require__(102),
+	    SepiaFilter:        __webpack_require__(103),
+	    SmartBlurFilter:    __webpack_require__(104),
+	    TiltShiftFilter:    __webpack_require__(105),
+	    TiltShiftXFilter:   __webpack_require__(106),
+	    TiltShiftYFilter:   __webpack_require__(108),
+	    TwistFilter:        __webpack_require__(109)
 	};
 
 
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4),
-	    BlurXFilter = __webpack_require__(82),
-	    BlurYTintFilter = __webpack_require__(83);
+	var core = __webpack_require__(5),
+	    BlurXFilter = __webpack_require__(83),
+	    BlurYTintFilter = __webpack_require__(84);
 
 	/**
 	 * The DropShadowFilter applies a Gaussian blur to an object.
@@ -19762,12 +19797,12 @@
 
 
 /***/ },
-/* 82 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * The BlurXFilter applies a horizontal Gaussian blur to an object.
@@ -19861,13 +19896,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 83 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * The BlurYTintFilter applies a vertical Gaussian blur to an object.
@@ -19957,12 +19992,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 84 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	// TODO (cengler) - The Y is flipped in this shader for some reason.
 
@@ -20019,12 +20054,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 85 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4),
-	    BlurXFilter = __webpack_require__(82),
-	    BlurYFilter = __webpack_require__(86);
+	var core = __webpack_require__(5),
+	    BlurXFilter = __webpack_require__(83),
+	    BlurYFilter = __webpack_require__(87);
 
 	/**
 	 * The BloomFilter applies a Gaussian blur to an object.
@@ -20124,12 +20159,12 @@
 
 
 /***/ },
-/* 86 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * The BlurYFilter applies a horizontal Gaussian blur to an object.
@@ -20215,12 +20250,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 87 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4),
-	    BlurXFilter = __webpack_require__(82),
-	    BlurYFilter = __webpack_require__(86);
+	var core = __webpack_require__(5),
+	    BlurXFilter = __webpack_require__(83),
+	    BlurYFilter = __webpack_require__(87);
 
 	/**
 	 * The BlurFilter applies a Gaussian blur to an object.
@@ -20329,11 +20364,11 @@
 
 
 /***/ },
-/* 88 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
-	var fs = __webpack_require__(51);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * The BlurDirFilter applies a Gaussian blur toward a direction to an object.
@@ -20479,12 +20514,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 89 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * The ColorMatrixFilter class lets you apply a 5x4 matrix transformation on the RGBA
@@ -21024,12 +21059,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 90 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * This lowers the color depth of your image by the given amount, producing an image with a smaller palette.
@@ -21078,12 +21113,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 91 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * The ConvolutionFilter class applies a matrix convolution filter effect.
@@ -21174,12 +21209,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 92 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * A Cross Hatch effect filter.
@@ -21205,12 +21240,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 93 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * The DisplacementFilter class uses the pixel values from the specified texture (called the displacement map) to perform a displacement of an object.
@@ -21291,12 +21326,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 94 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * @author Mat Groves http://matgroves.com/ @Doormat23
@@ -21368,12 +21403,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 95 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * This greyscales the palette of your Display Objects.
@@ -21422,12 +21457,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 96 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * This inverts your Display Objects colors.
@@ -21477,12 +21512,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 97 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * @author Vico @vicocotea
@@ -21537,12 +21572,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 98 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * The NormalMapFilter class uses the pixel values from the specified texture (called the normal map)
@@ -21655,12 +21690,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 99 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * This filter applies a pixelate effect making display objects appear 'blocky'.
@@ -21711,12 +21746,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 100 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * An RGB Split Filter.
@@ -21802,12 +21837,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 101 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * The ColorMatrixFilter class lets you apply a 4x4 matrix transformation on the RGBA
@@ -21895,12 +21930,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 102 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * This applies a sepia effect to your Display Objects.
@@ -21950,12 +21985,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 103 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * A Smart Blur Filter.
@@ -21985,12 +22020,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 104 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4),
-	    TiltShiftXFilter = __webpack_require__(105),
-	    TiltShiftYFilter = __webpack_require__(107);
+	var core = __webpack_require__(5),
+	    TiltShiftXFilter = __webpack_require__(106),
+	    TiltShiftYFilter = __webpack_require__(108);
 
 	/**
 	 * @author Vico @vicocotea
@@ -22099,10 +22134,10 @@
 
 
 /***/ },
-/* 105 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var TiltShiftAxisFilter = __webpack_require__(106);
+	var TiltShiftAxisFilter = __webpack_require__(107);
 
 	/**
 	 * @author Vico @vicocotea
@@ -22141,12 +22176,12 @@
 
 
 /***/ },
-/* 106 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * @author Vico @vicocotea
@@ -22271,10 +22306,10 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 107 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var TiltShiftAxisFilter = __webpack_require__(106);
+	var TiltShiftAxisFilter = __webpack_require__(107);
 
 	/**
 	 * @author Vico @vicocotea
@@ -22313,12 +22348,12 @@
 
 
 /***/ },
-/* 108 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function(__dirname) {var core = __webpack_require__(5);
 	// @see https://github.com/substack/brfs/issues/25
-	var fs = __webpack_require__(51);
+	var fs = __webpack_require__(52);
 
 	/**
 	 * This filter applies a twist effect making display objects appear twisted in the given direction.
@@ -22403,7 +22438,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ },
-/* 109 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -22417,24 +22452,24 @@
 	 * @namespace PIXI.loaders
 	 */
 	module.exports = {
-	    Loader:             __webpack_require__(110),
+	    Loader:             __webpack_require__(111),
 
 	    // parsers
-	    bitmapFontParser:   __webpack_require__(126),
-	    spritesheetParser:  __webpack_require__(124),
-	    textureParser:      __webpack_require__(123),
-	    Resource:           __webpack_require__(111).Resource
+	    bitmapFontParser:   __webpack_require__(127),
+	    spritesheetParser:  __webpack_require__(125),
+	    textureParser:      __webpack_require__(124),
+	    Resource:           __webpack_require__(112).Resource
 	};
 
 
 /***/ },
-/* 110 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ResourceLoader = __webpack_require__(111),
-	    textureParser = __webpack_require__(123),
-	    spritesheetParser = __webpack_require__(124),
-	    bitmapFontParser = __webpack_require__(126);
+	var ResourceLoader = __webpack_require__(112),
+	    textureParser = __webpack_require__(124),
+	    spritesheetParser = __webpack_require__(125),
+	    bitmapFontParser = __webpack_require__(127);
 
 	/**
 	 *
@@ -22494,31 +22529,31 @@
 
 
 /***/ },
-/* 111 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(112);
+	module.exports = __webpack_require__(113);
 
-	module.exports.Resource = __webpack_require__(119);
+	module.exports.Resource = __webpack_require__(120);
 
 	module.exports.middleware = {
 	    caching: {
-	        memory: __webpack_require__(120)
+	        memory: __webpack_require__(121)
 	    },
 	    parsing: {
-	        blob: __webpack_require__(121)
+	        blob: __webpack_require__(122)
 	    }
 	};
 
 
 /***/ },
-/* 112 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var async       = __webpack_require__(10),
-	    urlParser   = __webpack_require__(113),
-	    Resource    = __webpack_require__(119),
-	    EventEmitter = __webpack_require__(13);
+	var async       = __webpack_require__(11),
+	    urlParser   = __webpack_require__(114),
+	    Resource    = __webpack_require__(120),
+	    EventEmitter = __webpack_require__(14);
 
 	/**
 	 * Manages the state and loading of multiple resources to load.
@@ -22971,7 +23006,7 @@
 
 
 /***/ },
-/* 113 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -22995,7 +23030,7 @@
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(114);
+	var punycode = __webpack_require__(115);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -23067,7 +23102,7 @@
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(116);
+	    querystring = __webpack_require__(117);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -23684,7 +23719,7 @@
 
 
 /***/ },
-/* 114 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -24216,10 +24251,10 @@
 
 	}(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(115)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(116)(module), (function() { return this; }())))
 
 /***/ },
-/* 115 */
+/* 116 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -24235,17 +24270,17 @@
 
 
 /***/ },
-/* 116 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(117);
-	exports.encode = exports.stringify = __webpack_require__(118);
+	exports.decode = exports.parse = __webpack_require__(118);
+	exports.encode = exports.stringify = __webpack_require__(119);
 
 
 /***/ },
-/* 117 */
+/* 118 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -24331,7 +24366,7 @@
 
 
 /***/ },
-/* 118 */
+/* 119 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -24401,11 +24436,11 @@
 
 
 /***/ },
-/* 119 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var EventEmitter = __webpack_require__(13),
-	    _url = __webpack_require__(113),
+	var EventEmitter = __webpack_require__(14),
+	    _url = __webpack_require__(114),
 	    // tests is CORS is supported in XHR, if not we need to use XDR
 	    useXdr = !!(window.XDomainRequest && !('withCredentials' in (new XMLHttpRequest()))),
 	    tempAnchor = null;
@@ -25182,7 +25217,7 @@
 
 
 /***/ },
-/* 120 */
+/* 121 */
 /***/ function(module, exports) {
 
 	// a simple in-memory cache for resources
@@ -25208,11 +25243,11 @@
 
 
 /***/ },
-/* 121 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Resource = __webpack_require__(119),
-	    b64 = __webpack_require__(122);
+	var Resource = __webpack_require__(120),
+	    b64 = __webpack_require__(123);
 
 	window.URL = window.URL || window.webkitURL;
 
@@ -25272,7 +25307,7 @@
 
 
 /***/ },
-/* 122 */
+/* 123 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -25342,10 +25377,10 @@
 
 
 /***/ },
-/* 123 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4);
+	var core = __webpack_require__(5);
 
 	module.exports = function ()
 	{
@@ -25365,12 +25400,12 @@
 
 
 /***/ },
-/* 124 */
+/* 125 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Resource = __webpack_require__(111).Resource,
-	    path = __webpack_require__(125),
-	    core = __webpack_require__(4);
+	var Resource = __webpack_require__(112).Resource,
+	    path = __webpack_require__(126),
+	    core = __webpack_require__(5);
 
 	module.exports = function ()
 	{
@@ -25452,7 +25487,7 @@
 
 
 /***/ },
-/* 125 */
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -25680,16 +25715,16 @@
 	    }
 	;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ },
-/* 126 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Resource = __webpack_require__(111).Resource,
-	    core = __webpack_require__(4),
-	    extras = __webpack_require__(73),
-	    path = __webpack_require__(125);
+	var Resource = __webpack_require__(112).Resource,
+	    core = __webpack_require__(5),
+	    extras = __webpack_require__(74),
+	    path = __webpack_require__(126);
 
 
 	function parse(resource, texture) {
@@ -25807,7 +25842,7 @@
 
 
 /***/ },
-/* 127 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25821,18 +25856,18 @@
 	 * @namespace PIXI.mesh
 	 */
 	module.exports = {
-	    Mesh:           __webpack_require__(128),
-	    Rope:           __webpack_require__(129),
-	    MeshRenderer:   __webpack_require__(130),
-	    MeshShader:     __webpack_require__(131)
+	    Mesh:           __webpack_require__(129),
+	    Rope:           __webpack_require__(130),
+	    MeshRenderer:   __webpack_require__(131),
+	    MeshShader:     __webpack_require__(132)
 	};
 
 
 /***/ },
-/* 128 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4),
+	var core = __webpack_require__(5),
 	    tempPoint = new core.Point(),
 	    tempPolygon = new core.Polygon();
 
@@ -26314,11 +26349,11 @@
 
 
 /***/ },
-/* 129 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Mesh = __webpack_require__(128);
-	var core = __webpack_require__(4);
+	var Mesh = __webpack_require__(129);
+	var core = __webpack_require__(5);
 
 	/**
 	 * The rope allows you to draw a texture across several points and them manipulate these points
@@ -26531,11 +26566,11 @@
 
 
 /***/ },
-/* 130 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4),
-	    Mesh = __webpack_require__(128);
+	var core = __webpack_require__(5),
+	    Mesh = __webpack_require__(129);
 
 	/**
 	 * @author Mat Groves
@@ -26749,10 +26784,10 @@
 
 
 /***/ },
-/* 131 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(4);
+	var core = __webpack_require__(5);
 
 	/**
 	 * @class
@@ -26814,14 +26849,14 @@
 
 
 /***/ },
-/* 132 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*global console */
-	var core = __webpack_require__(4),
-	    mesh = __webpack_require__(127),
-	    extras = __webpack_require__(73),
-	    filters = __webpack_require__(80);
+	var core = __webpack_require__(5),
+	    mesh = __webpack_require__(128),
+	    extras = __webpack_require__(74),
+	    filters = __webpack_require__(81);
 
 	/**
 	 * @class
@@ -27153,7 +27188,1421 @@
 
 
 /***/ },
-/* 133 */
+/* 134 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var WIDTH = 800;
+	exports.WIDTH = WIDTH;
+	var HEIGHT = 600;
+
+	exports.HEIGHT = HEIGHT;
+	var SPRING = -25;
+	exports.SPRING = SPRING;
+	var GRAVITY = 1.5;
+	exports.GRAVITY = GRAVITY;
+	var ACCEL = 1;
+	exports.ACCEL = ACCEL;
+	var MAX_SPEED = 8;
+
+	exports.MAX_SPEED = MAX_SPEED;
+	var OBS_COLOR = 0x774320;
+	exports.OBS_COLOR = OBS_COLOR;
+
+/***/ },
+/* 135 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _howler = __webpack_require__(136);
+
+	var bg = new _howler.Howl({
+	  urls: ['snd/ossuary-5-rest.mp3'],
+	  volume: 0.5,
+	  loop: true
+	});
+
+	exports.bg = bg;
+	var jump = new _howler.Howl({
+	  urls: ['snd/jump.mp3']
+	});
+
+	exports.jump = jump;
+	var land = new _howler.Howl({
+	  urls: ['snd/land.mp3']
+	});
+	exports.land = land;
+
+/***/ },
+/* 136 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	 *  howler.js v1.1.26
+	 *  howlerjs.com
+	 *
+	 *  (c) 2013-2015, James Simpson of GoldFire Studios
+	 *  goldfirestudios.com
+	 *
+	 *  MIT License
+	 */
+
+	(function() {
+	  // setup
+	  var cache = {};
+
+	  // setup the audio context
+	  var ctx = null,
+	    usingWebAudio = true,
+	    noAudio = false;
+	  try {
+	    if (typeof AudioContext !== 'undefined') {
+	      ctx = new AudioContext();
+	    } else if (typeof webkitAudioContext !== 'undefined') {
+	      ctx = new webkitAudioContext();
+	    } else {
+	      usingWebAudio = false;
+	    }
+	  } catch(e) {
+	    usingWebAudio = false;
+	  }
+
+	  if (!usingWebAudio) {
+	    if (typeof Audio !== 'undefined') {
+	      try {
+	        new Audio();
+	      } catch(e) {
+	        noAudio = true;
+	      }
+	    } else {
+	      noAudio = true;
+	    }
+	  }
+
+	  // create a master gain node
+	  if (usingWebAudio) {
+	    var masterGain = (typeof ctx.createGain === 'undefined') ? ctx.createGainNode() : ctx.createGain();
+	    masterGain.gain.value = 1;
+	    masterGain.connect(ctx.destination);
+	  }
+
+	  // create global controller
+	  var HowlerGlobal = function(codecs) {
+	    this._volume = 1;
+	    this._muted = false;
+	    this.usingWebAudio = usingWebAudio;
+	    this.ctx = ctx;
+	    this.noAudio = noAudio;
+	    this._howls = [];
+	    this._codecs = codecs;
+	    this.iOSAutoEnable = true;
+	  };
+	  HowlerGlobal.prototype = {
+	    /**
+	     * Get/set the global volume for all sounds.
+	     * @param  {Float} vol Volume from 0.0 to 1.0.
+	     * @return {Howler/Float}     Returns self or current volume.
+	     */
+	    volume: function(vol) {
+	      var self = this;
+
+	      // make sure volume is a number
+	      vol = parseFloat(vol);
+
+	      if (vol >= 0 && vol <= 1) {
+	        self._volume = vol;
+
+	        if (usingWebAudio) {
+	          masterGain.gain.value = vol;
+	        }
+
+	        // loop through cache and change volume of all nodes that are using HTML5 Audio
+	        for (var key in self._howls) {
+	          if (self._howls.hasOwnProperty(key) && self._howls[key]._webAudio === false) {
+	            // loop through the audio nodes
+	            for (var i=0; i<self._howls[key]._audioNode.length; i++) {
+	              self._howls[key]._audioNode[i].volume = self._howls[key]._volume * self._volume;
+	            }
+	          }
+	        }
+
+	        return self;
+	      }
+
+	      // return the current global volume
+	      return (usingWebAudio) ? masterGain.gain.value : self._volume;
+	    },
+
+	    /**
+	     * Mute all sounds.
+	     * @return {Howler}
+	     */
+	    mute: function() {
+	      this._setMuted(true);
+
+	      return this;
+	    },
+
+	    /**
+	     * Unmute all sounds.
+	     * @return {Howler}
+	     */
+	    unmute: function() {
+	      this._setMuted(false);
+
+	      return this;
+	    },
+
+	    /**
+	     * Handle muting and unmuting globally.
+	     * @param  {Boolean} muted Is muted or not.
+	     */
+	    _setMuted: function(muted) {
+	      var self = this;
+
+	      self._muted = muted;
+
+	      if (usingWebAudio) {
+	        masterGain.gain.value = muted ? 0 : self._volume;
+	      }
+
+	      for (var key in self._howls) {
+	        if (self._howls.hasOwnProperty(key) && self._howls[key]._webAudio === false) {
+	          // loop through the audio nodes
+	          for (var i=0; i<self._howls[key]._audioNode.length; i++) {
+	            self._howls[key]._audioNode[i].muted = muted;
+	          }
+	        }
+	      }
+	    },
+
+	    /**
+	     * Check for codec support.
+	     * @param  {String} ext Audio file extention.
+	     * @return {Boolean}
+	     */
+	    codecs: function(ext) {
+	      return this._codecs[ext];
+	    },
+
+	    /**
+	     * iOS will only allow audio to be played after a user interaction.
+	     * Attempt to automatically unlock audio on the first user interaction.
+	     * Concept from: http://paulbakaus.com/tutorials/html5/web-audio-on-ios/
+	     * @return {Howler}
+	     */
+	    _enableiOSAudio: function() {
+	      var self = this;
+
+	      // only run this on iOS if audio isn't already eanbled
+	      if (ctx && (self._iOSEnabled || !/iPhone|iPad|iPod/i.test(navigator.userAgent))) {
+	        return;
+	      }
+
+	      self._iOSEnabled = false;
+
+	      // call this method on touch start to create and play a buffer,
+	      // then check if the audio actually played to determine if
+	      // audio has now been unlocked on iOS
+	      var unlock = function() {
+	        // create an empty buffer
+	        var buffer = ctx.createBuffer(1, 1, 22050);
+	        var source = ctx.createBufferSource();
+	        source.buffer = buffer;
+	        source.connect(ctx.destination);
+
+	        // play the empty buffer
+	        if (typeof source.start === 'undefined') {
+	          source.noteOn(0);
+	        } else {
+	          source.start(0);
+	        }
+
+	        // setup a timeout to check that we are unlocked on the next event loop
+	        setTimeout(function() {
+	          if ((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
+	            // update the unlocked state and prevent this check from happening again
+	            self._iOSEnabled = true;
+	            self.iOSAutoEnable = false;
+
+	            // remove the touch start listener
+	            window.removeEventListener('touchstart', unlock, false);
+	          }
+	        }, 0);
+	      };
+
+	      // setup a touch start listener to attempt an unlock in
+	      window.addEventListener('touchstart', unlock, false);
+
+	      return self;
+	    }
+	  };
+
+	  // check for browser codec support
+	  var audioTest = null;
+	  var codecs = {};
+	  if (!noAudio) {
+	    audioTest = new Audio();
+	    codecs = {
+	      mp3: !!audioTest.canPlayType('audio/mpeg;').replace(/^no$/, ''),
+	      opus: !!audioTest.canPlayType('audio/ogg; codecs="opus"').replace(/^no$/, ''),
+	      ogg: !!audioTest.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/, ''),
+	      wav: !!audioTest.canPlayType('audio/wav; codecs="1"').replace(/^no$/, ''),
+	      aac: !!audioTest.canPlayType('audio/aac;').replace(/^no$/, ''),
+	      m4a: !!(audioTest.canPlayType('audio/x-m4a;') || audioTest.canPlayType('audio/m4a;') || audioTest.canPlayType('audio/aac;')).replace(/^no$/, ''),
+	      mp4: !!(audioTest.canPlayType('audio/x-mp4;') || audioTest.canPlayType('audio/mp4;') || audioTest.canPlayType('audio/aac;')).replace(/^no$/, ''),
+	      weba: !!audioTest.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/, '')
+	    };
+	  }
+
+	  // allow access to the global audio controls
+	  var Howler = new HowlerGlobal(codecs);
+
+	  // setup the audio object
+	  var Howl = function(o) {
+	    var self = this;
+
+	    // setup the defaults
+	    self._autoplay = o.autoplay || false;
+	    self._buffer = o.buffer || false;
+	    self._duration = o.duration || 0;
+	    self._format = o.format || null;
+	    self._loop = o.loop || false;
+	    self._loaded = false;
+	    self._sprite = o.sprite || {};
+	    self._src = o.src || '';
+	    self._pos3d = o.pos3d || [0, 0, -0.5];
+	    self._volume = o.volume !== undefined ? o.volume : 1;
+	    self._urls = o.urls || [];
+	    self._rate = o.rate || 1;
+
+	    // allow forcing of a specific panningModel ('equalpower' or 'HRTF'),
+	    // if none is specified, defaults to 'equalpower' and switches to 'HRTF'
+	    // if 3d sound is used
+	    self._model = o.model || null;
+
+	    // setup event functions
+	    self._onload = [o.onload || function() {}];
+	    self._onloaderror = [o.onloaderror || function() {}];
+	    self._onend = [o.onend || function() {}];
+	    self._onpause = [o.onpause || function() {}];
+	    self._onplay = [o.onplay || function() {}];
+
+	    self._onendTimer = [];
+
+	    // Web Audio or HTML5 Audio?
+	    self._webAudio = usingWebAudio && !self._buffer;
+
+	    // check if we need to fall back to HTML5 Audio
+	    self._audioNode = [];
+	    if (self._webAudio) {
+	      self._setupAudioNode();
+	    }
+
+	    // automatically try to enable audio on iOS
+	    if (typeof ctx !== 'undefined' && ctx && Howler.iOSAutoEnable) {
+	      Howler._enableiOSAudio();
+	    }
+
+	    // add this to an array of Howl's to allow global control
+	    Howler._howls.push(self);
+
+	    // load the track
+	    self.load();
+	  };
+
+	  // setup all of the methods
+	  Howl.prototype = {
+	    /**
+	     * Load an audio file.
+	     * @return {Howl}
+	     */
+	    load: function() {
+	      var self = this,
+	        url = null;
+
+	      // if no audio is available, quit immediately
+	      if (noAudio) {
+	        self.on('loaderror');
+	        return;
+	      }
+
+	      // loop through source URLs and pick the first one that is compatible
+	      for (var i=0; i<self._urls.length; i++) {
+	        var ext, urlItem;
+
+	        if (self._format) {
+	          // use specified audio format if available
+	          ext = self._format;
+	        } else {
+	          // figure out the filetype (whether an extension or base64 data)
+	          urlItem = self._urls[i];
+	          ext = /^data:audio\/([^;,]+);/i.exec(urlItem);
+	          if (!ext) {
+	            ext = /\.([^.]+)$/.exec(urlItem.split('?', 1)[0]);
+	          }
+
+	          if (ext) {
+	            ext = ext[1].toLowerCase();
+	          } else {
+	            self.on('loaderror');
+	            return;
+	          }
+	        }
+
+	        if (codecs[ext]) {
+	          url = self._urls[i];
+	          break;
+	        }
+	      }
+
+	      if (!url) {
+	        self.on('loaderror');
+	        return;
+	      }
+
+	      self._src = url;
+
+	      if (self._webAudio) {
+	        loadBuffer(self, url);
+	      } else {
+	        var newNode = new Audio();
+
+	        // listen for errors with HTML5 audio (http://dev.w3.org/html5/spec-author-view/spec.html#mediaerror)
+	        newNode.addEventListener('error', function () {
+	          if (newNode.error && newNode.error.code === 4) {
+	            HowlerGlobal.noAudio = true;
+	          }
+
+	          self.on('loaderror', {type: newNode.error ? newNode.error.code : 0});
+	        }, false);
+
+	        self._audioNode.push(newNode);
+
+	        // setup the new audio node
+	        newNode.src = url;
+	        newNode._pos = 0;
+	        newNode.preload = 'auto';
+	        newNode.volume = (Howler._muted) ? 0 : self._volume * Howler.volume();
+
+	        // setup the event listener to start playing the sound
+	        // as soon as it has buffered enough
+	        var listener = function() {
+	          // round up the duration when using HTML5 Audio to account for the lower precision
+	          self._duration = Math.ceil(newNode.duration * 10) / 10;
+
+	          // setup a sprite if none is defined
+	          if (Object.getOwnPropertyNames(self._sprite).length === 0) {
+	            self._sprite = {_default: [0, self._duration * 1000]};
+	          }
+
+	          if (!self._loaded) {
+	            self._loaded = true;
+	            self.on('load');
+	          }
+
+	          if (self._autoplay) {
+	            self.play();
+	          }
+
+	          // clear the event listener
+	          newNode.removeEventListener('canplaythrough', listener, false);
+	        };
+	        newNode.addEventListener('canplaythrough', listener, false);
+	        newNode.load();
+	      }
+
+	      return self;
+	    },
+
+	    /**
+	     * Get/set the URLs to be pulled from to play in this source.
+	     * @param  {Array} urls  Arry of URLs to load from
+	     * @return {Howl}        Returns self or the current URLs
+	     */
+	    urls: function(urls) {
+	      var self = this;
+
+	      if (urls) {
+	        self.stop();
+	        self._urls = (typeof urls === 'string') ? [urls] : urls;
+	        self._loaded = false;
+	        self.load();
+
+	        return self;
+	      } else {
+	        return self._urls;
+	      }
+	    },
+
+	    /**
+	     * Play a sound from the current time (0 by default).
+	     * @param  {String}   sprite   (optional) Plays from the specified position in the sound sprite definition.
+	     * @param  {Function} callback (optional) Returns the unique playback id for this sound instance.
+	     * @return {Howl}
+	     */
+	    play: function(sprite, callback) {
+	      var self = this;
+
+	      // if no sprite was passed but a callback was, update the variables
+	      if (typeof sprite === 'function') {
+	        callback = sprite;
+	      }
+
+	      // use the default sprite if none is passed
+	      if (!sprite || typeof sprite === 'function') {
+	        sprite = '_default';
+	      }
+
+	      // if the sound hasn't been loaded, add it to the event queue
+	      if (!self._loaded) {
+	        self.on('load', function() {
+	          self.play(sprite, callback);
+	        });
+
+	        return self;
+	      }
+
+	      // if the sprite doesn't exist, play nothing
+	      if (!self._sprite[sprite]) {
+	        if (typeof callback === 'function') callback();
+	        return self;
+	      }
+
+	      // get the node to playback
+	      self._inactiveNode(function(node) {
+	        // persist the sprite being played
+	        node._sprite = sprite;
+
+	        // determine where to start playing from
+	        var pos = (node._pos > 0) ? node._pos : self._sprite[sprite][0] / 1000;
+
+	        // determine how long to play for
+	        var duration = 0;
+	        if (self._webAudio) {
+	          duration = self._sprite[sprite][1] / 1000 - node._pos;
+	          if (node._pos > 0) {
+	            pos = self._sprite[sprite][0] / 1000 + pos;
+	          }
+	        } else {
+	          duration = self._sprite[sprite][1] / 1000 - (pos - self._sprite[sprite][0] / 1000);
+	        }
+
+	        // determine if this sound should be looped
+	        var loop = !!(self._loop || self._sprite[sprite][2]);
+
+	        // set timer to fire the 'onend' event
+	        var soundId = (typeof callback === 'string') ? callback : Math.round(Date.now() * Math.random()) + '',
+	          timerId;
+	        (function() {
+	          var data = {
+	            id: soundId,
+	            sprite: sprite,
+	            loop: loop
+	          };
+	          timerId = setTimeout(function() {
+	            // if looping, restart the track
+	            if (!self._webAudio && loop) {
+	              self.stop(data.id).play(sprite, data.id);
+	            }
+
+	            // set web audio node to paused at end
+	            if (self._webAudio && !loop) {
+	              self._nodeById(data.id).paused = true;
+	              self._nodeById(data.id)._pos = 0;
+
+	              // clear the end timer
+	              self._clearEndTimer(data.id);
+	            }
+
+	            // end the track if it is HTML audio and a sprite
+	            if (!self._webAudio && !loop) {
+	              self.stop(data.id);
+	            }
+
+	            // fire ended event
+	            self.on('end', soundId);
+	          }, duration * 1000);
+
+	          // store the reference to the timer
+	          self._onendTimer.push({timer: timerId, id: data.id});
+	        })();
+
+	        if (self._webAudio) {
+	          var loopStart = self._sprite[sprite][0] / 1000,
+	            loopEnd = self._sprite[sprite][1] / 1000;
+
+	          // set the play id to this node and load into context
+	          node.id = soundId;
+	          node.paused = false;
+	          refreshBuffer(self, [loop, loopStart, loopEnd], soundId);
+	          self._playStart = ctx.currentTime;
+	          node.gain.value = self._volume;
+
+	          if (typeof node.bufferSource.start === 'undefined') {
+	            loop ? node.bufferSource.noteGrainOn(0, pos, 86400) : node.bufferSource.noteGrainOn(0, pos, duration);
+	          } else {
+	            loop ? node.bufferSource.start(0, pos, 86400) : node.bufferSource.start(0, pos, duration);
+	          }
+	        } else {
+	          if (node.readyState === 4 || !node.readyState && navigator.isCocoonJS) {
+	            node.readyState = 4;
+	            node.id = soundId;
+	            node.currentTime = pos;
+	            node.muted = Howler._muted || node.muted;
+	            node.volume = self._volume * Howler.volume();
+	            setTimeout(function() { node.play(); }, 0);
+	          } else {
+	            self._clearEndTimer(soundId);
+
+	            (function(){
+	              var sound = self,
+	                playSprite = sprite,
+	                fn = callback,
+	                newNode = node;
+	              var listener = function() {
+	                sound.play(playSprite, fn);
+
+	                // clear the event listener
+	                newNode.removeEventListener('canplaythrough', listener, false);
+	              };
+	              newNode.addEventListener('canplaythrough', listener, false);
+	            })();
+
+	            return self;
+	          }
+	        }
+
+	        // fire the play event and send the soundId back in the callback
+	        self.on('play');
+	        if (typeof callback === 'function') callback(soundId);
+
+	        return self;
+	      });
+
+	      return self;
+	    },
+
+	    /**
+	     * Pause playback and save the current position.
+	     * @param {String} id (optional) The play instance ID.
+	     * @return {Howl}
+	     */
+	    pause: function(id) {
+	      var self = this;
+
+	      // if the sound hasn't been loaded, add it to the event queue
+	      if (!self._loaded) {
+	        self.on('play', function() {
+	          self.pause(id);
+	        });
+
+	        return self;
+	      }
+
+	      // clear 'onend' timer
+	      self._clearEndTimer(id);
+
+	      var activeNode = (id) ? self._nodeById(id) : self._activeNode();
+	      if (activeNode) {
+	        activeNode._pos = self.pos(null, id);
+
+	        if (self._webAudio) {
+	          // make sure the sound has been created
+	          if (!activeNode.bufferSource || activeNode.paused) {
+	            return self;
+	          }
+
+	          activeNode.paused = true;
+	          if (typeof activeNode.bufferSource.stop === 'undefined') {
+	            activeNode.bufferSource.noteOff(0);
+	          } else {
+	            activeNode.bufferSource.stop(0);
+	          }
+	        } else {
+	          activeNode.pause();
+	        }
+	      }
+
+	      self.on('pause');
+
+	      return self;
+	    },
+
+	    /**
+	     * Stop playback and reset to start.
+	     * @param  {String} id  (optional) The play instance ID.
+	     * @return {Howl}
+	     */
+	    stop: function(id) {
+	      var self = this;
+
+	      // if the sound hasn't been loaded, add it to the event queue
+	      if (!self._loaded) {
+	        self.on('play', function() {
+	          self.stop(id);
+	        });
+
+	        return self;
+	      }
+
+	      // clear 'onend' timer
+	      self._clearEndTimer(id);
+
+	      var activeNode = (id) ? self._nodeById(id) : self._activeNode();
+	      if (activeNode) {
+	        activeNode._pos = 0;
+
+	        if (self._webAudio) {
+	          // make sure the sound has been created
+	          if (!activeNode.bufferSource || activeNode.paused) {
+	            return self;
+	          }
+
+	          activeNode.paused = true;
+
+	          if (typeof activeNode.bufferSource.stop === 'undefined') {
+	            activeNode.bufferSource.noteOff(0);
+	          } else {
+	            activeNode.bufferSource.stop(0);
+	          }
+	        } else if (!isNaN(activeNode.duration)) {
+	          activeNode.pause();
+	          activeNode.currentTime = 0;
+	        }
+	      }
+
+	      return self;
+	    },
+
+	    /**
+	     * Mute this sound.
+	     * @param  {String} id (optional) The play instance ID.
+	     * @return {Howl}
+	     */
+	    mute: function(id) {
+	      var self = this;
+
+	      // if the sound hasn't been loaded, add it to the event queue
+	      if (!self._loaded) {
+	        self.on('play', function() {
+	          self.mute(id);
+	        });
+
+	        return self;
+	      }
+
+	      var activeNode = (id) ? self._nodeById(id) : self._activeNode();
+	      if (activeNode) {
+	        if (self._webAudio) {
+	          activeNode.gain.value = 0;
+	        } else {
+	          activeNode.muted = true;
+	        }
+	      }
+
+	      return self;
+	    },
+
+	    /**
+	     * Unmute this sound.
+	     * @param  {String} id (optional) The play instance ID.
+	     * @return {Howl}
+	     */
+	    unmute: function(id) {
+	      var self = this;
+
+	      // if the sound hasn't been loaded, add it to the event queue
+	      if (!self._loaded) {
+	        self.on('play', function() {
+	          self.unmute(id);
+	        });
+
+	        return self;
+	      }
+
+	      var activeNode = (id) ? self._nodeById(id) : self._activeNode();
+	      if (activeNode) {
+	        if (self._webAudio) {
+	          activeNode.gain.value = self._volume;
+	        } else {
+	          activeNode.muted = false;
+	        }
+	      }
+
+	      return self;
+	    },
+
+	    /**
+	     * Get/set volume of this sound.
+	     * @param  {Float}  vol Volume from 0.0 to 1.0.
+	     * @param  {String} id  (optional) The play instance ID.
+	     * @return {Howl/Float}     Returns self or current volume.
+	     */
+	    volume: function(vol, id) {
+	      var self = this;
+
+	      // make sure volume is a number
+	      vol = parseFloat(vol);
+
+	      if (vol >= 0 && vol <= 1) {
+	        self._volume = vol;
+
+	        // if the sound hasn't been loaded, add it to the event queue
+	        if (!self._loaded) {
+	          self.on('play', function() {
+	            self.volume(vol, id);
+	          });
+
+	          return self;
+	        }
+
+	        var activeNode = (id) ? self._nodeById(id) : self._activeNode();
+	        if (activeNode) {
+	          if (self._webAudio) {
+	            activeNode.gain.value = vol;
+	          } else {
+	            activeNode.volume = vol * Howler.volume();
+	          }
+	        }
+
+	        return self;
+	      } else {
+	        return self._volume;
+	      }
+	    },
+
+	    /**
+	     * Get/set whether to loop the sound.
+	     * @param  {Boolean} loop To loop or not to loop, that is the question.
+	     * @return {Howl/Boolean}      Returns self or current looping value.
+	     */
+	    loop: function(loop) {
+	      var self = this;
+
+	      if (typeof loop === 'boolean') {
+	        self._loop = loop;
+
+	        return self;
+	      } else {
+	        return self._loop;
+	      }
+	    },
+
+	    /**
+	     * Get/set sound sprite definition.
+	     * @param  {Object} sprite Example: {spriteName: [offset, duration, loop]}
+	     *                @param {Integer} offset   Where to begin playback in milliseconds
+	     *                @param {Integer} duration How long to play in milliseconds
+	     *                @param {Boolean} loop     (optional) Set true to loop this sprite
+	     * @return {Howl}        Returns current sprite sheet or self.
+	     */
+	    sprite: function(sprite) {
+	      var self = this;
+
+	      if (typeof sprite === 'object') {
+	        self._sprite = sprite;
+
+	        return self;
+	      } else {
+	        return self._sprite;
+	      }
+	    },
+
+	    /**
+	     * Get/set the position of playback.
+	     * @param  {Float}  pos The position to move current playback to.
+	     * @param  {String} id  (optional) The play instance ID.
+	     * @return {Howl/Float}      Returns self or current playback position.
+	     */
+	    pos: function(pos, id) {
+	      var self = this;
+
+	      // if the sound hasn't been loaded, add it to the event queue
+	      if (!self._loaded) {
+	        self.on('load', function() {
+	          self.pos(pos);
+	        });
+
+	        return typeof pos === 'number' ? self : self._pos || 0;
+	      }
+
+	      // make sure we are dealing with a number for pos
+	      pos = parseFloat(pos);
+
+	      var activeNode = (id) ? self._nodeById(id) : self._activeNode();
+	      if (activeNode) {
+	        if (pos >= 0) {
+	          self.pause(id);
+	          activeNode._pos = pos;
+	          self.play(activeNode._sprite, id);
+
+	          return self;
+	        } else {
+	          return self._webAudio ? activeNode._pos + (ctx.currentTime - self._playStart) : activeNode.currentTime;
+	        }
+	      } else if (pos >= 0) {
+	        return self;
+	      } else {
+	        // find the first inactive node to return the pos for
+	        for (var i=0; i<self._audioNode.length; i++) {
+	          if (self._audioNode[i].paused && self._audioNode[i].readyState === 4) {
+	            return (self._webAudio) ? self._audioNode[i]._pos : self._audioNode[i].currentTime;
+	          }
+	        }
+	      }
+	    },
+
+	    /**
+	     * Get/set the 3D position of the audio source.
+	     * The most common usage is to set the 'x' position
+	     * to affect the left/right ear panning. Setting any value higher than
+	     * 1.0 will begin to decrease the volume of the sound as it moves further away.
+	     * NOTE: This only works with Web Audio API, HTML5 Audio playback
+	     * will not be affected.
+	     * @param  {Float}  x  The x-position of the playback from -1000.0 to 1000.0
+	     * @param  {Float}  y  The y-position of the playback from -1000.0 to 1000.0
+	     * @param  {Float}  z  The z-position of the playback from -1000.0 to 1000.0
+	     * @param  {String} id (optional) The play instance ID.
+	     * @return {Howl/Array}   Returns self or the current 3D position: [x, y, z]
+	     */
+	    pos3d: function(x, y, z, id) {
+	      var self = this;
+
+	      // set a default for the optional 'y' & 'z'
+	      y = (typeof y === 'undefined' || !y) ? 0 : y;
+	      z = (typeof z === 'undefined' || !z) ? -0.5 : z;
+
+	      // if the sound hasn't been loaded, add it to the event queue
+	      if (!self._loaded) {
+	        self.on('play', function() {
+	          self.pos3d(x, y, z, id);
+	        });
+
+	        return self;
+	      }
+
+	      if (x >= 0 || x < 0) {
+	        if (self._webAudio) {
+	          var activeNode = (id) ? self._nodeById(id) : self._activeNode();
+	          if (activeNode) {
+	            self._pos3d = [x, y, z];
+	            activeNode.panner.setPosition(x, y, z);
+	            activeNode.panner.panningModel = self._model || 'HRTF';
+	          }
+	        }
+	      } else {
+	        return self._pos3d;
+	      }
+
+	      return self;
+	    },
+
+	    /**
+	     * Fade a currently playing sound between two volumes.
+	     * @param  {Number}   from     The volume to fade from (0.0 to 1.0).
+	     * @param  {Number}   to       The volume to fade to (0.0 to 1.0).
+	     * @param  {Number}   len      Time in milliseconds to fade.
+	     * @param  {Function} callback (optional) Fired when the fade is complete.
+	     * @param  {String}   id       (optional) The play instance ID.
+	     * @return {Howl}
+	     */
+	    fade: function(from, to, len, callback, id) {
+	      var self = this,
+	        diff = Math.abs(from - to),
+	        dir = from > to ? 'down' : 'up',
+	        steps = diff / 0.01,
+	        stepTime = len / steps;
+
+	      // if the sound hasn't been loaded, add it to the event queue
+	      if (!self._loaded) {
+	        self.on('load', function() {
+	          self.fade(from, to, len, callback, id);
+	        });
+
+	        return self;
+	      }
+
+	      // set the volume to the start position
+	      self.volume(from, id);
+
+	      for (var i=1; i<=steps; i++) {
+	        (function() {
+	          var change = self._volume + (dir === 'up' ? 0.01 : -0.01) * i,
+	            vol = Math.round(1000 * change) / 1000,
+	            toVol = to;
+
+	          setTimeout(function() {
+	            self.volume(vol, id);
+
+	            if (vol === toVol) {
+	              if (callback) callback();
+	            }
+	          }, stepTime * i);
+	        })();
+	      }
+	    },
+
+	    /**
+	     * [DEPRECATED] Fade in the current sound.
+	     * @param  {Float}    to      Volume to fade to (0.0 to 1.0).
+	     * @param  {Number}   len     Time in milliseconds to fade.
+	     * @param  {Function} callback
+	     * @return {Howl}
+	     */
+	    fadeIn: function(to, len, callback) {
+	      return this.volume(0).play().fade(0, to, len, callback);
+	    },
+
+	    /**
+	     * [DEPRECATED] Fade out the current sound and pause when finished.
+	     * @param  {Float}    to       Volume to fade to (0.0 to 1.0).
+	     * @param  {Number}   len      Time in milliseconds to fade.
+	     * @param  {Function} callback
+	     * @param  {String}   id       (optional) The play instance ID.
+	     * @return {Howl}
+	     */
+	    fadeOut: function(to, len, callback, id) {
+	      var self = this;
+
+	      return self.fade(self._volume, to, len, function() {
+	        if (callback) callback();
+	        self.pause(id);
+
+	        // fire ended event
+	        self.on('end');
+	      }, id);
+	    },
+
+	    /**
+	     * Get an audio node by ID.
+	     * @return {Howl} Audio node.
+	     */
+	    _nodeById: function(id) {
+	      var self = this,
+	        node = self._audioNode[0];
+
+	      // find the node with this ID
+	      for (var i=0; i<self._audioNode.length; i++) {
+	        if (self._audioNode[i].id === id) {
+	          node = self._audioNode[i];
+	          break;
+	        }
+	      }
+
+	      return node;
+	    },
+
+	    /**
+	     * Get the first active audio node.
+	     * @return {Howl} Audio node.
+	     */
+	    _activeNode: function() {
+	      var self = this,
+	        node = null;
+
+	      // find the first playing node
+	      for (var i=0; i<self._audioNode.length; i++) {
+	        if (!self._audioNode[i].paused) {
+	          node = self._audioNode[i];
+	          break;
+	        }
+	      }
+
+	      // remove excess inactive nodes
+	      self._drainPool();
+
+	      return node;
+	    },
+
+	    /**
+	     * Get the first inactive audio node.
+	     * If there is none, create a new one and add it to the pool.
+	     * @param  {Function} callback Function to call when the audio node is ready.
+	     */
+	    _inactiveNode: function(callback) {
+	      var self = this,
+	        node = null;
+
+	      // find first inactive node to recycle
+	      for (var i=0; i<self._audioNode.length; i++) {
+	        if (self._audioNode[i].paused && self._audioNode[i].readyState === 4) {
+	          // send the node back for use by the new play instance
+	          callback(self._audioNode[i]);
+	          node = true;
+	          break;
+	        }
+	      }
+
+	      // remove excess inactive nodes
+	      self._drainPool();
+
+	      if (node) {
+	        return;
+	      }
+
+	      // create new node if there are no inactives
+	      var newNode;
+	      if (self._webAudio) {
+	        newNode = self._setupAudioNode();
+	        callback(newNode);
+	      } else {
+	        self.load();
+	        newNode = self._audioNode[self._audioNode.length - 1];
+
+	        // listen for the correct load event and fire the callback
+	        var listenerEvent = navigator.isCocoonJS ? 'canplaythrough' : 'loadedmetadata';
+	        var listener = function() {
+	          newNode.removeEventListener(listenerEvent, listener, false);
+	          callback(newNode);
+	        };
+	        newNode.addEventListener(listenerEvent, listener, false);
+	      }
+	    },
+
+	    /**
+	     * If there are more than 5 inactive audio nodes in the pool, clear out the rest.
+	     */
+	    _drainPool: function() {
+	      var self = this,
+	        inactive = 0,
+	        i;
+
+	      // count the number of inactive nodes
+	      for (i=0; i<self._audioNode.length; i++) {
+	        if (self._audioNode[i].paused) {
+	          inactive++;
+	        }
+	      }
+
+	      // remove excess inactive nodes
+	      for (i=self._audioNode.length-1; i>=0; i--) {
+	        if (inactive <= 5) {
+	          break;
+	        }
+
+	        if (self._audioNode[i].paused) {
+	          // disconnect the audio source if using Web Audio
+	          if (self._webAudio) {
+	            self._audioNode[i].disconnect(0);
+	          }
+
+	          inactive--;
+	          self._audioNode.splice(i, 1);
+	        }
+	      }
+	    },
+
+	    /**
+	     * Clear 'onend' timeout before it ends.
+	     * @param  {String} soundId  The play instance ID.
+	     */
+	    _clearEndTimer: function(soundId) {
+	      var self = this,
+	        index = 0;
+
+	      // loop through the timers to find the one associated with this sound
+	      for (var i=0; i<self._onendTimer.length; i++) {
+	        if (self._onendTimer[i].id === soundId) {
+	          index = i;
+	          break;
+	        }
+	      }
+
+	      var timer = self._onendTimer[index];
+	      if (timer) {
+	        clearTimeout(timer.timer);
+	        self._onendTimer.splice(index, 1);
+	      }
+	    },
+
+	    /**
+	     * Setup the gain node and panner for a Web Audio instance.
+	     * @return {Object} The new audio node.
+	     */
+	    _setupAudioNode: function() {
+	      var self = this,
+	        node = self._audioNode,
+	        index = self._audioNode.length;
+
+	      // create gain node
+	      node[index] = (typeof ctx.createGain === 'undefined') ? ctx.createGainNode() : ctx.createGain();
+	      node[index].gain.value = self._volume;
+	      node[index].paused = true;
+	      node[index]._pos = 0;
+	      node[index].readyState = 4;
+	      node[index].connect(masterGain);
+
+	      // create the panner
+	      node[index].panner = ctx.createPanner();
+	      node[index].panner.panningModel = self._model || 'equalpower';
+	      node[index].panner.setPosition(self._pos3d[0], self._pos3d[1], self._pos3d[2]);
+	      node[index].panner.connect(node[index]);
+
+	      return node[index];
+	    },
+
+	    /**
+	     * Call/set custom events.
+	     * @param  {String}   event Event type.
+	     * @param  {Function} fn    Function to call.
+	     * @return {Howl}
+	     */
+	    on: function(event, fn) {
+	      var self = this,
+	        events = self['_on' + event];
+
+	      if (typeof fn === 'function') {
+	        events.push(fn);
+	      } else {
+	        for (var i=0; i<events.length; i++) {
+	          if (fn) {
+	            events[i].call(self, fn);
+	          } else {
+	            events[i].call(self);
+	          }
+	        }
+	      }
+
+	      return self;
+	    },
+
+	    /**
+	     * Remove a custom event.
+	     * @param  {String}   event Event type.
+	     * @param  {Function} fn    Listener to remove.
+	     * @return {Howl}
+	     */
+	    off: function(event, fn) {
+	      var self = this,
+	        events = self['_on' + event],
+	        fnString = fn ? fn.toString() : null;
+
+	      if (fnString) {
+	        // loop through functions in the event for comparison
+	        for (var i=0; i<events.length; i++) {
+	          if (fnString === events[i].toString()) {
+	            events.splice(i, 1);
+	            break;
+	          }
+	        }
+	      } else {
+	        self['_on' + event] = [];
+	      }
+
+	      return self;
+	    },
+
+	    /**
+	     * Unload and destroy the current Howl object.
+	     * This will immediately stop all play instances attached to this sound.
+	     */
+	    unload: function() {
+	      var self = this;
+
+	      // stop playing any active nodes
+	      var nodes = self._audioNode;
+	      for (var i=0; i<self._audioNode.length; i++) {
+	        // stop the sound if it is currently playing
+	        if (!nodes[i].paused) {
+	          self.stop(nodes[i].id);
+	          self.on('end', nodes[i].id);
+	        }
+
+	        if (!self._webAudio) {
+	          // remove the source if using HTML5 Audio
+	          nodes[i].src = '';
+	        } else {
+	          // disconnect the output from the master gain
+	          nodes[i].disconnect(0);
+	        }
+	      }
+
+	      // make sure all timeouts are cleared
+	      for (i=0; i<self._onendTimer.length; i++) {
+	        clearTimeout(self._onendTimer[i].timer);
+	      }
+
+	      // remove the reference in the global Howler object
+	      var index = Howler._howls.indexOf(self);
+	      if (index !== null && index >= 0) {
+	        Howler._howls.splice(index, 1);
+	      }
+
+	      // delete this sound from the cache
+	      delete cache[self._src];
+	      self = null;
+	    }
+
+	  };
+
+	  // only define these functions when using WebAudio
+	  if (usingWebAudio) {
+
+	    /**
+	     * Buffer a sound from URL (or from cache) and decode to audio source (Web Audio API).
+	     * @param  {Object} obj The Howl object for the sound to load.
+	     * @param  {String} url The path to the sound file.
+	     */
+	    var loadBuffer = function(obj, url) {
+	      // check if the buffer has already been cached
+	      if (url in cache) {
+	        // set the duration from the cache
+	        obj._duration = cache[url].duration;
+
+	        // load the sound into this object
+	        loadSound(obj);
+	        return;
+	      }
+	      
+	      if (/^data:[^;]+;base64,/.test(url)) {
+	        // Decode base64 data-URIs because some browsers cannot load data-URIs with XMLHttpRequest.
+	        var data = atob(url.split(',')[1]);
+	        var dataView = new Uint8Array(data.length);
+	        for (var i=0; i<data.length; ++i) {
+	          dataView[i] = data.charCodeAt(i);
+	        }
+	        
+	        decodeAudioData(dataView.buffer, obj, url);
+	      } else {
+	        // load the buffer from the URL
+	        var xhr = new XMLHttpRequest();
+	        xhr.open('GET', url, true);
+	        xhr.responseType = 'arraybuffer';
+	        xhr.onload = function() {
+	          decodeAudioData(xhr.response, obj, url);
+	        };
+	        xhr.onerror = function() {
+	          // if there is an error, switch the sound to HTML Audio
+	          if (obj._webAudio) {
+	            obj._buffer = true;
+	            obj._webAudio = false;
+	            obj._audioNode = [];
+	            delete obj._gainNode;
+	            delete cache[url];
+	            obj.load();
+	          }
+	        };
+	        try {
+	          xhr.send();
+	        } catch (e) {
+	          xhr.onerror();
+	        }
+	      }
+	    };
+
+	    /**
+	     * Decode audio data from an array buffer.
+	     * @param  {ArrayBuffer} arraybuffer The audio data.
+	     * @param  {Object} obj The Howl object for the sound to load.
+	     * @param  {String} url The path to the sound file.
+	     */
+	    var decodeAudioData = function(arraybuffer, obj, url) {
+	      // decode the buffer into an audio source
+	      ctx.decodeAudioData(
+	        arraybuffer,
+	        function(buffer) {
+	          if (buffer) {
+	            cache[url] = buffer;
+	            loadSound(obj, buffer);
+	          }
+	        },
+	        function(err) {
+	          obj.on('loaderror');
+	        }
+	      );
+	    };
+
+	    /**
+	     * Finishes loading the Web Audio API sound and fires the loaded event
+	     * @param  {Object}  obj    The Howl object for the sound to load.
+	     * @param  {Objecct} buffer The decoded buffer sound source.
+	     */
+	    var loadSound = function(obj, buffer) {
+	      // set the duration
+	      obj._duration = (buffer) ? buffer.duration : obj._duration;
+
+	      // setup a sprite if none is defined
+	      if (Object.getOwnPropertyNames(obj._sprite).length === 0) {
+	        obj._sprite = {_default: [0, obj._duration * 1000]};
+	      }
+
+	      // fire the loaded event
+	      if (!obj._loaded) {
+	        obj._loaded = true;
+	        obj.on('load');
+	      }
+
+	      if (obj._autoplay) {
+	        obj.play();
+	      }
+	    };
+
+	    /**
+	     * Load the sound back into the buffer source.
+	     * @param  {Object} obj   The sound to load.
+	     * @param  {Array}  loop  Loop boolean, pos, and duration.
+	     * @param  {String} id    (optional) The play instance ID.
+	     */
+	    var refreshBuffer = function(obj, loop, id) {
+	      // determine which node to connect to
+	      var node = obj._nodeById(id);
+
+	      // setup the buffer source for playback
+	      node.bufferSource = ctx.createBufferSource();
+	      node.bufferSource.buffer = cache[obj._src];
+	      node.bufferSource.connect(node.panner);
+	      node.bufferSource.loop = loop[0];
+	      if (loop[0]) {
+	        node.bufferSource.loopStart = loop[1];
+	        node.bufferSource.loopEnd = loop[1] + loop[2];
+	      }
+	      node.bufferSource.playbackRate.value = obj._rate;
+	    };
+
+	  }
+
+	  /**
+	   * Add support for AMD (Asynchronous Module Definition) libraries such as require.js.
+	   */
+	  if (true) {
+	    !(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	      return {
+	        Howler: Howler,
+	        Howl: Howl
+	      };
+	    }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	  }
+
+	  /**
+	   * Add support for CommonJS libraries such as browserify.
+	   */
+	  if (true) {
+	    exports.Howler = Howler;
+	    exports.Howl = Howl;
+	  }
+
+	  // define globally in case AMD is not available or available but not used
+
+	  if (typeof window !== 'undefined') {
+	    window.Howler = Howler;
+	    window.Howl = Howl;
+	  }
+
+	})();
+
+
+/***/ },
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27165,7 +28614,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _pixiJs = __webpack_require__(1);
+	var _pixiJs = __webpack_require__(2);
 
 	var _pixiJs2 = _interopRequireDefault(_pixiJs);
 
@@ -27209,35 +28658,7 @@
 	}
 
 /***/ },
-/* 134 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var WIDTH = 800;
-	exports.WIDTH = WIDTH;
-	var HEIGHT = 600;
-
-	exports.HEIGHT = HEIGHT;
-	var CHAR_COLOR = 0x4731FF;
-	exports.CHAR_COLOR = CHAR_COLOR;
-	var SPRING = -25;
-	exports.SPRING = SPRING;
-	var GRAVITY = 1.5;
-	exports.GRAVITY = GRAVITY;
-	var ACCEL = 1;
-	exports.ACCEL = ACCEL;
-	var MAX_SPEED = 8;
-
-	exports.MAX_SPEED = MAX_SPEED;
-	var OBS_COLOR = 0x774320;
-	exports.OBS_COLOR = OBS_COLOR;
-
-/***/ },
-/* 135 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27249,68 +28670,28 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _pixiJs = __webpack_require__(1);
+	var _pixiJs = __webpack_require__(2);
 
 	var _pixiJs2 = _interopRequireDefault(_pixiJs);
 
-	var _constants = __webpack_require__(134);
+	var _lodash = __webpack_require__(139);
 
-	var tree = new _pixiJs2['default'].Sprite.fromImage('img/tree02.svg');
-	tree.position.x = 350;
+	var _input = __webpack_require__(140);
 
-	var container = new _pixiJs2['default'].Container();
-	exports.container = container;
-	container.addChild(tree);
-
-	function update() {
-	  tree.position.y = _constants.HEIGHT - tree.height;
-	}
-
-/***/ },
-/* 136 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	exports.update = update;
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _pixiJs = __webpack_require__(1);
-
-	var _pixiJs2 = _interopRequireDefault(_pixiJs);
-
-	var _lodash = __webpack_require__(137);
-
-	var _input = __webpack_require__(138);
+	var _music = __webpack_require__(135);
 
 	var _constants = __webpack_require__(134);
 
 	function createCharacter() {
-	  var char = new _pixiJs2['default'].Graphics();
-	  char.lineStyle(5, _constants.CHAR_COLOR, 1);
-	  char.beginFill(null, 0);
-	  char.moveTo(0, 125);
-	  char.lineTo(25, 75);
-	  char.moveTo(50, 125);
-	  char.lineTo(25, 75);
-	  char.moveTo(25, 75);
-	  char.lineTo(25, 25);
-	  char.moveTo(0, 50);
-	  char.lineTo(50, 50);
-	  char.endFill();
-	  char.beginFill(_constants.CHAR_COLOR);
-	  char.drawRect(10, 5, 30, 30);
-	  char.endFill();
+	  var char = new _pixiJs2['default'].Sprite.fromImage('img/beardy.png');
+	  char.width = 1010 / 16;
+	  char.height = 1549 / 16;
+	  char.position.x = 230;
+	  char.position.y = _constants.HEIGHT - char.height;
 	  return char;
 	}
 
 	var char = createCharacter();
-	char.position.x = _constants.WIDTH - 50 - 200;
-	char.position.y = _constants.HEIGHT - 125;
 	var container = char;
 
 	exports.container = container;
@@ -27340,8 +28721,8 @@
 	  if (char.position.x < 0) {
 	    char.position.x = 0;
 	  }
-	  if (char.position.x > _constants.WIDTH - 50) {
-	    char.position.x = _constants.WIDTH - 50;
+	  if (char.position.x > _constants.WIDTH - char.width) {
+	    char.position.x = _constants.WIDTH - char.width;
 	  }
 	  // if character collides, x wise, go back to old x
 	  var collidesX = (0, _lodash.any)(obstacles, function (obs) {
@@ -27355,15 +28736,20 @@
 	  if (_input.keyMap[_input.UP]) {
 	    if (onGround) {
 	      dy = _constants.SPRING;
+	      _music.jump.play();
 	    }
 	  }
+	  var oldOnGround = onGround;
 	  onGround = false;
 	  dy += _constants.GRAVITY;
 	  char.position.y += dy;
-	  if (char.position.y > _constants.HEIGHT - 125) {
-	    char.position.y = _constants.HEIGHT - 125;
+	  if (char.position.y > _constants.HEIGHT - char.height) {
+	    char.position.y = _constants.HEIGHT - char.height;
 	    dy = 0;
 	    onGround = true;
+	    if (!oldOnGround) {
+	      _music.land.play();
+	    }
 	  }
 	  // if character collides, y wise, go back to old y
 	  var collidesY = (0, _lodash.any)(obstacles, function (obs) {
@@ -27373,6 +28759,9 @@
 	    char.position.y = oldY;
 	    if (dy > 0) {
 	      onGround = true;
+	      if (!oldOnGround) {
+	        _music.land.play();
+	      }
 	    }
 	    dy = 0;
 	  }
@@ -27383,7 +28772,7 @@
 	}
 
 /***/ },
-/* 137 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -39738,10 +41127,10 @@
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(115)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(116)(module), (function() { return this; }())))
 
 /***/ },
-/* 138 */
+/* 140 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -39772,7 +41161,7 @@
 	});
 
 /***/ },
-/* 139 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39784,7 +41173,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _pixiJs = __webpack_require__(1);
+	var _pixiJs = __webpack_require__(2);
 
 	var _pixiJs2 = _interopRequireDefault(_pixiJs);
 
