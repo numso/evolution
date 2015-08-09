@@ -89,6 +89,19 @@
 	stage.addChild(char.lightMask);
 	stage.mask = char.lightMask;
 
+	// DEBUG MODE
+	window.addEventListener('keydown', function (e) {
+	  if (e.keyCode === 68) {
+	    if (stage.mask) {
+	      stage.mask = null;
+	      char.lightMask.visible = false;
+	    } else {
+	      stage.mask = char.lightMask;
+	      char.lightMask.visible = true;
+	    }
+	  }
+	});
+
 	function gameLoop() {
 	  window.requestAnimationFrame(gameLoop);
 	  update();
