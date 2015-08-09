@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+# Note: Running this script assumes the following directory structure:
+#
+# some-root-folder
+#  |- evolution
+#  |  |- <project master branch cloned>
+#  |- gh-pages
+#     |- <project gh-pages branch cloned>
+
+# Run webpack
+webpack
+
+# Copy over the files from master to gh-pages
+cp client/index.html ../gh-pages/index.html
+cp client/build/bundle.js ../gh-pages/build/bundle.js
+cp -r client/img/ ../gh-pages/img/
+cp -r client/snd/ ../gh-pages/snd/
+
+# Echo out the rest of the instructions
+echo -e "\n\n  -----  Now cd into gh-pages, add, commit, and push the release  -----\n\n"
