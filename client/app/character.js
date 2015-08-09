@@ -4,30 +4,18 @@ import PIXI from 'pixi.js'
 import {any} from 'lodash'
 
 import {keyMap, LEFT, RIGHT, UP} from './input'
-import {WIDTH, HEIGHT, CHAR_COLOR, SPRING, GRAVITY, ACCEL, MAX_SPEED} from './constants'
+import {WIDTH, HEIGHT, SPRING, GRAVITY, ACCEL, MAX_SPEED} from './constants'
 
 function createCharacter() {
-  var char = new PIXI.Graphics()
-  char.lineStyle(5, CHAR_COLOR, 1)
-  char.beginFill(null, 0)
-  char.moveTo(0, 125)
-  char.lineTo(25, 75)
-  char.moveTo(50, 125)
-  char.lineTo(25, 75)
-  char.moveTo(25, 75)
-  char.lineTo(25, 25)
-  char.moveTo(0, 50)
-  char.lineTo(50, 50)
-  char.endFill()
-  char.beginFill(CHAR_COLOR)
-  char.drawRect(10, 5, 30, 30)
-  char.endFill()
+  var char = new PIXI.Sprite.fromImage('img/beardy.png')
+  char.width = 1010 / 16
+  char.height = 1549 / 16
+  char.position.x = 230
+  char.position.y = HEIGHT - char.height
   return char
 }
 
 var char = createCharacter()
-char.position.x = WIDTH - 50 - 200
-char.position.y = HEIGHT - 125
 export var container = char
 
 var dy = 0
@@ -56,8 +44,8 @@ export function update(obstacles: any) {
   if (char.position.x < 0) {
     char.position.x = 0
   }
-  if (char.position.x > WIDTH - 50) {
-    char.position.x = WIDTH - 50
+  if (char.position.x > WIDTH - char.width) {
+    char.position.x = WIDTH - char.width
   }
   // if character collides, x wise, go back to old x
   var collidesX = any(obstacles, obs => doesCollide(char, obs))
@@ -74,8 +62,8 @@ export function update(obstacles: any) {
   onGround = false
   dy += GRAVITY
   char.position.y += dy
-  if (char.position.y > HEIGHT - 125) {
-    char.position.y = HEIGHT - 125
+  if (char.position.y > HEIGHT - char.height) {
+    char.position.y = HEIGHT - char.height
     dy = 0
     onGround = true
   }

@@ -3,7 +3,6 @@
 export var WIDTH = 800
 export var HEIGHT = 600
 
-export var CHAR_COLOR = 0x4731FF
 export var SPRING = -25
 export var GRAVITY = 1.5
 export var ACCEL = 1
