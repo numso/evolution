@@ -21,6 +21,7 @@
     "babel-eslint": "3.1.23",
     "babel-loader": "5.3.1",
     "bluebird": "2.9.34",
+    "brfs": "1.4.0",
     "eslint": "0.24.1",
     "eslint-plugin-react": "2.7.0",
     "flow-bin": "0.13.1",
@@ -30,6 +31,7 @@
     "moment": "2.10.3",
     "pixi.js": "3.0.7",
     "shortid": "2.2.2",
+    "transform-loader": "0.2.2",
     "webpack": "1.10.5",
     "webpack-dev-server": "1.10.1"
   }

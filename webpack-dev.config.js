@@ -23,10 +23,6 @@ module.exports = {
     publicPath: '/build/'
   },
 
-  node: {
-    fs: 'empty'
-  },
-
   resolve: {
     extensions: ['', '.js', '.jsx', 'index.js', 'index.jsx']
   },
@@ -36,8 +32,10 @@ module.exports = {
       { test: /\.json$/, loader: 'json'}
     ],
     loaders: [
-      { test: /\.jsx$/, loader: 'react-hot!babel?stage=0', exclude: [/node_modules/] },
       { test: /\.js$/, loader: 'babel?stage=0', exclude: [/node_modules/] }
+    ],
+    postLoaders: [
+      { test: /\.js$/, loader: 'transform?brfs' }
     ]
   },
 

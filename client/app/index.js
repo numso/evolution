@@ -20,6 +20,9 @@ stage.addChild(char.container)
 stage.addChild(obstacles.container)
 stage.addChild(fg.container)
 
+stage.addChild(char.lightMask)
+stage.mask = char.lightMask
+
 function gameLoop() {
   window.requestAnimationFrame(gameLoop)
   update()

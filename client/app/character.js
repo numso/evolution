@@ -7,10 +7,14 @@ import {keyMap, LEFT, RIGHT, UP} from './input'
 import {jump, land} from './music'
 import {WIDTH, HEIGHT, SPRING, GRAVITY, ACCEL, MAX_SPEED} from './constants'
 
+export var lightMask = new PIXI.Sprite.fromImage('img/alpha-mask.png')
+function rescaleLight(num) {
+  lightMask.scale.x = lightMask.scale.y = num
+}
+
 function createCharacter() {
   var char = new PIXI.Sprite.fromImage('img/beardy.png')
-  char.width = 1010 / 16
-  char.height = 1549 / 16
+  char.scale.x = char.scale.y = 0.0625
   char.position.x = 230
   char.position.y = HEIGHT - char.height
   return char
@@ -85,6 +89,14 @@ export function update(obstacles: any) {
     }
     dy = 0
   }
+
+  // lightMask logic
+  var speed = Math.abs(dx)
+  var mod = (8 - speed) / 8
+  mod = mod * 0.6 + 0.4
+  rescaleLight(mod)
+  lightMask.position.x = char.position.x + char.width / 2 - lightMask.width / 2 + 25
+  lightMask.position.y = char.position.y + char.height / 2 - lightMask.height / 2 - 8
 }
 
 
