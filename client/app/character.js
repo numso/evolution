@@ -4,6 +4,7 @@ import PIXI from 'pixi.js'
 import {any} from 'lodash'
 
 import {keyMap, LEFT, RIGHT, UP} from './input'
+import {jump, land} from './music'
 import {WIDTH, HEIGHT, SPRING, GRAVITY, ACCEL, MAX_SPEED} from './constants'
 
 function createCharacter() {
@@ -57,8 +58,10 @@ export function update(obstacles: any) {
   if (keyMap[UP]) {
     if (onGround) {
       dy = SPRING
+      jump.play()
     }
   }
+  var oldOnGround = onGround
   onGround = false
   dy += GRAVITY
   char.position.y += dy
@@ -66,6 +69,9 @@ export function update(obstacles: any) {
     char.position.y = HEIGHT - char.height
     dy = 0
     onGround = true
+    if (!oldOnGround) {
+      land.play()
+    }
   }
   // if character collides, y wise, go back to old y
   var collidesY = any(obstacles, obs => doesCollide(char, obs))
@@ -73,6 +79,9 @@ export function update(obstacles: any) {
     char.position.y = oldY
     if (dy > 0) {
       onGround = true
+      if (!oldOnGround) {
+        land.play()
+      }
     }
     dy = 0
   }

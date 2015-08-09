@@ -2,6 +2,7 @@
 
 import PIXI from 'pixi.js'
 
+import * as music from './music'
 import * as bg from './background'
 import * as fg from './foreground'
 import * as char from './character'
@@ -32,4 +33,5 @@ function update() {
   fg.update()
 }
 
+music.bg.play()
 window.requestAnimationFrame(gameLoop)
