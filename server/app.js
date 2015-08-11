@@ -13,5 +13,5 @@ new WebpackDevServer(webpack(config), config.devServer)
     if (err) {
       return console.log(err)
     }
-    console.log(`HMR Static Server listening at http://${os.hostname()}:${port}`)
+    console.log('HMR Static Server listening at http://' + os.hostname() + ':' + port)
   })

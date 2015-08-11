@@ -3,9 +3,9 @@
 import PIXI from 'pixi.js'
 import {any} from 'lodash'
 
-import {keyMap, LEFT, RIGHT, UP} from './input'
+import {keyMap, LEFT, RIGHT, UP, SHIFT, CTRL} from './input'
 import {jump, land} from './music'
-import {WIDTH, HEIGHT, SPRING, GRAVITY, ACCEL, MAX_SPEED} from './constants'
+import {WIDTH, HEIGHT, SPRING, GRAVITY, ACCEL, RUN_ACCEL, RUN_MAX_SPEED, MAX_SPEED, CROUCH_ACCEL, CROUCH_MAX_SPEED} from './constants'
 
 export var lightMask = new PIXI.Sprite.fromImage('img/alpha-mask.png')
 function rescaleLight(num) {
@@ -26,23 +26,57 @@ export var container = char
 var dy = 0
 var dx = 0
 var onGround = true
+var isRunning = false
+var isCrouching = false
 
 export function update(obstacles: any) {
   // UPDATE X
   var oldX = char.position.x
   if (keyMap[LEFT]) {
-    dx -= ACCEL
-    dx = Math.max(dx, -MAX_SPEED)
+    if (keyMap[SHIFT]) {
+      dx -= RUN_ACCEL
+      dx = Math.max (dx, -RUN_MAX_SPEED)
+      isCrouching = false
+      isRunning = true
+    } else if (keyMap[CTRL]) {
+      dx -= CROUCH_ACCEL
+      dx = Math.max(dx, -CROUCH_MAX_SPEED)
+      isRunning = false
+      isCrouching = true
+    } else {
+      dx -= ACCEL
+      dx = Math.max(dx, -MAX_SPEED)
+      isRunning = false
+      isCrouching = false
+    }
   } else if (keyMap[RIGHT]) {
-    dx += ACCEL
-    dx = Math.min(dx, MAX_SPEED)
+    if (keyMap[SHIFT]) {
+      dx += RUN_ACCEL
+      dx = Math.min(dx, RUN_MAX_SPEED)
+      isCrouching = false
+      isRunning = true
+    } else if (keyMap[CTRL]) {
+      dx += CROUCH_ACCEL
+      dx = Math.min(dx, CROUCH_MAX_SPEED)
+      isRunning = false
+      isCrouching = true
+    } else {
+      dx += ACCEL
+      dx = Math.min(dx, MAX_SPEED)
+      isRunning = false
+      isCrouching = false
+    }
   } else {
     if (dx > 0) {
       dx -= ACCEL
       dx = Math.max(0, dx)
+      isRunning = false
+      isCrouching = false
     } else if (dx < 0) {
       dx += ACCEL
       dx = Math.min(0, dx)
+      isRunning = false
+      isCrouching = false
     }
   }
   char.position.x += dx
@@ -91,6 +125,7 @@ export function update(obstacles: any) {
   }
 
   // lightMask logic
+
   var speed = Math.abs(dx)
   var mod = (8 - speed) / 8
   mod = mod * 0.6 + 0.4
