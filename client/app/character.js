@@ -1,7 +1,7 @@
 /* @flow */
 
 import PIXI from 'pixi.js'
-import {any} from 'lodash'
+import {any, map, range} from 'lodash'
 
 import {keyMap, LEFT, RIGHT, UP} from './input'
 import {jump, land} from './music'
@@ -13,15 +13,26 @@ function rescaleLight(num) {
 }
 
 function createCharacter() {
-  var char = new PIXI.Sprite.fromImage('img/beardy.png')
+  var imgs = map(range(1, 5), num => `img/char/frame0${num}_handUp.png`)
+  var textureArray = map(imgs, img => PIXI.Texture.fromImage(img))
+  var char = new PIXI.MovieClip(textureArray)
+  char.animationSpeed = 0.2
   char.scale.x = char.scale.y = 0.0625
-  char.position.x = 230
-  char.position.y = HEIGHT - char.height
+  char.anchor.x = char.anchor.y = 0.5
   return char
 }
 
+export var container = new PIXI.Container()
 var char = createCharacter()
-export var container = char
+char.gotoAndStop(1)
+container.addChild(char)
+var torch = new PIXI.Sprite.fromImage('img/char/torch.png')
+torch.scale.x = torch.scale.y = 0.0625
+torch.position.x = 22
+torch.position.y = -23
+container.addChild(torch)
+container.position.x = 230
+container.position.y = HEIGHT - char.height
 
 var dy = 0
 var dx = 0
@@ -29,11 +40,13 @@ var onGround = true
 
 export function update(obstacles: any) {
   // UPDATE X
-  var oldX = char.position.x
+  var oldX = container.position.x
   if (keyMap[LEFT]) {
+    container.scale.x = -1
     dx -= ACCEL
     dx = Math.max(dx, -MAX_SPEED)
   } else if (keyMap[RIGHT]) {
+    container.scale.x = 1
     dx += ACCEL
     dx = Math.min(dx, MAX_SPEED)
   } else {
@@ -45,20 +58,29 @@ export function update(obstacles: any) {
       dx = Math.min(0, dx)
     }
   }
-  char.position.x += dx
-  if (char.position.x < 0) {
-    char.position.x = 0
+  var isMoving = dx !== 0
+  container.position.x += dx
+  if (container.position.x < char.width / 2) {
+    container.position.x = char.width / 2
+    isMoving = false
   }
-  if (char.position.x > WIDTH - char.width) {
-    char.position.x = WIDTH - char.width
+  if (container.position.x > WIDTH - char.width / 2) {
+    container.position.x = WIDTH - char.width / 2
+    isMoving = false
   }
   // if character collides, x wise, go back to old x
-  var collidesX = any(obstacles, obs => doesCollide(char, obs))
+  var collidesX = any(obstacles, obs => doesCollide(container, obs))
   if (collidesX) {
-    char.position.x = oldX
+    container.position.x = oldX
+    isMoving = false
+  }
+  if (isMoving) {
+    char.play()
+  } else {
+    char.gotoAndStop(1)
   }
   // UPDATE Y
-  var oldY = char.position.y
+  var oldY = container.position.y
   if (keyMap[UP]) {
     if (onGround) {
       dy = SPRING
@@ -68,9 +90,9 @@ export function update(obstacles: any) {
   var oldOnGround = onGround
   onGround = false
   dy += GRAVITY
-  char.position.y += dy
-  if (char.position.y > HEIGHT - char.height) {
-    char.position.y = HEIGHT - char.height
+  container.position.y += dy
+  if (container.position.y > HEIGHT - char.height / 2) {
+    container.position.y = HEIGHT - char.height / 2
     dy = 0
     onGround = true
     if (!oldOnGround) {
@@ -78,9 +100,9 @@ export function update(obstacles: any) {
     }
   }
   // if character collides, y wise, go back to old y
-  var collidesY = any(obstacles, obs => doesCollide(char, obs))
+  var collidesY = any(obstacles, obs => doesCollide(container, obs))
   if (collidesY) {
-    char.position.y = oldY
+    container.position.y = oldY
     if (dy > 0) {
       onGround = true
       if (!oldOnGround) {
@@ -95,12 +117,15 @@ export function update(obstacles: any) {
   var mod = (8 - speed) / 8
   mod = mod * 0.6 + 0.4
   rescaleLight(mod)
-  lightMask.position.x = char.position.x + char.width / 2 - lightMask.width / 2 + 25
-  lightMask.position.y = char.position.y + char.height / 2 - lightMask.height / 2 - 8
+  var X_OFFSET = container.scale.x === -1 ? -25 : 25
+  lightMask.position.x = container.position.x - lightMask.width / 2 + X_OFFSET
+  lightMask.position.y = container.position.y - lightMask.height / 2 - 8
 }
 
-
 function doesCollide(obj1, obj2) {
-  return (obj1.x + obj1.width > obj2.x && obj1.x < obj2.x + obj2.width)
-    && (obj1.y + obj1.height > obj2.y && obj1.y < obj2.y + obj2.height)
+  var w1 = Math.abs(obj1.width)
+  var x1 = obj1.x - w1 / 2
+  var y1 = obj1.y - obj1.height / 2
+  return (x1 + w1 > obj2.x && x1 < obj2.x + obj2.width)
+    && (y1 + obj1.height > obj2.y && y1 < obj2.y + obj2.height)
 }
