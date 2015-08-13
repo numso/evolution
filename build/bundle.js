@@ -28675,28 +28675,45 @@
 	}
 
 	function createCharacter() {
-	  var char = new _pixiJs2['default'].Sprite.fromImage('img/beardy.png');
+	  var imgs = (0, _lodash.map)((0, _lodash.range)(1, 5), function (num) {
+	    return 'img/char/frame0' + num + '_handUp.png';
+	  });
+	  var textureArray = (0, _lodash.map)(imgs, function (img) {
+	    return _pixiJs2['default'].Texture.fromImage(img);
+	  });
+	  var char = new _pixiJs2['default'].MovieClip(textureArray);
+	  char.animationSpeed = 0.2;
 	  char.scale.x = char.scale.y = 0.0625;
-	  char.position.x = 230;
-	  char.position.y = _constants.HEIGHT - char.height;
+	  char.anchor.x = char.anchor.y = 0.5;
 	  return char;
 	}
 
-	var char = createCharacter();
-	var container = char;
-
+	var container = new _pixiJs2['default'].Container();
 	exports.container = container;
+	var char = createCharacter();
+	char.gotoAndStop(1);
+	container.addChild(char);
+	var torch = new _pixiJs2['default'].Sprite.fromImage('img/char/torch.png');
+	torch.scale.x = torch.scale.y = 0.0625;
+	torch.position.x = 22;
+	torch.position.y = -23;
+	container.addChild(torch);
+	container.position.x = 230;
+	container.position.y = _constants.HEIGHT - char.height;
+
 	var dy = 0;
 	var dx = 0;
 	var onGround = true;
 
 	function update(obstacles) {
 	  // UPDATE X
-	  var oldX = char.position.x;
+	  var oldX = container.position.x;
 	  if (_input.keyMap[_input.LEFT]) {
+	    container.scale.x = -1;
 	    dx -= _constants.ACCEL;
 	    dx = Math.max(dx, -_constants.MAX_SPEED);
 	  } else if (_input.keyMap[_input.RIGHT]) {
+	    container.scale.x = 1;
 	    dx += _constants.ACCEL;
 	    dx = Math.min(dx, _constants.MAX_SPEED);
 	  } else {
@@ -28708,22 +28725,31 @@
 	      dx = Math.min(0, dx);
 	    }
 	  }
-	  char.position.x += dx;
-	  if (char.position.x < 0) {
-	    char.position.x = 0;
+	  var isMoving = dx !== 0;
+	  container.position.x += dx;
+	  if (container.position.x < char.width / 2) {
+	    container.position.x = char.width / 2;
+	    isMoving = false;
 	  }
-	  if (char.position.x > _constants.WIDTH - char.width) {
-	    char.position.x = _constants.WIDTH - char.width;
+	  if (container.position.x > _constants.WIDTH - char.width / 2) {
+	    container.position.x = _constants.WIDTH - char.width / 2;
+	    isMoving = false;
 	  }
 	  // if character collides, x wise, go back to old x
 	  var collidesX = (0, _lodash.any)(obstacles, function (obs) {
-	    return doesCollide(char, obs);
+	    return doesCollide(container, obs);
 	  });
 	  if (collidesX) {
-	    char.position.x = oldX;
+	    container.position.x = oldX;
+	    isMoving = false;
+	  }
+	  if (isMoving) {
+	    char.play();
+	  } else {
+	    char.gotoAndStop(1);
 	  }
 	  // UPDATE Y
-	  var oldY = char.position.y;
+	  var oldY = container.position.y;
 	  if (_input.keyMap[_input.UP]) {
 	    if (onGround) {
 	      dy = _constants.SPRING;
@@ -28733,9 +28759,9 @@
 	  var oldOnGround = onGround;
 	  onGround = false;
 	  dy += _constants.GRAVITY;
-	  char.position.y += dy;
-	  if (char.position.y > _constants.HEIGHT - char.height) {
-	    char.position.y = _constants.HEIGHT - char.height;
+	  container.position.y += dy;
+	  if (container.position.y > _constants.HEIGHT - char.height / 2) {
+	    container.position.y = _constants.HEIGHT - char.height / 2;
 	    dy = 0;
 	    onGround = true;
 	    if (!oldOnGround) {
@@ -28744,10 +28770,10 @@
 	  }
 	  // if character collides, y wise, go back to old y
 	  var collidesY = (0, _lodash.any)(obstacles, function (obs) {
-	    return doesCollide(char, obs);
+	    return doesCollide(container, obs);
 	  });
 	  if (collidesY) {
-	    char.position.y = oldY;
+	    container.position.y = oldY;
 	    if (dy > 0) {
 	      onGround = true;
 	      if (!oldOnGround) {
@@ -28762,12 +28788,16 @@
 	  var mod = (8 - speed) / 8;
 	  mod = mod * 0.6 + 0.4;
 	  rescaleLight(mod);
-	  lightMask.position.x = char.position.x + char.width / 2 - lightMask.width / 2 + 25;
-	  lightMask.position.y = char.position.y + char.height / 2 - lightMask.height / 2 - 8;
+	  var X_OFFSET = container.scale.x === -1 ? -25 : 25;
+	  lightMask.position.x = container.position.x - lightMask.width / 2 + X_OFFSET;
+	  lightMask.position.y = container.position.y - lightMask.height / 2 - 8;
 	}
 
 	function doesCollide(obj1, obj2) {
-	  return obj1.x + obj1.width > obj2.x && obj1.x < obj2.x + obj2.width && (obj1.y + obj1.height > obj2.y && obj1.y < obj2.y + obj2.height);
+	  var w1 = Math.abs(obj1.width);
+	  var x1 = obj1.x - w1 / 2;
+	  var y1 = obj1.y - obj1.height / 2;
+	  return x1 + w1 > obj2.x && x1 < obj2.x + obj2.width && (y1 + obj1.height > obj2.y && y1 < obj2.y + obj2.height);
 	}
 
 /***/ },
