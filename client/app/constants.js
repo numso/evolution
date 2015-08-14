@@ -11,5 +11,9 @@ export var MAX_SPEED = 8
 export var RUN_MAX_SPEED = 12
 export var CROUCH_ACCEL = .5
 export var CROUCH_MAX_SPEED = 4
+export var POSTURE_STANDING = 0
+export var POSTURE_CROUCHING = 1
+export var POSTURE_WALKING = 2
+export var POSTURE_RUNNING = 3
 
 export var OBS_COLOR = 0x774320
