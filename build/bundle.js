@@ -93,8 +93,7 @@
 	stage.addChild(fg.container);
 
 	stage.addChild(char.lightMask);
-	// stage.mask = char.lightMask
-	char.lightMask.visible = false;
+	stage.mask = char.lightMask;
 
 	// DEBUG MODE
 	window.addEventListener('keydown', function (e) {
