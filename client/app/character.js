@@ -5,7 +5,8 @@ import {any, map, range} from 'lodash'
 
 import {keyMap, LEFT, RIGHT, UP} from './input'
 import {jump, land} from './music'
-import {WIDTH, HEIGHT, SPRING, GRAVITY, ACCEL, MAX_SPEED} from './constants'
+import gameMap from './maps/test'
+import {SPRING, GRAVITY, ACCEL, MAX_SPEED} from './constants'
 
 export var lightMask = new PIXI.Sprite.fromImage('img/alpha-mask.png')
 function rescaleLight(num) {
@@ -32,7 +33,7 @@ torch.position.x = 22
 torch.position.y = -23
 container.addChild(torch)
 container.position.x = 230
-container.position.y = HEIGHT - char.height
+container.position.y = gameMap.height - char.height
 
 var dy = 0
 var dx = 0
@@ -64,8 +65,8 @@ export function update(obstacles: any) {
     container.position.x = char.width / 2
     isMoving = false
   }
-  if (container.position.x > WIDTH - char.width / 2) {
-    container.position.x = WIDTH - char.width / 2
+  if (container.position.x > gameMap.width - char.width / 2) {
+    container.position.x = gameMap.width - char.width / 2
     isMoving = false
   }
   // if character collides, x wise, go back to old x
@@ -91,8 +92,8 @@ export function update(obstacles: any) {
   onGround = false
   dy += GRAVITY
   container.position.y += dy
-  if (container.position.y > HEIGHT - char.height / 2) {
-    container.position.y = HEIGHT - char.height / 2
+  if (container.position.y > gameMap.height - char.height / 2) {
+    container.position.y = gameMap.height - char.height / 2
     dy = 0
     onGround = true
     if (!oldOnGround) {

@@ -1,7 +1,7 @@
 /* @flow */
 
-export var WIDTH = 800
-export var HEIGHT = 600
+export var SCREEN_WIDTH = 800
+export var SCREEN_HEIGHT = 600
 
 export var SPRING = -25
 export var GRAVITY = 1.5

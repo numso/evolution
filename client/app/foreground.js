@@ -1,14 +1,15 @@
 /* @flow */
 
 import PIXI from 'pixi.js'
-import {HEIGHT} from './constants'
+
+import gameMap from './maps/test'
 
 var tree = new PIXI.Sprite.fromImage('img/tree02.svg')
-tree.position.x = 350
+tree.position.x = 450
 
 export var container = new PIXI.Container()
 container.addChild(tree)
 
 export function update() {
-  tree.position.y = HEIGHT - tree.height
+  tree.position.y = gameMap.height - tree.height
 }
