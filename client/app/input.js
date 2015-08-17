@@ -5,6 +5,8 @@ export var UP = 38
 export var RIGHT = 39
 export var DOWN = 40
 export var SPACE = 32 // I think?
+export var SHIFT = 16
+export var CTRL = 17
 
 export var keyMap: Array<bool> = []
 
