@@ -7,6 +7,8 @@ import * as bg from './background'
 import * as fg from './foreground'
 import * as char from './character'
 import * as obstacles from './obstacles'
+import {SCREEN_WIDTH, SCREEN_HEIGHT} from './constants'
+import gameMap from './maps/test'
 
 var renderer = PIXI.autoDetectRenderer()
 // renderer.view.style.width = window.innerWidth + 'px'
@@ -47,7 +49,19 @@ function update() {
   char.update(obstacles.obstacles)
   obstacles.update()
   fg.update()
+  updateStagePosition(char.container.position)
 }
 
 music.bg.play()
 window.requestAnimationFrame(gameLoop)
+
+function updateStagePosition(c) {
+  var stageX = bound(c.x - SCREEN_WIDTH / 2, 0, gameMap.width - SCREEN_WIDTH)
+  var stageY = bound(c.y - SCREEN_HEIGHT / 2, 0, gameMap.height - SCREEN_HEIGHT)
+  stage.x = -stageX
+  stage.y = -stageY
+}
+
+function bound(num, lower, upper) {
+  return Math.min(Math.max(num, lower), upper)
+}

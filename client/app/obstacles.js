@@ -1,10 +1,12 @@
 /* @flow */
 
 import PIXI from 'pixi.js'
+import {each} from 'lodash'
 
-import {WIDTH, HEIGHT, OBS_COLOR} from './constants'
+import {OBS_COLOR} from './constants'
+import gameMap from './maps/test'
 
-function createObstacle(w, h, x, y) {
+function createObstacle(x, y, w, h) {
   var obs = new PIXI.Graphics()
   obs.beginFill(OBS_COLOR)
   obs.drawRect(0, 0, w, h)
@@ -14,17 +16,15 @@ function createObstacle(w, h, x, y) {
   return obs
 }
 
-var obs1 = createObstacle(300, 20, 300, 280)
-var obs2 = createObstacle(300, 20, 100, 450)
-var obs3 = createObstacle(150, 150, WIDTH - 150, HEIGHT - 150)
-
 export var container = new PIXI.Container()
-container.addChild(obs1)
-container.addChild(obs2)
-container.addChild(obs3)
+export var obstacles: Array<any> = []
+
+each(gameMap.obstacles, (obs) => {
+  var gameObject = createObstacle(obs.x, obs.y, obs.w, obs.h)
+  container.addChild(gameObject)
+  obstacles.push(gameObject)
+})
 
 export function update() {
 
 }
-
-export var obstacles = [obs1, obs2, obs3]
