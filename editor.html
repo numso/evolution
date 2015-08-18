@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Evolution Editor</title>
+    <meta name="description" content="Evolution Editor">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+      }
+      html {
+        height: 100%;
+      }
+      body {
+        background-color: gray;
+        display: flex;
+        height: 100%;
+      }
+      #toolsPanel {
+        position: relative;
+        width: 300px;
+        background-color: white;
+        box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
+      }
+      #editPanel {
+        flex: 1;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="toolsPanel">
+      <div>
+        <span>Width: </span>
+        <button id="increaseWidth">+ 100</button>
+        <button id="decreaseWidth">- 100</button>
+      </div>
+      <div>
+        <span>Height: </span>
+        <button id="increaseHeight">+ 100</button>
+        <button id="decreaseHeight">- 100</button>
+      </div>
+      <div>
+        <input id="lbl" type="text"/>
+        <button id="save">Save</button>
+        <button id="load">Load</button>
+      </div>
+      <div id="messages"></div>
+    </div>
+    <div id="editPanel"></div>
+    <script src="build/editor.js"></script>
+  </body>
+</html>
