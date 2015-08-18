@@ -39541,9 +39541,25 @@
 	exports.GRAVITY = GRAVITY;
 	var ACCEL = 1;
 	exports.ACCEL = ACCEL;
+	var RUN_ACCEL = 3;
+	exports.RUN_ACCEL = RUN_ACCEL;
 	var MAX_SPEED = 8;
-
 	exports.MAX_SPEED = MAX_SPEED;
+	var RUN_MAX_SPEED = 12;
+	exports.RUN_MAX_SPEED = RUN_MAX_SPEED;
+	var CROUCH_ACCEL = .5;
+	exports.CROUCH_ACCEL = CROUCH_ACCEL;
+	var CROUCH_MAX_SPEED = 4;
+	exports.CROUCH_MAX_SPEED = CROUCH_MAX_SPEED;
+	var POSTURE_STANDING = 0;
+	exports.POSTURE_STANDING = POSTURE_STANDING;
+	var POSTURE_CROUCHING = 1;
+	exports.POSTURE_CROUCHING = POSTURE_CROUCHING;
+	var POSTURE_WALKING = 2;
+	exports.POSTURE_WALKING = POSTURE_WALKING;
+	var POSTURE_RUNNING = 3;
+
+	exports.POSTURE_RUNNING = POSTURE_RUNNING;
 	var OBS_COLOR = 0x774320;
 	exports.OBS_COLOR = OBS_COLOR;
 
@@ -39558,6 +39574,8 @@
 	});
 	exports.update = update;
 
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var _pixiJs = __webpack_require__(1);
@@ -39570,15 +39588,22 @@
 
 	var _music = __webpack_require__(137);
 
+	var _constants = __webpack_require__(135);
+
+	var C = _interopRequireWildcard(_constants);
+
 	var _mapsTest = __webpack_require__(140);
 
 	var _mapsTest2 = _interopRequireDefault(_mapsTest);
 
-	var _constants = __webpack_require__(135);
-
 	var lightMask = new _pixiJs2['default'].Sprite.fromImage('img/alpha-mask.png');
 	exports.lightMask = lightMask;
 	function rescaleLight(num) {
+	  if (num > 1) {
+	    num = 1;
+	  } else if (num < 0.4) {
+	    num = 0.4;
+	  }
 	  lightMask.scale.x = lightMask.scale.y = num;
 	}
 
@@ -39611,26 +39636,56 @@
 
 	var dy = 0;
 	var dx = 0;
+	var dl = 0;
 	var onGround = true;
+	var posture = C.POSTURE_STANDING;
+	var light = 1;
+	// var minLight = 0
 
 	function update(obstacles) {
 	  // UPDATE X
 	  var oldX = container.position.x;
 	  if (_input.keyMap[_input.LEFT]) {
 	    container.scale.x = -1;
-	    dx -= _constants.ACCEL;
-	    dx = Math.max(dx, -_constants.MAX_SPEED);
+	    if (_input.keyMap[_input.SHIFT]) {
+	      dx -= C.RUN_ACCEL;
+	      dx = Math.max(dx, -C.RUN_MAX_SPEED);
+	      setPosture(C.POSTURE_RUNNING);
+	    } else if (_input.keyMap[_input.CTRL]) {
+	      dx -= C.CROUCH_ACCEL;
+	      dx = Math.max(dx, -C.CROUCH_MAX_SPEED);
+	      setPosture(C.POSTURE_CROUCHING);
+	    } else {
+	      dx -= C.ACCEL;
+	      dx = Math.max(dx, -C.MAX_SPEED);
+	      setPosture(C.POSTURE_WALKING);
+	    }
 	  } else if (_input.keyMap[_input.RIGHT]) {
 	    container.scale.x = 1;
-	    dx += _constants.ACCEL;
-	    dx = Math.min(dx, _constants.MAX_SPEED);
+	    if (_input.keyMap[_input.SHIFT]) {
+	      dx += C.RUN_ACCEL;
+	      dx = Math.min(dx, C.RUN_MAX_SPEED);
+	      setPosture(C.POSTURE_RUNNING);
+	    } else if (_input.keyMap[_input.CTRL]) {
+	      dx += C.CROUCH_ACCEL;
+	      dx = Math.min(dx, C.CROUCH_MAX_SPEED);
+	      setPosture(C.POSTURE_CROUCHING);
+	    } else {
+	      dx += C.ACCEL;
+	      dx = Math.min(dx, C.MAX_SPEED);
+	      setPosture(C.POSTURE_WALKING);
+	    }
 	  } else {
 	    if (dx > 0) {
-	      dx -= _constants.ACCEL;
+	      dx -= C.ACCEL;
 	      dx = Math.max(0, dx);
+	      setPosture(C.POSTURE_WALKING);
 	    } else if (dx < 0) {
-	      dx += _constants.ACCEL;
+	      dx += C.ACCEL;
 	      dx = Math.min(0, dx);
+	      setPosture(C.POSTURE_WALKING);
+	    } else {
+	      setPosture(C.POSTURE_STANDING);
 	    }
 	  }
 	  var isMoving = dx !== 0;
@@ -39660,13 +39715,13 @@
 	  var oldY = container.position.y;
 	  if (_input.keyMap[_input.UP]) {
 	    if (onGround) {
-	      dy = _constants.SPRING;
+	      dy = C.SPRING;
 	      _music.jump.play();
 	    }
 	  }
 	  var oldOnGround = onGround;
 	  onGround = false;
-	  dy += _constants.GRAVITY;
+	  dy += C.GRAVITY;
 	  container.position.y += dy;
 	  if (container.position.y > _mapsTest2['default'].height - char.height / 2) {
 	    container.position.y = _mapsTest2['default'].height - char.height / 2;
@@ -39692,13 +39747,25 @@
 	  }
 
 	  // lightMask logic
+
 	  var speed = Math.abs(dx);
-	  var mod = (8 - speed) / 8;
-	  mod = mod * 0.6 + 0.4;
-	  rescaleLight(mod);
+	  var maxSpeed = posture * 4;
+	  if (speed > 0 && light > 0.4) {
+	    dl = speed * (-.0001 * maxSpeed);
+	    light += dl;
+	  } else if (light < 1) {
+	    dl = .01;
+	    light += dl;
+	  }
+
+	  rescaleLight(light);
 	  var X_OFFSET = container.scale.x === -1 ? -25 : 25;
 	  lightMask.position.x = container.position.x - lightMask.width / 2 + X_OFFSET;
 	  lightMask.position.y = container.position.y - lightMask.height / 2 - 8;
+	}
+
+	function setPosture(newPosture) {
+	  posture = newPosture;
 	}
 
 	function doesCollide(obj1, obj2) {
@@ -41115,7 +41182,11 @@
 	exports.DOWN = DOWN;
 	var SPACE = 32;exports.SPACE = SPACE;
 	// I think?
+	var SHIFT = 16;
+	exports.SHIFT = SHIFT;
+	var CTRL = 17;
 
+	exports.CTRL = CTRL;
 	var keyMap = [];
 
 	exports.keyMap = keyMap;
